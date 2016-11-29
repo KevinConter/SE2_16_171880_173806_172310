@@ -57,18 +57,18 @@
 						</div>
 					</div>
 				</form>
-				<form action="#" method="POST">
+				<form id="formConferma" action="#" method="POST">
 					<div class="margin-top-100">
 						<hr>
 						<div class="row">
 							<div class="col-xs-5 col-xs-offset-1">
 								<div class="form-group">
-									<input type="button" class="btn btn-lg btn-block btn-success" value="Conferma Ordine">
+									<input type="button" class="btn btn-lg btn-block btn-success" onclick="conferma()" value="Conferma Ordine">
 								</div>
 							</div>
 							<div class="col-xs-5">
 								<div class="form-group">
-									<input type="button" class="btn btn-lg btn-block btn-danger" value="Salta Ordine">
+									<input type="button" class="btn btn-lg btn-block btn-danger" onclick="salta()" value="Salta Ordine">
 								</div>
 							</div>
 						</div>
