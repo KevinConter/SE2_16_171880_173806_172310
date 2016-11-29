@@ -4,7 +4,7 @@
 /*************** LIBRERIES **********************/
 var util = require('util');
 var express = require('express');
-var parser = require('body-parser');
+var bodyParser = require('body-parser');
 var bind = require('bind');
 var session = require('express-session');
 /************************************************/
@@ -20,7 +20,23 @@ app.use('/files',express.static(__dirname+'/web'));
 app.use(bodyParser.urlencoded({ extended: false }));
 /*************************************************/
 
+//Set the server to redirect a root request
+app.get("/",function(request,response){
+	//Controlli per verificare se esiste la sessione
+	//Se non esiste
+	response.redirect("/files/index.html");
+});
 
+app.get("/files/index.html",function(request,response){
+	var user={nome:"Asd",cognome:"qwery"};
+	bind.toFile("tpl/index.tpl",
+		{user: user.nome},
+		function(data){
+			response.writeHead(200,{"Content-Type":"text/html"});
+			response.end(data);
+		}
+	);
+});
 
 
 app.listen(app.get('port'), function() {
