@@ -20,8 +20,7 @@ app.use('/files',express.static(__dirname+'/web'));
 //applica body-parser alle richieste
 app.use(bodyParser.urlencoded({ extended: false }));
 //inizializzazione delle sessioni
-app.use(express.cookieParser());
-app.use(express.session({secret: "MySecretPassword"});
+app.use(session({secret: "MySecretPassword"}));
 /*************************************************/
 
 //Set del server per reindirizzare le richieste fatte alla root
@@ -33,9 +32,13 @@ app.get("/",function(request,response){
 
 //Bind per recuperare index.html
 app.get("/files/index.html",function(request,response){
-	var user={nome:"Asd",cognome:"qwery"};
+	var user={nome:"Nome",cognome:"Cognome"};
+	var dati=['asd','asd','asd'];
 	bind.toFile("tpl/index.tpl",
-		{user: user.nome},
+		{
+		user: user,
+		piatti:dati
+		},
 		function(data){
 			response.writeHead(200,{"Content-Type":"text/html"});
 			response.end(data);

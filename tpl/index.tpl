@@ -14,7 +14,7 @@
 			<div class="jumbotron">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h1 class="centra">Benvenuto (:user ~ Utente:)</h1>
+						<h1 class="centra">Benvenuto (:user~[:nome ~ Utente:]:)</h1>
 					</div>
 				</div>
 				<hr>
