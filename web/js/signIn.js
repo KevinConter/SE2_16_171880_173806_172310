@@ -3,46 +3,26 @@ SCRIPT PER IL SIGNIN
 **************************************************************************************/
 
 /**
- * Aggiunge all'id passato le rispettive classi di successo
- * @param {string} id indica l'id al quale vanno aggiunte le classi per il successo
+ * Resetta le classi dei campi di input (toglie il successo o insuccesso)
  */
-function aggiungiSuccesso(id){
-    id = id.substring(1);
-    document.getElementById("c"+id).className ="form-group has-feedback has-success";
+function resetta(){
+	document.getElementById("cNome").className="form-group";
+	document.getElementById("cCognome").className="form-group";
+	document.getElementById("cIndirizzo").className="form-group";
+	document.getElementById("cData").className="form-group";
+	document.getElementById("cNumero").className="form-group";
+	document.getElementById("cMail").className="form-group";
+	document.getElementById("cPassword").className="form-group";
 }
-
-function aggiungiInsuccesso(id){
-    id = id.substring(1);
-    document.getElementById("c"+id).className="form-group has-feedback has-error";
-}
-
 
 /**
 * Controlla se fare il submit del form oppure da un messaggio di errore
 */
 function controlloInvia(){
 
-	var ok = controlloValidita("iNome") && controlloValidita("iCognome") && controlloValidita("iIndirizzo") && controlloValidita("iData") && controlloValidita("iNumero") && controlloValidita("iMail") && controlloValidita("iPassword") && document.getElementById("iPassword").lenht>8;
+	var ok = controlloValidita("iNome") && controlloValidita("iCognome") && controlloValidita("iIndirizzo") && controlloValidita("iData") && controlloValidita("iNumero") && controlloValidita("iMail") && controlloPassword("iPassword");
 	if(ok)
-		document.getElementById("btnRegistra").submit();
+		document.getElementById("modulo").submit();
 	else
 		alert("Form incompleto");	
-}
-
-/**
-* Controlla se il campo di input è valido
-* @param {String} id che indica il rispettivo campo di input
-* @return true se è valido
-* @return false se non è valido
-*/
-function controlloValidita(id){
-	oggetto=document.getElementById(id);
-	if(oggetto.value!=""){
-		aggiungiSuccesso(id);
-		return true;
-		}
-	else{
-		aggiungiInsuccesso(id);
-		return false;			
-	}
 }

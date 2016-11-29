@@ -1,29 +1,23 @@
 /**************************************************************************************
-SCRIPT PER IL SIGNIN
+SCRIPT PER IL LOGIN
 **************************************************************************************/
+
+/**
+ * Resetta le classi dei campi di input (toglie il successo o insuccesso)
+ */
+function resetta(){
+	document.getElementById("cMail").className="form-group";
+	document.getElementById("cPassword").className="form-group";
+}
 
 /**
 * Controlla se fare il submit del form oppure da un messaggio di errore
 */
 function controlloInvia(){
 
-	var ok = controlloValidita("iNome") && controlloValidita("iCognome") && controlloValidita("iIndirizzo") && controlloValidita("iData") && controlloValidita("iNumero");
+	var ok = controlloValidita("iMail") && controlloPassword("iPassword");
 	if(ok)
-		document.getElementById("btnRegistra").submit();
+		document.getElementById("modulo").submit();
 	else
 		alert("Form incompleto");	
-}
-
-/**
-* Controlla se il campo di input è valido
-* @param {String} id che indica il rispettivo campo di input
-* @return true se è valido
-* @return false se non è valido
-*/
-function controlloValidita(id){
-	oggetto=document.getElementById(id);
-	if(oggetto.value!="")
-		return true;
-	else
-		return false;			
 }
