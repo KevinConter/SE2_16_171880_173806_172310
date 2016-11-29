@@ -10,7 +10,9 @@ var bind = require('bind');
 var app = express();
 
 app.set('port',( process.env.PORT || 8848));
+app.use('/files',express.static(__dirname+'/web'));
 
 
-app.listen('8848','127.0.0.1');
-console.log('Server running at http://127.0.0.1:8848');
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
