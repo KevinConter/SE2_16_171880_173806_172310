@@ -32,7 +32,23 @@ app.get("/",function(request,response){
 	}else{	//Se non esiste
 		response.redirect("/files/logIn.html");
 	}
-	
+});
+
+//per il login dell'utente
+app.post("/LogIn",function(request,response){
+	var mail = undefined;
+	var pwd = undefined;
+	if(request.body.iMail){
+		mail = request.body.iMail;
+	}
+	if(request.body.iPassword){
+		pwd = request.body.iPassword;
+	}
+	if(mail != undefined && pwd != undefined){
+		var user = db.cercaUtenteMailPassword(mail,pwd);
+		session.user = user;
+	}
+	response.redirect("/");
 });
 
 //Bind per recuperare index.html
@@ -50,9 +66,6 @@ app.get("/files/index.html",function(request,response){
 		}
 	);
 });
-
-
-
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
