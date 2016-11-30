@@ -1,7 +1,6 @@
 var users = [];
 var piatti = [];
 
-
 /**************************
  * Gestione degli utenti  *
  **************************/
@@ -15,9 +14,9 @@ var piatti = [];
   * @param {String} password la password di log-in dell'utente
   * @param {String} via l'indirizzo della persona
   * @param {String|Array[String]} recapito un recapito oppure una lista di recapiti
-  * @param {optional Array[String]} allergeni una lista di allergeni. Può essere omessa
+  * @param {Array[String]} allergeni una lista di allergeni. Può essere omessa
 */
-function User(nome,cognome,data,mail,password,via,recapito,allergeni = []){
+var User = function(nome,cognome,data,mail,password,via,recapito,allergeni){
 	if(typeof nome != 'string' || 
 		typeof cognome != 'string' || 
 		! (data instanceof Date) || 
@@ -45,26 +44,28 @@ function User(nome,cognome,data,mail,password,via,recapito,allergeni = []){
 			'recapito: '+ this.recapito+'\n'+
 			'allergeni: '+ this.allergeni;
 	};
-}
+};
+exports.User = User
 
 /**
   * Comparatore tra utenti
   * @param {User} u1
   * @param {User} u2
 */
-function UserComparator(u1,u2){
+var UserComparator = function(u1,u2){
 	if(u1 instanceof User && u2 instanceof User){
 		return u1.id - u2.id;
 	}
 	return -1;
 };
+exports.UserComparator = UserComparator;
 
 /**
   * Funzione che cerca un utente dato l'id
   * @param {Number} id l'id da ricercare
   * @return {User} ritorna l'utente con l'id passato come parametro, oppure null se non c'è
 */
-function cercaUtente(id){
+var cercaUtenteId = function(id){
 	for (var i in users){
 		if(users[i] != undefined && i == id){
 			return users[i];
@@ -72,6 +73,7 @@ function cercaUtente(id){
 	}
 	return null;
 }
+exports.cercaUtenteId = cercaUtenteId;
 
 /**
   * Funzione che cerca un utente data la sua E-mail e la password
@@ -80,7 +82,7 @@ function cercaUtente(id){
   * @param {String} password la password dell'utente per verificare l'accesso
   * @return {User} ritorna l'utente con quella mail e password, null se non c'è oppure la mail o password sono sbagliate
 */
-function cercaUtente(mail,password){
+var  cercaUtenteMailPassword = function(mail,password){
 	for(var i in users){
 		var u = users[i]
 		if(u != undefined){
@@ -91,13 +93,14 @@ function cercaUtente(mail,password){
 	}
 	return null;
 }
+exports.cercaUtenteMailPassword = cercaUtenteMailPassword;
 
 /**
   * Funzione che controlla se esiste già la mail
   * @param {String} mail la E-mail da controllare
   * @return {Boolean} false se la mail è già presente, false altrimenti
 */
-function chechMail(mail){
+var checkMail = function(mail){
 	for (var i in users){
 		if(users[i].mail.localeCompare(mail) == 0){
 			return false;
@@ -105,13 +108,14 @@ function chechMail(mail){
 	}
 	return true;
 }
+exports.checkMail = checkMail;
 
 /**
   * Funzione che aggiunge al vettore l'utente passato come parametro
   * @param {User} u l'utente da aggiungere
   * @return {Number} l'id associato all'utente aggiunto | undefined se l'inserimento non è andato a buon fine
 */
-function addUser(u){
+var addUser = function(u){
 	if(u instanceof User){
 		if(checkMail(u.mail)){
 			var id = users.push(u) -1;
@@ -120,21 +124,23 @@ function addUser(u){
 		}
 	}
 }
+exports.addUser = addUser;
 
 /**
   * Funzione che rimuove un utente dall'array dato l'id
   * @param {Number} id l'id dell'utente da eliminare
 */
-function deleteUser(id){
+var deleteUser = function(id){
 	delete users[i];
 }
+exports.deleteUser = deleteUser;
 
 /**
   * Funzine che permette di aggiungere le allergie ad un utente dato l'id
   * @param {Number} id l'id dell'utente a cui aggiungere le allergie
   * @param {String|Array[String}} allergie le allegie da aggiungere all'utente
 */
-function aggiungiAllergie(id,allergie){
+var aggiungiAllergie = function(id,allergie){
 	var u = cercaUtente(id);
 	if(u != null){
 		if(allergie instanceof String || typeof allergie == 'string'){
@@ -145,6 +151,7 @@ function aggiungiAllergie(id,allergie){
 		}
 	}
 }
+exports.aggiungiAllergie = aggiungiAllergie;
 
 /********************
  * Gestione piatti  *
@@ -158,7 +165,7 @@ function aggiungiAllergie(id,allergie){
   * @param {String} foto il percorso della foto del piatto
   * @param {Array[String]} allergeni gli allergeni contenuti nel piatto
 */
-function Piatto(nome,ingredienti,curiosita,foto,allergeni){
+var  Piatto = function(nome,ingredienti,curiosita,foto,allergeni){
 	if(typeof nome != 'string' || 
 		typeof ingredienti != 'string' || 
 		typeof curiosita != 'string' || 
@@ -180,13 +187,14 @@ function Piatto(nome,ingredienti,curiosita,foto,allergeni){
 			'allergeni contenuti: '+this.allergeni;
 	}
 }
+exports.Piatto = Piatto;
 
 /**
   * Comparatore tra piatti
   * @param {Piatto} p1
   * @param {Piatto} p2
 */
-function PiattoComparator(p1,p2){
+var PiattoComparator = function(p1,p2){
 	if(p1 instanceof Piatto && 
 		p2 instanceof Piatto){
 		
@@ -194,13 +202,14 @@ function PiattoComparator(p1,p2){
 	}
 	return -1;
 }
+exports.PiattoComparator = PiattoComparator;
 
 /**
   * Funzione che controlla se il nome del piatto è già stato inserito
   * @param {String} nome il nome da cercare
   * @return {Boolean} true se il nome non è stato già inserito, false altrimenti
 */
-function checkNomePiatto(nome){
+var checkNomePiatto = function(nome){
 	for(var i in piatti){
 		var p = piatti[i];
 		if(p != undefined && p.nome.localeCompare(nome)==0){
@@ -209,13 +218,14 @@ function checkNomePiatto(nome){
 	}
 	return true;
 }
+exports.checkNomePiatto = checkNomePiatto;
 
 /**
   * Funzione che aggiunge un piatto alla lista
   * @param {Piatto} p piatto da aggiungere
   * @return {Boolean} true se il piatto è stato inserito correttamente, false altrimenti
 */
-function addPiatto(p){
+var addPiatto = function(p){
 	if(p instanceof Piatto){
 		if(checkNomePiatto(p.nome)){
 			piatti.push(p);
@@ -224,13 +234,14 @@ function addPiatto(p){
 	}
 	return false;
 }
+exports.addPiatto = addPiatto;
 
 /**
   * Funzione che elimina un piatto
   * @param {String} nome nome del piatto da eliminare
   * @return {Boolean} true se l'eliminazione è andata a buon fine, false altrimenti
 */
-function deletePiatto(nome){
+var deletePiatto = function(nome){
 	for(var i in piatti){
 		if(piatti[i].nome.localeCompare(nome)==0){
 			delete piatti[i];
@@ -239,16 +250,24 @@ function deletePiatto(nome){
 	}
 	return false;
 }
+exports.deletePiatto = deletePiatto;
 
 /**
   * Funzione che restituisce un piatto dato il nome
   * @param {String} nome il nome del piatto da cercare
   * @return {Piatto} il piatto con il nome dato, undefined se non è presente
 */
-function getPiatto(nome){
+var getPiatto = function(nome){
 	for (var i in piatti){
 		if(piatti[i].nome.localeCompare(nome) == 0){
 			return piatti[i];
 		}
 	}
 }
+exports.getPiatto = getPiatto;
+
+
+/*****
+  Init
+******/
+addUser(new User('nome','cognome',new Date('1995-12.29'),'nome@gmail.com','password','via da qui','0123456789',[]));
