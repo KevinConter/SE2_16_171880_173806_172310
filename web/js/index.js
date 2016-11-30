@@ -12,7 +12,7 @@ function checkButton(str){
 *	Invia il comando di conferma al server.
 */
 function conferma(){
-	document.getElementById("formConferma").action="getResoconto";
+	document.getElementById("formConferma").action="/getResoconto";
 	document.getElementById("formConferma").submit();
 }
 
@@ -22,7 +22,7 @@ function conferma(){
 */
 function salta(){
 	if(confirm("Sei sicuro di voler saltare l'ordine per la data selezionata?")){
-		document.getElementById("formConferma").action="saltaOrdine";
+		document.getElementById("formConferma").action="/saltaOrdine";
 		document.getElementById("formConferma").submit();
 	}
 }
