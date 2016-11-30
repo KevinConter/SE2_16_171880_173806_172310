@@ -26,8 +26,29 @@ app.use(session({secret: "MySecretPassword"}));
 //Set del server per reindirizzare le richieste fatte alla root
 app.get("/",function(request,response){
 	//Controlli per verificare se esiste la sessione
+	var r = "/files/logIn.html";
+	if(session.user){
+		r = "/files/index.html";
+	}
 	//Se non esiste
-	response.redirect("/files/index.html");
+	response.redirect(r);
+});
+
+//per il login dell'utente
+app.post("/LogIn",function(request,response){
+	var mail = undefined;
+	var pwd = undefined;
+	if(request.body.iMail){
+		mail = request.body.iMail;
+	}
+	if(request.body.iPassword){
+		pwd = request.body.iPassword;
+	}
+	if(mail != undefined && pwd != undefined){
+		var user = db.cercaUtenteMailPassword(mail,pwd);
+		session.user = user;
+	}
+	response.redirect("/");
 });
 
 //Bind per recuperare index.html
