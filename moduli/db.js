@@ -230,7 +230,7 @@ function addPiatto(p){
   * @param {String} nome nome del piatto da eliminare
   * @return {Boolean} true se l'eliminazione è andata a buon fine, false altrimenti
 */
-function deletePiatto(nome
+function deletePiatto(nome){
 	for(var i in piatti){
 		if(piatti[i].nome.localeCompare(nome)==0){
 			delete piatti[i];
