@@ -34,6 +34,15 @@ app.get("/",function(request,response){
 	}
 });
 
+app.get("/files/elenco.html",function(request,response){
+	bind.toFile("tpl/elenco.tpl",
+		{},
+		function(data){
+			response.writeHead(200,{"Content-Type":"text/html"});
+			response.end(data)
+		});
+});
+
 //per il login dell'utente
 app.post("/LogIn",function(request,response){
 	var mail = undefined;

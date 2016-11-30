@@ -19,7 +19,7 @@
 					</div>
 				</div>
 				<hr>
-				<form id="form" action="/getPiatto" method="POST">
+				<form id="form" action="/getPiatti" method="POST">
 					<input class="form-control" type="hidden" id="iHidden" name="iTipo">
 					<div class="margin-top-100">
 						<div class="row">
