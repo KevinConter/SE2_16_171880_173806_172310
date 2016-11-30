@@ -3,6 +3,7 @@
 	<head>
 		<title>Home</title>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<link rel="stylesheet" href="bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 		<script type="text/javascript" src="bootstrap/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -18,7 +19,7 @@
 					</div>
 				</div>
 				<hr>
-				<form id="form" action="getPiatto" method="POST">
+				<form id="form" action="/getPiatto" method="POST">
 					<input class="form-control" type="hidden" id="iHidden" name="iTipo">
 					<div class="margin-top-100">
 						<div class="row">

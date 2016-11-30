@@ -7,7 +7,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bind = require('bind');
 var session = require('express-session');
-var db = require('./moduli/db.js');
+//var db = require('./moduli/db.js');
 /************************************************/
 
 /************** INIZIALIZZAZIONE ******************/
@@ -26,8 +26,13 @@ app.use(session({secret: "MySecretPassword"}));
 //Set del server per reindirizzare le richieste fatte alla root
 app.get("/",function(request,response){
 	//Controlli per verificare se esiste la sessione
-	//Se non esiste
-	response.redirect("/files/index.html");
+	var sess = request.session;
+	if(sess.user){
+		response.redirect("/files/index.html");
+	}else{	//Se non esiste
+		response.redirect("/files/logIn.html");
+	}
+	
 });
 
 //Bind per recuperare index.html
