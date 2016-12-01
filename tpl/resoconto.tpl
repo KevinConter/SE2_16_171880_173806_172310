@@ -19,7 +19,7 @@
 				</div>
 				<hr>
 				<div clas="row">
-					<form action="#" method="POST">
+					<form action="/conferma" method="POST">
 						<div class="list-group">
 							<div class="list-group-item panel panel-primary">
 								<div class="panel-heading">
@@ -28,7 +28,7 @@
 								<div class="panel-body">
 									<div class="col-xs-5">
 										<a href="#dettagliPiatto?id=1">
-											<img class="img-responsive center-block" src="#">
+											<img class="img-max-height-150 img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -47,7 +47,7 @@
 								<div class="panel-body">
 									<div class="col-xs-5">
 										<a href="#dettagliPiatto?id=1">
-											<img class="img-responsive center-block" src="#">
+											<img class="img-max-height-150 img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -66,7 +66,7 @@
 								<div class="panel-body">
 									<div class="col-xs-5">
 										<a href="#dettagliPiatto?id=1">
-											<img class="img-responsive center-block" src="#">
+											<img class="img-max-height-150 img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -85,7 +85,7 @@
 								<div class="panel-body">
 									<div class="col-xs-5">
 										<a href="#dettagliPiatto?id=1">
-											<img class="img-responsive center-block" src="#">
+											<img class="img-max-height-150 img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -101,7 +101,7 @@
 						<hr>
 						<div class="row">
 							<div class="col-xs-4 col-xs-offset-4">
-								<input type="button" class="btn btn-lg btn-block btn-success" value="Conferma">
+								<input type="submit" class="btn btn-lg btn-block btn-success" value="Conferma">
 							</div>
 						</dv>
 					</div>

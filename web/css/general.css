@@ -26,3 +26,7 @@ hr{
 	width:30px;
 	height:30px;
 }
+
+.img-max-height-150{
+	max-height:150px;
+}

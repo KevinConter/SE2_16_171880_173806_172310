@@ -25,7 +25,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="#dettagliPiatto?id=1">
-											<img class="img-responsive center-block" src="#">
+											<img class="img-max-height-150 img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -46,7 +46,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="#dettagliPiatto?id=2">
-											<img class="img-responsive center-block" src="#">
+											<img class="img-max-height-150 img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -67,7 +67,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="#dettagliPiatto?id=3">
-											<img class="img-responsive center-block" src="#">
+											<img class="img-max-height-150 img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -88,7 +88,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="#dettagliPiatto?id=4">
-											<img class="img-responsive center-block" src="#">
+											<img class="img-max-height-150 img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
