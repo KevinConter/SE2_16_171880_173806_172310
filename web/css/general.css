@@ -21,3 +21,12 @@ hr{
 .margin-top-100{
 	margin-top: 100px;
 }
+
+.radio{
+	width:30px;
+	height:30px;
+}
+
+.img-max-height-150{
+	max-height:150px;
+}

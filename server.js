@@ -43,6 +43,15 @@ app.get("/files/elenco.html",function(request,response){
 		});
 });
 
+app.get("/files/resoconto.html",function(request,response){
+	bind.toFile("tpl/resoconto.tpl",
+		{},
+		function(data){
+			response.writeHead(200,{"Content-Type":"text/html"});
+			response.end(data)
+		});
+});
+
 //per il signin dell'utente
 app.post("/SignIn",function(request,response){
 	var errore=false;
