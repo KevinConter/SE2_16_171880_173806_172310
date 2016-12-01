@@ -155,7 +155,8 @@ app.get("/files/index.html",function(request,response){
 
 //per il logout dell'utente
 app.get('/LogOut',function(request,response){
-	request.session.destroy(function(response) {
+	request.session.cookie.maxAge = -1;
+	request.session.destroy(function(err) {
 		if(err) {
 			console.log(err);
 		} else {
