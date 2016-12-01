@@ -20,7 +20,10 @@ app.use('/files',express.static(__dirname+'/web'));
 //applica body-parser alle richieste
 app.use(bodyParser.urlencoded({ extended: false }));
 //inizializzazione delle sessioni
-app.use(session({secret: "MySecretPassword"}));
+var date = new Date();
+var midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
+var delta = midnight - Date.now();
+app.use(session({ secret: 'MySecretPassword',  cookie: {maxAge: delta}}));
 /*************************************************/
 
 //Set del server per reindirizzare le richieste fatte alla root
@@ -28,6 +31,7 @@ app.get("/",function(request,response){
 	//Controlli per verificare se esiste la sessione
 	var sess = request.session;
 	if(sess.user){
+		
 		response.redirect("/files/index.html");
 	}else{	//Se non esiste
 		response.redirect("/files/logIn.html");
@@ -146,6 +150,18 @@ app.get("/files/index.html",function(request,response){
 			response.end(data);
 		}
 	);
+});
+
+
+//per il logout dell'utente
+app.get('/LogOut',function(request,response){
+	request.session.destroy(function(response) {
+		if(err) {
+			console.log(err);
+		} else {
+			response.redirect('/');
+		}
+	});
 });
 
 app.listen(app.get('port'), function() {
