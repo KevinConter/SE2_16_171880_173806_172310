@@ -39,6 +39,7 @@ var User = function(nome,cognome,via,data,recapito,mail,password,allergeni){
 	this.toString = function(){
 		return 'nome: '+this.nome+'\n' +
 			'cognome: '+this.cognome+'\n'+
+			'nato il: '+this.data+'\n'+
 			'E-mail: '+this.mail+'\n'+
 			'via: '+this.via+'\n'+
 			'recapito: '+ this.recapito+'\n'+
