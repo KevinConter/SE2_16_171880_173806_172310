@@ -316,4 +316,4 @@ exports.getPiattiTipo = getPiattiTipo;
 /*****
   Init
 ******/
-addUser(new User('nome','cognome',new Date('1995-12.29'),'nome@gmail.com','password','via da qui','0123456789',[]));
+addUser(new User('nome','cognome','via da qui',new Date('1995-12.29'),'0123456789','nome@gmail.com','password',[]));
