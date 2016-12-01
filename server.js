@@ -7,7 +7,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bind = require('bind');
 var session = require('express-session');
-//var db = require('./moduli/db.js');
+var db = require('./moduli/db.js');
 /************************************************/
 
 /************** INIZIALIZZAZIONE ******************/
@@ -43,6 +43,69 @@ app.get("/files/elenco.html",function(request,response){
 		});
 });
 
+//per il signin dell'utente
+app.post("/SignIn",function(request,response){
+	var errore=false;
+	var nome = undefined;
+	var cognome = undefined;
+	var indirizzo = undefined;
+	var data = undefined;
+	var numero = undefined;
+	var mail = undefined;
+	var pwd = undefined;
+	
+	if(request.body.iNome){
+		nome = request.body.iNome;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iCognome){
+		cognome = request.body.iCognome;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iIndirizzo){
+		indirizzo = request.body.iIndirizzo;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iData){
+		data = request.body.iData;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iNumero){
+		numero = request.body.iNumero;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iMail){
+		mail = request.body.iMail;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iPassword){
+		pwd = request.body.iPassword;
+	}else{
+		errore=true;
+	}
+	
+	if(errore){	
+		response.redirect("/");
+	}else{
+		//console.log("\nnome: "+nome+"\ncognome: "+cognome+"\nindirizzo: "+indirizzo+"\ndata: "+data+"\nnumero: "+numero+"\nmail: "+mail+"\npassword: "+pwd);
+		var user = new db.User(nome,cognome,indirizzo,new Date(data),numero,mail,pwd,[]);
+		var id = db.addUser(user);
+		response.redirect("/");
+	}
+});
+
 //per il login dell'utente
 app.post("/LogIn",function(request,response){
 	var mail = undefined;
@@ -55,7 +118,7 @@ app.post("/LogIn",function(request,response){
 	}
 	if(mail != undefined && pwd != undefined){
 		var user = db.cercaUtenteMailPassword(mail,pwd);
-		session.user = user;
+		request.session.user = user;
 	}
 	response.redirect("/");
 });
