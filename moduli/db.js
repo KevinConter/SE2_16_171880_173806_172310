@@ -9,21 +9,21 @@ var piatti = [];
   *	Costruttore di un utente
   * @param {String} nome il nome della persona
   * @param {String} cognome il comgnome della persona
+  * @param {String} via l'indirizzo della persona
   * @param {Date} data la data di nascita della persona
+  * @param {String|Array[String]} recapito un recapito oppure una lista di recapiti
   * @param {String} mail l'e-mail con cui si è registrata la persona
   * @param {String} password la password di log-in dell'utente
-  * @param {String} via l'indirizzo della persona
-  * @param {String|Array[String]} recapito un recapito oppure una lista di recapiti
   * @param {Array[String]} allergeni una lista di allergeni. Può essere omessa
 */
-var User = function(nome,cognome,data,mail,password,via,recapito,allergeni){
+var User = function(nome,cognome,via,data,recapito,mail,password,allergeni){
 	if(typeof nome != 'string' || 
 		typeof cognome != 'string' || 
+		typeof via != 'string' || 
 		! (data instanceof Date) || 
+		!(typeof recapito == 'string' || (recapito instanceof Array)) || 
 		typeof mail != 'string' || 
 		typeof password != 'string' || 
-		typeof via != 'string' || 
-		!(typeof recapito == 'string' || (recapito instanceof Array)) || 
 		!(allergeni instanceof Array)){
 			return null;
 	}
@@ -45,7 +45,6 @@ var User = function(nome,cognome,data,mail,password,via,recapito,allergeni){
 			'allergeni: '+ this.allergeni;
 	};
 };
-exports.User = User
 
 /**
   * Comparatore tra utenti
@@ -58,7 +57,6 @@ var UserComparator = function(u1,u2){
 	}
 	return -1;
 };
-exports.UserComparator = UserComparator;
 
 /**
   * Funzione che cerca un utente dato l'id
@@ -73,7 +71,6 @@ var cercaUtenteId = function(id){
 	}
 	return null;
 }
-exports.cercaUtenteId = cercaUtenteId;
 
 /**
   * Funzione che cerca un utente data la sua E-mail e la password
@@ -93,7 +90,6 @@ var  cercaUtenteMailPassword = function(mail,password){
 	}
 	return null;
 }
-exports.cercaUtenteMailPassword = cercaUtenteMailPassword;
 
 /**
   * Funzione che controlla se esiste già la mail
@@ -108,7 +104,6 @@ var checkMail = function(mail){
 	}
 	return true;
 }
-exports.checkMail = checkMail;
 
 /**
   * Funzione che aggiunge al vettore l'utente passato come parametro
@@ -124,7 +119,6 @@ var addUser = function(u){
 		}
 	}
 }
-exports.addUser = addUser;
 
 /**
   * Funzione che rimuove un utente dall'array dato l'id
@@ -133,7 +127,6 @@ exports.addUser = addUser;
 var deleteUser = function(id){
 	delete users[i];
 }
-exports.deleteUser = deleteUser;
 
 /**
   * Funzine che permette di aggiungere le allergie ad un utente dato l'id
@@ -151,11 +144,26 @@ var aggiungiAllergie = function(id,allergie){
 		}
 	}
 }
+
+
+
+exports.User = User;
+exports.UserComparator = UserComparator;
+exports.cercaUtenteId = cercaUtenteId;
+exports.cercaUtenteMailPassword = cercaUtenteMailPassword;
+exports.checkMail = checkMail;
+exports.addUser = addUser;
+exports.deleteUser = deleteUser;
 exports.aggiungiAllergie = aggiungiAllergie;
 
 /********************
  * Gestione piatti  *
  ********************/
+
+var PRIMO = 'primo';
+var SECONDO = 'secondo';
+var CONTORNO = 'contorno';
+var DESSERT = 'dessert';
 
 /**
   * Costruttore di un piatto
@@ -164,13 +172,20 @@ exports.aggiungiAllergie = aggiungiAllergie;
   * @param {String} curiosita le curiosità del piatto
   * @param {String} foto il percorso della foto del piatto
   * @param {Array[String]} allergeni gli allergeni contenuti nel piatto
+  * @param {String} tipo se è primo/secondo/contorno/dessert
 */
-var  Piatto = function(nome,ingredienti,curiosita,foto,allergeni){
+var  Piatto = function(nome,ingredienti,curiosita,foto,allergeni,tipo){
 	if(typeof nome != 'string' || 
 		typeof ingredienti != 'string' || 
 		typeof curiosita != 'string' || 
 		typeof foto != 'string' ||
-		!(allergeni instanceof Array)){
+		!(allergeni instanceof Array) ||
+		typeof tipo != 'string' ||
+		(tipo.localeCompare(PRIMO) != 0 &&
+		tipo.localeCompare(SECONDO) != 0 &&
+		tipo.localeCompare(CONTORNO) != 0 &&
+		tipo.localeCompare(DESSERT) != 0 )
+		){
 		return null;
 	}
 	this.nome = nome;
@@ -178,16 +193,17 @@ var  Piatto = function(nome,ingredienti,curiosita,foto,allergeni){
 	this.curiosita = curiosita;
 	this.foto = foto;
 	this.allergeni = allergeni;
+	this.tipo = tipo;
 	
 	this.toString = function(){
 		return 'nome: '+this.nome+'\n'+
+			'e\'un: '+ this.tipo+'\n'+
 			'ingredienti: '+this.ingredienti+'\n'+
 			'curiosita\': '+this.curiosita+'\n'+
 			'percorso foto: '+this.foto+'\n'+
 			'allergeni contenuti: '+this.allergeni;
 	}
 }
-exports.Piatto = Piatto;
 
 /**
   * Comparatore tra piatti
@@ -202,7 +218,6 @@ var PiattoComparator = function(p1,p2){
 	}
 	return -1;
 }
-exports.PiattoComparator = PiattoComparator;
 
 /**
   * Funzione che controlla se il nome del piatto è già stato inserito
@@ -218,7 +233,6 @@ var checkNomePiatto = function(nome){
 	}
 	return true;
 }
-exports.checkNomePiatto = checkNomePiatto;
 
 /**
   * Funzione che aggiunge un piatto alla lista
@@ -234,7 +248,6 @@ var addPiatto = function(p){
 	}
 	return false;
 }
-exports.addPiatto = addPiatto;
 
 /**
   * Funzione che elimina un piatto
@@ -250,7 +263,6 @@ var deletePiatto = function(nome){
 	}
 	return false;
 }
-exports.deletePiatto = deletePiatto;
 
 /**
   * Funzione che restituisce un piatto dato il nome
@@ -264,10 +276,44 @@ var getPiatto = function(nome){
 		}
 	}
 }
-exports.getPiatto = getPiatto;
 
+/**
+  * Funzione che permette di ottenere tutti i piatti di un certo tipo
+  * @param{String} tipo il tipo che si vuole ottenere
+  * @return {Piatti[]} un vettore di piatti di quel tipo
+*/
+var getPiattiTipo = function(tipo){
+	var ret = [];
+	if(tipo.localeCompare(PRIMO) == 0 ||
+		tipo.localeCompare(SECONDO) == 0 ||
+		tipo.localeCompare(CONTORNO) == 0 ||
+		tipo.localeCompare(DESSERT) == 0 ){
+	
+		for(var i in piatti){
+			if(piatti[i] != undefined && piatti[i].tipo == tipo){
+				ret.push(piatti[i]);
+			}
+		}
+	}
+	return ret;
+}
+
+
+
+exports.Tipo.PRIMO = PRIMO;
+exports.Tipo.SECONDO = SECONDO;
+exports.Tipo.CONTORNO = CONTORNO;
+exports.Tipo.DESSERT = DESSERT;
+
+exports.Piatto = Piatto;
+exports.PiattoComparator = PiattoComparator;
+exports.checkNomePiatto = checkNomePiatto;
+exports.addPiatto = addPiatto;
+exports.deletePiatto = deletePiatto;
+exports.getPiatto = getPiatto;
+exports.getPiattiTipo = getPiattiTipo;
 
 /*****
   Init
 ******/
-addUser(new User('nome','cognome',new Date('1995-12.29'),'nome@gmail.com','password','via da qui','0123456789',[]));
+addUser(new User('nome','cognome','via da qui',new Date('1995-12.29'),'0123456789','nome@gmail.com','password',[]));
