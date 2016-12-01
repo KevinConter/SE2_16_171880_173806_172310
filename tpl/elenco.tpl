@@ -18,9 +18,9 @@
 					</div>
 				</div>
 				<hr>
-				<form action="#" method="POST">
+				<form action="/scegliPrimo" method="POST">
 					<div class="list-group">
-						<div class="list-group-item panel">
+						<div class="list-group-item panel panel-primary">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-4">
@@ -36,12 +36,12 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" class="radio" name="iPrimo">
+										<input type="radio" class="radio" name="iPrimo" value="(:piatto.id ~ 1:)">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="list-group-item panel">
+						<div class="list-group-item panel panel-primary">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-4">
@@ -57,12 +57,12 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" class="radio" name="iPrimo">
+										<input type="radio" class="radio" name="iPrimo" value="(:piatto.id ~ 2:)">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="list-group-item panel">
+						<div class="list-group-item panel panel-primary">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-4">
@@ -78,12 +78,12 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" class="radio" name="iPrimo">
+										<input type="radio" class="radio" name="iPrimo" value="(:piatto.id ~ 3:)">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="list-group-item panel">
+						<div class="list-group-item panel panel-primary">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-4">
@@ -99,7 +99,7 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" class="radio" name="iPrimo">
+										<input type="radio" class="radio" name="iPrimo" value="(:piatto.id ~ 4:)">
 									</div>
 								</div>
 							</div>
