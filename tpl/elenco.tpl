@@ -25,7 +25,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="#dettagliPiatto?id=1">
-											<img class="center-block" width="100px" height="100px" src="#">
+											<img class="img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -36,7 +36,7 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" name="iPrimo">
+										<input type="radio" class="radio" name="iPrimo">
 									</div>
 								</div>
 							</div>
@@ -46,7 +46,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="#dettagliPiatto?id=2">
-											<img class="center-block" width="100px" height="100px" src="#">
+											<img class="img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -57,7 +57,7 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" name="iPrimo">
+										<input type="radio" class="radio" name="iPrimo">
 									</div>
 								</div>
 							</div>
@@ -67,7 +67,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="#dettagliPiatto?id=3">
-											<img class="center-block" width="100px" height="100px" src="#">
+											<img class="img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -78,7 +78,7 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" name="iPrimo">
+										<input type="radio" class="radio" name="iPrimo">
 									</div>
 								</div>
 							</div>
@@ -88,7 +88,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="#dettagliPiatto?id=4">
-											<img class="center-block" width="100px" height="100px" src="#">
+											<img class="img-responsive center-block" src="#">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -99,7 +99,7 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" name="iPrimo">
+										<input type="radio" class="radio" name="iPrimo">
 									</div>
 								</div>
 							</div>
