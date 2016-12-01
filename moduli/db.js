@@ -319,8 +319,8 @@ exports.getPiattiTipo = getPiattiTipo;
 ******/
 addUser(new User('nome','cognome','via da qui',new Date('1995-12.29'),'0123456789','nome@gmail.com','password',[]));
 
-addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\''),'Non ci sono curiosita\'','',[],PRIMO);
-addPiatto(new Piatto('Arrosto di Maiale','Arrosto gr. 100'),'Non ci sono curiosita\'','',[],SECONDO);
-addPiatto(new Piatto('Capuccio','Capuccio gr. 50\nSale, Olio, Aceto qb'),'Il capuccio e\' stato coltivato la prima volta da ...','',[],CONTORNO);
-addPiatto(new Piatto('Budino','[Ingredienti del budino]'),'Non ci sono curiosita\'','',[],DESSERT);
+addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'','',[],PRIMO));
+addPiatto(new Piatto('Arrosto di Maiale','Arrosto gr. 100','Non ci sono curiosita\'','',[],SECONDO));
+addPiatto(new Piatto('Capuccio','Capuccio gr. 50\nSale, Olio, Aceto qb','Il capuccio e\' stato coltivato la prima volta da ...','',[],CONTORNO));
+addPiatto(new Piatto('Budino','[Ingredienti del budino]','Non ci sono curiosita\'','',[],DESSERT));
 
