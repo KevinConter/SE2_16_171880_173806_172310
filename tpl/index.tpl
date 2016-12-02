@@ -18,6 +18,12 @@
 						<h1 class="centra">Benvenuto (:user~[:nome ~ Utente:]:)</h1>
 					</div>
 				</div>
+                
+                <a href="/files/editUser.html" role="button" class="btn btn-lg btn-block btn-primary">
+		        			<span class="glyphicon glyphicon-user"> </span>
+		        			Profilo
+		        		</a>
+                
 				<hr>
 				<form id="form" action="/getPiatti" method="POST">
 					<input class="form-control" type="hidden" id="iHidden" name="iTipo">

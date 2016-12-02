@@ -56,6 +56,7 @@ app.get("/files/resoconto.html",function(request,response){
 		});
 });
 
+
 //per il signin dell'utente
 app.post("/SignIn",function(request,response){
 	var errore=false;
@@ -164,6 +165,34 @@ app.get('/LogOut',function(request,response){
 		}
 	});
 });
+
+
+//Bind per recuperare editUser.html
+app.get("/files/editUser.html",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var user= db.cercaUtenteId(sess.user.id);
+		bind.toFile("tpl/editUser.tpl",
+		{
+			id: user.id,
+			nome: user.nome,
+			cognome: user.cognome,
+			indirizzo: user.via,
+			data: user.data_nascita,
+			recapito: user.recapito,
+			mail: user.mail,
+			password: user.password
+		},
+		function(data){
+			response.writeHead(200,{"Content-Type":"text/html"});
+			response.end(data)
+		});
+	}else{	//Se non esiste
+		response.redirect("/files/logIn.html");
+	}
+});
+
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
