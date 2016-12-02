@@ -31,21 +31,40 @@ app.get("/",function(request,response){
 	//Controlli per verificare se esiste la sessione
 	var sess = request.session;
 	if(sess.user){
-		
 		response.redirect("/files/index.html");
 	}else{	//Se non esiste
 		response.redirect("/files/logIn.html");
 	}
 });
 
-app.get("/files/elenco.html",function(request,response){
+//Bind per recuperare index.html
+app.get("/files/index.html",function(request,response){
+	/*var user={nome:"Nome",cognome:"Cognome"};
+	var dati=['asd','asd','asd'];*/
+	if(request.session.user){
+		var user = request.session.user;
+		bind.toFile("tpl/index.tpl",
+			{
+			user: user
+			},
+			function(data){
+				response.writeHead(200,{"Content-Type":"text/html"});
+				response.end(data);
+			}
+		);
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+});
+
+/*app.get("/files/elenco.html",function(request,response){
 	bind.toFile("tpl/elenco.tpl",
 		{},
 		function(data){
 			response.writeHead(200,{"Content-Type":"text/html"});
 			response.end(data)
 		});
-});
+});*/
 
 app.get("/files/resoconto.html",function(request,response){
 	bind.toFile("tpl/resoconto.tpl",
@@ -133,28 +152,11 @@ app.post("/LogIn",function(request,response){
 		var user = db.cercaUtenteMailPassword(mail,pwd);
 		request.session.user = user;
 	}
-	response.redirect("/");
+	response.redirect("/files/index.html");
 });
-
-//Bind per recuperare index.html
-app.get("/files/index.html",function(request,response){
-	var user={nome:"Nome",cognome:"Cognome"};
-	var dati=['asd','asd','asd'];
-	bind.toFile("tpl/index.tpl",
-		{
-		user: user,
-		piatti:dati
-		},
-		function(data){
-			response.writeHead(200,{"Content-Type":"text/html"});
-			response.end(data);
-		}
-	);
-});
-
 
 //per il logout dell'utente
-app.get('/LogOut',function(request,response){
+app.get("/LogOut",function(request,response){
 	request.session.cookie.maxAge = -1;
 	request.session.destroy(function(err) {
 		if(err) {
@@ -163,6 +165,35 @@ app.get('/LogOut',function(request,response){
 			response.redirect('/');
 		}
 	});
+});
+
+//Estrazione dell'elenco di piatti da mostrare
+//nella pagina apposita
+app.post("/GetPiatti",function(request,response){
+	if(request.session.user){	//Se l'utente è loggato
+		var tipo = undefined;
+		var piatti = [];
+		if(request.body.iTipo){
+			tipo = request.body.iTipo;
+			switch(tipo){	//Se è uno dei tipo predefiniti
+				case db.PRIMO: 
+				case db.SECONDO:
+				case db.CONTORNO:
+				case db.DESSERT: piatti = db.getPiattiTipo(tipo);
+							bind.toFile("tpl/elenco.tpl",
+								{piatti: piatti},
+								function(data){
+									response.writeHead(200,{"Content-Type":"text/html"});
+									response.end(data);
+								}
+							);
+							break;
+				default: response.redirect("/files/index.html");	//in qualsiasi altro caso
+			}
+		}
+	}else{ //se non è loggato
+		response.redirect("/files/logIn.html");
+	}
 });
 
 app.listen(app.get('port'), function() {
