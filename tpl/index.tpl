@@ -61,7 +61,7 @@
 				</div>
                 
 				<hr>
-				<form id="form" action="/getPiatti" method="POST">
+				<form id="form" action="/GetPiatti" method="POST">
 					<input class="form-control" type="hidden" id="iHidden" name="iTipo">
 					<div class="margin-top-100">
 						<div class="row">
@@ -77,19 +77,19 @@
 						<div class="row margin-top-bottom-20">
 							<div class="col-xs-4 col-xs-offset-1">
 								<div class="form-group">
-									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('primi')" value="Primi">
+									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('primo')" value="Primi">
 								</div>
 							</div>
 							<div class="col-xs-4 col-xs-offset-2">
 								<div class="form-group">
-									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('secondi')" value="Secondi">
+									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('secondo')" value="Secondi">
 								</div>
 							</div>
 						</div>
 						<div class="row margin-top-bottom-20">
 							<div class="col-xs-4 col-xs-offset-1">
 								<div class="form-group">
-									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('contorni')" value="Contorni">
+									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('contorno')" value="Contorni">
 								</div>
 							</div>
 							<div class="col-xs-4 col-xs-offset-2">
