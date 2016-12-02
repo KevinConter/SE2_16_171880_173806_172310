@@ -63,7 +63,7 @@ app.post("/SignIn",function(request,response){
 	var cognome = undefined;
 	var indirizzo = undefined;
 	var data = undefined;
-	var numero = undefined;
+	var recapito = undefined;
 	var mail = undefined;
 	var pwd = undefined;
 	
@@ -91,8 +91,8 @@ app.post("/SignIn",function(request,response){
 		errore=true;
 	}
 	
-	if(request.body.iNumero){
-		numero = request.body.iNumero;
+	if(request.body.iRecapito){
+		recapito = request.body.iRecapito;
 	}else{
 		errore=true;
 	}
@@ -112,8 +112,8 @@ app.post("/SignIn",function(request,response){
 	if(errore){	
 		response.redirect("/");
 	}else{
-		//console.log("\nnome: "+nome+"\ncognome: "+cognome+"\nindirizzo: "+indirizzo+"\ndata: "+data+"\nnumero: "+numero+"\nmail: "+mail+"\npassword: "+pwd);
-		var user = new db.User(nome,cognome,indirizzo,new Date(data),numero,mail,pwd,[]);
+		//console.log("\nnome: "+nome+"\ncognome: "+cognome+"\nindirizzo: "+indirizzo+"\ndata: "+data+"\nrecapito: "+recapito+"\nmail: "+mail+"\npassword: "+pwd);
+		var user = new db.User(nome,cognome,indirizzo,new Date(data),recapito,mail,pwd,[]);
 		var id = db.addUser(user);
 		response.redirect("/");
 	}

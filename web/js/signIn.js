@@ -10,7 +10,7 @@ function resetta(){
 	document.getElementById("cCognome").className="form-group";
 	document.getElementById("cIndirizzo").className="form-group";
 	document.getElementById("cData").className="form-group";
-	document.getElementById("cNumero").className="form-group";
+	document.getElementById("cRecapito").className="form-group";
 	document.getElementById("cMail").className="form-group";
 	document.getElementById("cPassword").className="form-group";
 }
@@ -20,7 +20,7 @@ function resetta(){
 */
 function controlloInvia(){
 
-	var ok = controlloValidita("iNome") && controlloValidita("iCognome") && controlloValidita("iIndirizzo") && controlloValidita("iData") && controlloValidita("iNumero") && controlloValidita("iMail") && controlloPassword("iPassword");
+	var ok = controlloValidita("iNome") && controlloValidita("iCognome") && controlloValidita("iIndirizzo") && controlloValidita("iData") && controlloValidita("iRecapito") && controlloValidita("iMail") && controlloPassword("iPassword");
 	if(ok)
 		document.getElementById("modulo").submit();
 	else
