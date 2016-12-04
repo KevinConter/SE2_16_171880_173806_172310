@@ -66,19 +66,19 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-4">
-										<a href="#dettagliPiatto?id=1">
-											<img class="img-max-height-150 img-responsive center-block" src="#">
+										<a href="#dettagliPiatto?id=[:id:]">
+											<img class="img-max-height-150 img-responsive center-block" src="[:foto ~ files/immagini/defaultPiatti.jpg:]">
 										</a>
 									</div>
 									<div class="col-xs-7">
 										<div class="row">
 											<div class="col-xs-12">
-												<h3>[:nome:]</h3>
+												<h3>[:nome ~ nome piatto:]</h3>
 											</div>
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" class="radio" name="iPrimo" value="(:piatto.id ~ 1:)">
+										<input type="radio" class="radio" name="iPrimo" value="[:id:]">
 									</div>
 								</div>
 							</div>
