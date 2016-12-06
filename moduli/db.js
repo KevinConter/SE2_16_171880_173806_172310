@@ -83,7 +83,7 @@ var cercaUtenteId = function(id){
 */
 var  cercaUtenteMailPassword = function(mail,password){
 	for(var i in users){
-		var u = users[i]
+		var u = users[i];
 		if(u != undefined){
 			if(u.mail.localeCompare(mail) == 0 && u.password.localeCompare(password) == 0){
 				return u;
@@ -134,7 +134,7 @@ var deleteUser = function(id){
   * Funzione che permette di aggiornare un utente
   * @param {User] u l'utente aggiornato
  */
-var updateUser(u){
+var updateUser = function(u){
 	if(u instanceof User){
 		user[u.id] = u;
 	}
@@ -166,6 +166,7 @@ exports.cercaUtenteMailPassword = cercaUtenteMailPassword;
 exports.checkMail = checkMail;
 exports.addUser = addUser;
 exports.deleteUser = deleteUser;
+exports.updateUser = updateUser;
 exports.aggiungiAllergie = aggiungiAllergie;
 
 /********************
@@ -380,10 +381,110 @@ var prenotazioneComparator = function(p1,p2){
 	return -1;
 }
 
+/**
+  * Funzione che controlla se l'utente ha già effettuato una prenotazione in quella data
+  * @param {User} u l'utente da controllare
+  * @param {Date} date la data da controllare
+  * @return {Boolean} true se l'utente ha già effettuato la prenotazione in quel giorno, false altrimenti
+ */
+var hasPrenotazione = function(u,date){
+	if(u instanceof User && date instanceof Date){
+		for(var i in prenotazioni){
+			if(userComparator(u,prenotazioni[i].user) == 0 && date.getTime() == prenotazioni[i].date.getTime()){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+/**
+  * Funzione che permette di aggiungere una prenotazione
+  * @param {Prenotazione} p la prenotazione da aggiungere
+ */
+var addPrenotazione = function(p){
+	if(p instanceof Prenotazione && !hasPrenotazione(p.user,p.date)){
+		prenotazioni.push(p);
+	}
+}
+
+/**
+  * Funzione che permette di cancellare la prenotazione passata come parametro
+  * @param{Prenotazione} p la prenptazione da cancellare
+ */
+var deletePrenotazione = function(p){
+	if(p instanceof Prenotazione){
+		for (var i in prenotazioni){
+			if(prenotazioneComparator(p,prenotazioni[i]) == 0){
+				delete prenotazioni[i];
+				return;
+			}
+		}
+	}
+}
+
+/**
+  * Funzione che permette di aggiornare una prenotazione
+  * @param{Prenotazione} p_old la prenotazione da sostituire
+  * @param{Prenotazione} p_new la nuova prenotazione
+ */
+var updatePrenotazione = function(p_old,p_new){
+	if(p_old instanceof Prenotazione && p_new instanceof Prenotazione){
+		for(var i in prenotazioni){
+			if(prenotazioneComparator(p_old,prenotazioni[i]) == 0){
+				prenotazioni[i] = p_new;
+			}
+		}
+	}
+}
+
+/**
+  * Funzione che restituisce tutte le ptenotazioni effetttuate da un utente
+  * @param{User} u l'utente di cui si vogniono conoscere le prenotazioni
+  * @return {Array} un Array di prenotazioni dell'utente
+ */
+var getPrenotazioniUser = function(u){
+	if(u instanceof User){
+		var ret = [];
+		for(var i in prenotazioni){
+			if(UserComparator(u,prenotazioni[i].user) == 0){
+				ret.push(prenotazioni[i]);
+			}
+		}
+		return ret;
+	}
+}
+
+/**
+  * Funzione che restituisce tutte le ptenotazioni effetttuate in un determinato giorno
+  * @param{Date} d la data di cui si vogniono conoscere le prenotazioni
+  * @return {Array} un Array di prenotazioni effettuate nella data specificata
+ */
+var getprenotazioniGiorno = function(d){
+	if(d instanceof Date){
+		var ret = [];
+		for(var i in prenotazioni){
+			if(d.getTime() == prenotazioni[i].getTime(){
+				ret.push(preotazioni[i]);
+			}
+		}
+		return ret;
+	}
+}
+
+exports.Prenotazione = Prenotazione;
+exprots.prenotazioneComparator = prenotazioneComparator;
+exports.hasPrenotazione = hasPrenotazione;
+exports.addPrenotazione = addPrenotazione;
+exports.deletePrenotazione = deletePrenotazione;
+exports.updatePrenotazione = updatePrenotazione;
+exports.getPrenotazioniUser = getPrenotazioniUser;
+exports.getprenotazioniGiorno = getprenotazioniGiorno;
+
 /*****
   Init
 ******/
-addUser(new User('nome','cognome','via da qui',new Date('1995-12.29'),'0123456789','nome@gmail.com','password',[]));
+addUser(new User('nome','cognome','via da qui',new Date('1995-12-29'),'0123456789','nome@gmail.com','password',[]));
 
 addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'','',['glutine'],PRIMO));
 addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto e\' uno dei vanti della citta\' di genova','',['glutine'],PRIMO));
@@ -391,7 +492,7 @@ addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto
 addPiatto(new Piatto('Arrosto di Maiale','Arrosto gr. 100','Non ci sono curiosita\'','',[],SECONDO));
 addPiatto(new Piatto('Cotoletta alla Milanese','Carne di maiale gr. 100\nuova\npane grattugiato','Non ci sono curiosita\'','',['uova'],SECONDO));
 
-addPiatto(new Piatto('Capuccio','Capuccio gr. 50\nSale, Olio, Aceto qb','Il capuccio e\' stato coltivato la prima volta da ...','',[],CONTORNO));
+addPiatto(new Piatto('Cavolo','Cavolo gr. 75\nSale, Olio, Aceto qb','Il cavolo e\' stato coltivato la prima volta da ...','',[],CONTORNO));
 addPiatto(new Piatto('Patatine fritte','Patate gr. 75\nSale\nketchup, Maionese o Senape a scelta','Non ci sono curiosita\'','',[],CONTORNO));
 
 addPiatto(new Piatto('Budino','[Ingredienti del budino]','Non ci sono curiosita\'','',[],DESSERT));
