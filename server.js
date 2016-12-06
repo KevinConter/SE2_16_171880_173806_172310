@@ -139,6 +139,97 @@ app.post("/SignIn",function(request,response){
 	}
 });
 
+
+//per la modifica dell'utente
+app.post("/EditUser",function(request,response){
+	var errore=false;
+	var nome = undefined;
+	var cognome = undefined;
+	var indirizzo = undefined;
+	var data = undefined;
+	var recapito = undefined;
+	var mail = undefined;
+	var pwd = undefined;
+	var user = request.session.user;
+	
+	if(request.body.iNome){
+		nome = request.body.iNome;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iCognome){
+		cognome = request.body.iCognome;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iIndirizzo){
+		indirizzo = request.body.iIndirizzo;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iData){
+		data = request.body.iData;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iRecapito){
+		recapito = request.body.iRecapito;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iMail){
+		mail = request.body.iMail;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iPassword){
+		pwd = request.body.iPassword;
+	}else{
+		errore=true;
+	}
+	
+	if(errore){	
+		response.redirect("/");
+	}else{
+		if(user.mail!=mail){
+			if(db.checkMail(mail)){
+				user.nome=nome;
+				user.cognome=cognome;
+				user.data_nascita=data;
+				user.mail=mail;
+				user.password=pwd;
+				user.via=indirizzo;
+				user.recapito=recapito;
+				
+				db.updateUser(user);
+				request.session.user=user;
+				response.redirect("/");
+			}else{
+				response.redirect("/files/error.html");
+			}
+		}else{
+			user.nome=nome;
+			user.cognome=cognome;
+			user.data_nascita=data;
+			user.mail=mail;
+			user.password=pwd;
+			user.via=indirizzo;
+			user.recapito=recapito;
+
+			db.updateUser(user);
+			request.session.user=user;
+			
+			response.redirect("/");
+		}
+	}
+});
+
 //per il login dell'utente
 app.post("/LogIn",function(request,response){
 	var mail = undefined;
@@ -168,7 +259,6 @@ app.get("/LogOut",function(request,response){
 	});
 });
 
-
 //Bind per recuperare editUser.html
 app.get("/files/editUser.html",function(request,response){
 	var sess = request.session;
@@ -193,6 +283,7 @@ app.get("/files/editUser.html",function(request,response){
 		response.redirect("/files/logIn.html");
 	}
 });
+
 //Estrazione dell'elenco di piatti da mostrare
 //nella pagina apposita
 app.post("/GetPiatti",function(request,response){
@@ -222,6 +313,23 @@ app.post("/GetPiatti",function(request,response){
 	}
 });
 
+//Bind per recuperare error.html
+app.get("/files/error.html",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var user= db.cercaUtenteId(sess.user.id);
+		bind.toFile("tpl/error.tpl",
+		{
+			messaggio: "L'operazione ha causato un errore, ritenti l'operazione tra qualche minuto. Nel caso che l'errore persista contattare il team"
+		},
+		function(data){
+			response.writeHead(200,{"Content-Type":"text/html"});
+			response.end(data)
+		});
+	}else{	//Se non esiste
+		response.redirect("/files/logIn.html");
+	}
+});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
