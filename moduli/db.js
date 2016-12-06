@@ -460,7 +460,7 @@ var getPrenotazioniUser = function(u){
   * @param{Date} d la data di cui si vogniono conoscere le prenotazioni
   * @return {Array} un Array di prenotazioni effettuate nella data specificata
  */
-var getprenotazioniGiorno = function(d){
+var getPrenotazioniGiorno = function(d){
 	if(d instanceof Date){
 		var ret = [];
 		for(var i in prenotazioni){
@@ -479,7 +479,7 @@ exports.addPrenotazione = addPrenotazione;
 exports.deletePrenotazione = deletePrenotazione;
 exports.updatePrenotazione = updatePrenotazione;
 exports.getPrenotazioniUser = getPrenotazioniUser;
-exports.getprenotazioniGiorno = getprenotazioniGiorno;
+exports.getPrenotazioniGiorno = getPrenotazioniGiorno;
 
 /*****
   Init
