@@ -342,33 +342,23 @@ exports.getPiattiTipo = getPiattiTipo;
   * Costruttore per associare una prenotazione di una determinata data ad un certo utente
   * @param String} data la data della prenotazione
   * @param {User} user l'utente che ha effettuato la prenotazione
-  * @param {Array[Piatto]} piatti i piatti prenotati dall'utente per quella data
 */
-var Prenotazione = function(data,user,piatti){
+var Prenotazione = function(data,user){
 	if( typeof data != 'string' ||
-		!(user instanceof User) ||
-		!(piatti instanceof Array) ||
-		piatti.length > 4){
+		!(user instanceof User){
 		
 		return null;
 	}
 	var c = [];
-	c[PRIMO] = false;
-	c[SECONDO] = false;
-	c[CONTORNO] = false;
-	c[DESSERT] = false;
-	for (var i in piatti){
-		var tmp = piatti[i].tipo;
-		if(!c[tmp]){
-			c[tmp] = true;
-		}else{
-			return null;
-		}
-	}
 	
 	this.date = data;
 	this.user = user;
-	this.piatti = piatti;
+	this.piatti = [];
+	this.add = function(p){
+		if (p instanceof Piatto){
+			piatti[p.tipo] = p;
+		}
+	}
 }
 
 /**
