@@ -57,14 +57,25 @@ app.get("/files/index.html",function(request,response){
 	}
 });
 
-/*app.get("/files/elenco.html",function(request,response){
-	bind.toFile("tpl/elenco.tpl",
-		{},
-		function(data){
-			response.writeHead(200,{"Content-Type":"text/html"});
-			response.end(data)
-		});
-});*/
+app.get("/GetDettagliPiatto",function(request,response){
+	if(request.session.user){
+		if(request.query.nome){
+			var piatto = db.getPiatto(request.query.nome);
+			bind.toFile("tpl/dettagliPiatto.tpl",
+				{piatto:piatto},
+				function(data){
+					response.writeHead(200,{"Content-Type":"text/html"});
+					response.end(data)
+				});
+		}else{
+			response.writeHead(404,{"Content-Type":"text/html"});
+			response.end("Il piatto richiesto non è stato trovato sul server.");
+		}
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+	//////////
+});
 
 app.get("/files/resoconto.html",function(request,response){
 	bind.toFile("tpl/resoconto.tpl",
