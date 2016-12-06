@@ -61,11 +61,11 @@
 		<div class="jumbotron">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h1 class="centra">ERRORE</h1>               
+                    <h1 class="centra" style="color:red;">ERRORE</h1>               
                 </div>
             </div>
             <hr>
-    		<p>
+    		<p class="centra">
     			(:messaggio:)
     		</p>
 
