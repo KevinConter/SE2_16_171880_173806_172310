@@ -139,6 +139,97 @@ app.post("/SignIn",function(request,response){
 	}
 });
 
+
+//per la modifica dell'utente
+app.post("/EditUser",function(request,response){
+	var errore=false;
+	var nome = undefined;
+	var cognome = undefined;
+	var indirizzo = undefined;
+	var data = undefined;
+	var recapito = undefined;
+	var mail = undefined;
+	var pwd = undefined;
+	var user = request.session.user;
+	
+	if(request.body.iNome){
+		nome = request.body.iNome;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iCognome){
+		cognome = request.body.iCognome;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iIndirizzo){
+		indirizzo = request.body.iIndirizzo;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iData){
+		data = request.body.iData;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iRecapito){
+		recapito = request.body.iRecapito;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iMail){
+		mail = request.body.iMail;
+	}else{
+		errore=true;
+	}
+	
+	if(request.body.iPassword){
+		pwd = request.body.iPassword;
+	}else{
+		errore=true;
+	}
+	
+	if(errore){	
+		response.redirect("/");
+	}else{
+		if(user.mail!=mail){
+			if(checkMail(mail)){
+				user.nome=nome;
+				user.cognome=cognome;
+				user.data_nascita=data;
+				user.mail=mail;
+				user.password=pwd;
+				user.via=indirizzo;
+				user.recapito=recapito;
+				
+				db.updateUser(user);
+				request.session.user=user;
+				response.redirect("/");
+			}else{
+				console.log("err");
+			}
+		}else{
+			user.nome=nome;
+			user.cognome=cognome;
+			user.data_nascita=data;
+			user.mail=mail;
+			user.password=pwd;
+			user.via=indirizzo;
+			user.recapito=recapito;
+
+			db.updateUser(user);
+			request.session.user=user;
+			
+			response.redirect("/");
+		}
+	}
+});
+
 //per il login dell'utente
 app.post("/LogIn",function(request,response){
 	var mail = undefined;
@@ -168,7 +259,6 @@ app.get("/LogOut",function(request,response){
 	});
 });
 
-
 //Bind per recuperare editUser.html
 app.get("/files/editUser.html",function(request,response){
 	var sess = request.session;
@@ -193,6 +283,7 @@ app.get("/files/editUser.html",function(request,response){
 		response.redirect("/files/logIn.html");
 	}
 });
+
 //Estrazione dell'elenco di piatti da mostrare
 //nella pagina apposita
 app.post("/GetPiatti",function(request,response){

@@ -134,7 +134,7 @@ var deleteUser = function(id){
   * Funzione che permette di aggiornare un utente
   * @param {User] u l'utente aggiornato
  */
-var updateUser(u){
+var updateUser = function(u){
 	if(u instanceof User){
 		user[u.id] = u;
 	}
@@ -166,6 +166,7 @@ exports.cercaUtenteMailPassword = cercaUtenteMailPassword;
 exports.checkMail = checkMail;
 exports.addUser = addUser;
 exports.deleteUser = deleteUser;
+exports.updateUser = updateUser;
 exports.aggiungiAllergie = aggiungiAllergie;
 
 /********************
@@ -383,7 +384,7 @@ var prenotazioneComparator = function(p1,p2){
 /*****
   Init
 ******/
-addUser(new User('nome','cognome','via da qui',new Date('1995-12.29'),'0123456789','nome@gmail.com','password',[]));
+addUser(new User('nome','cognome','via da qui',new Date('1995-12-29'),'0123456789','nome@gmail.com','password',[]));
 
 addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'','',['glutine'],PRIMO));
 addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto e\' uno dei vanti della citta\' di genova','',['glutine'],PRIMO));
