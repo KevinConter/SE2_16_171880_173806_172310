@@ -8,6 +8,8 @@
 		<script type="text/javascript" src="bootstrap/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="css/general.css">
+		<link rel="stylesheet" href="css/resoconto.css">
+		<script type="text/javascript" src="js/resoconto.js"></script>
 	</head>
 	<body>
     
@@ -61,82 +63,77 @@
 				<hr>
 				<div clas="row">
 					<div class="list-group">
-						<div class="list-group-item panel panel-primary">
-							<div class="panel-heading">
-								<h3 class="panel-title">Primo</h3>
-							</div>
-							<div class="panel-body">
-								<div class="col-xs-5">
-									<a href="/GetDettagliPiatto?nome=(:primo ~ [:nome:]:)">
-										<img class="img-max-height-150 img-responsive center-block" src="(:primo ~ [:foto:]:)">
-									</a>
+						<form id="form" action="/GetPiatti" method="POST">
+							<input type="hidden" class="form-control" name="iTipo" id="iHidden">
+							<div class="list-group-item panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title">Primo</h3>
 								</div>
-								<div class="col-xs-7">
-									<div class="row">
-										<div class="col-xs-12">
-											<h3>(:primo ~ [:nome:]:)</h3>
+								<div class="panel-body">
+									<div class="col-xs-5">
+											<img class="img-max-height-150 img-responsive center-block" src="(:primo ~ [:foto:]:)" onclick="getElenco('(:primo ~ [:tipo ~ primo:]:)')">
+									</div>
+									<div class="col-xs-7">
+										<div class="row">
+											<div class="col-xs-12">
+												<h3>(:primo ~ [:nome:]:)</h3>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="list-group-item panel panel-primary">
-							<div class="panel-heading">
-								<h3 class="panel-title">Secondo</h3>
-							</div>
-							<div class="panel-body">
-								<div class="col-xs-5">
-									<a href="/GetDettagliPiatto?nome=(:secondo ~ [:nome:]:)">
-										<img class="img-max-height-150 img-responsive center-block" src="(:secondo ~ [:foto:]:)">
-									</a>
+							<div class="list-group-item panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title">Secondo</h3>
 								</div>
-								<div class="col-xs-7">
-									<div class="row">
-										<div class="col-xs-12">
-											<h3>(:secondo ~ [:nome:]:)</h3>
+								<div class="panel-body">
+									<div class="col-xs-5">
+										<img class="img-max-height-150 img-responsive center-block" src="(:secondo ~ [:foto:]:)" onclick="getElenco('(:secondo ~ [:tipo:]:)')">
+									</div>
+									<div class="col-xs-7">
+										<div class="row">
+											<div class="col-xs-12">
+												<h3>(:secondo ~ [:nome:]:)</h3>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="list-group-item panel panel-primary">
-							<div class="panel-heading">
-								<h3 class="panel-title">Contorno</h3>
-							</div>
-							<div class="panel-body">
-								<div class="col-xs-5">
-									<a href="/GetDettagliPiatto?nome=(:contorno ~ [:nome:]:)">
-										<img class="img-max-height-150 img-responsive center-block" src="(:contorno ~ [:foto:]:)">
-									</a>
+							<div class="list-group-item panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title">Contorno</h3>
 								</div>
-								<div class="col-xs-7">
-									<div class="row">
-										<div class="col-xs-12">
-											<h3>(:contorno ~ [:nome:]:)</h3>
+								<div class="panel-body">
+									<div class="col-xs-5">
+										<img class="img-max-height-150 img-responsive center-block" src="(:contorno ~ [:foto:]:)" onclick="getElenco('(:contorno ~ [:tipo:]:)')">
+									</div>
+									<div class="col-xs-7">
+										<div class="row">
+											<div class="col-xs-12">
+												<h3>(:contorno ~ [:nome:]:)</h3>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="list-group-item panel panel-primary">
-							<div class="panel-heading">
-								<h3 class="panel-title">Dessert</h3>
-							</div>
-							<div class="panel-body">
-								<div class="col-xs-5">
-									<a href="/GetDettagliPiatto?nome=(:dessert ~ [:nome:]:)">
-										<img class="img-max-height-150 img-responsive center-block" src="(:dessert ~ [:foto:]:)">
-									</a>
+							<div class="list-group-item panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title">Dessert</h3>
 								</div>
-								<div class="col-xs-7">
-									<div class="row">
-										<div class="col-xs-12">
-											<h3>(:dessert ~ [:nome:]:)</h3>
+								<div class="panel-body">
+									<div class="col-xs-5">
+										<img class="img-max-height-150 img-responsive center-block" src="(:dessert ~ [:foto:]:)" onclick="getElenco('(:dessert ~ [:tipo:]:)')">
+									</div>
+									<div class="col-xs-7">
+										<div class="row">
+											<div class="col-xs-12">
+												<h3>(:dessert ~ [:nome:]:)</h3>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 					<hr>
 					<div class="row">
