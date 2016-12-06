@@ -464,7 +464,7 @@ var getPrenotazioniGiorno = function(d){
 	if(d instanceof Date){
 		var ret = [];
 		for(var i in prenotazioni){
-			if(d.getTime() == prenotazioni[i].getTime(){
+			if(d.getTime() == prenotazioni[i].getTime()){
 				ret.push(preotazioni[i]);
 			}
 		}
@@ -473,7 +473,7 @@ var getPrenotazioniGiorno = function(d){
 }
 
 exports.Prenotazione = Prenotazione;
-exprots.prenotazioneComparator = prenotazioneComparator;
+exports.prenotazioneComparator = prenotazioneComparator;
 exports.hasPrenotazione = hasPrenotazione;
 exports.addPrenotazione = addPrenotazione;
 exports.deletePrenotazione = deletePrenotazione;
