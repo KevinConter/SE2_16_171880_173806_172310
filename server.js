@@ -211,7 +211,7 @@ app.post("/EditUser",function(request,response){
 				request.session.user=user;
 				response.redirect("/");
 			}else{
-				console.log("err");
+				response.redirect("/files/error.html");
 			}
 		}else{
 			user.nome=nome;
@@ -313,6 +313,23 @@ app.post("/GetPiatti",function(request,response){
 	}
 });
 
+//Bind per recuperare error.html
+app.get("/files/error.html",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var user= db.cercaUtenteId(sess.user.id);
+		bind.toFile("tpl/error.tpl",
+		{
+			messaggio: "L'operazione ha causato un errore, ritenti l'operazione tra qualche minuto. Nel caso che l'errore persista contattare il team"
+		},
+		function(data){
+			response.writeHead(200,{"Content-Type":"text/html"});
+			response.end(data)
+		});
+	}else{	//Se non esiste
+		response.redirect("/files/logIn.html");
+	}
+});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
