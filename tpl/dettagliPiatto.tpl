@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Elenco (:tipo ~ piatti:)</title>
+		<title>Dettagli</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<link rel="stylesheet" href="files/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
@@ -10,8 +10,7 @@
 		<link rel="stylesheet" href="files/css/general.css">
 	</head>
 	<body>
-    
-    	<!-- navbar -->    
+		<!-- navbar -->    
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -51,52 +50,50 @@
         </nav>
         <!-- navbar -->
         
-		<div class="container">
-			<div class="jumbotron">
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h1 class="centra">Elenco piatti</h1>
-					</div>
-				</div>
-				<hr>
-				<form action="/scegliPrimo" method="POST">
-					<div class="list-group">
-						(:piatti~
-						<div class="list-group-item panel panel-primary">
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-xs-4">
-										<a href="/GetDettagliPiatto?nome=[:nome:]">
-											<img class="img-max-height-125 img-responsive center-block" src="[:fotoa ~ files/immagini/defaultPiatti.png:]">
-										</a>
-									</div>
-									<div class="col-xs-7">
-										<div class="row">
-											<div class="col-xs-12">
-												<h3>[:nome ~ nome piatto:]</h3>
-											</div>
-										</div>
-									</div>
-									<div class="col-xs-1">
-										<input type="radio" class="radio" name="iPrimo" value="[:id:]">
-									</div>
-								</div>
-							</div>
-						</div>
-						:)
-					<hr>
-					<div class="row">
-						<div class="col-xs-5 col-xs-offset-1">
-		    				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
-		    			</div>
-						<div class="col-xs-5">
-							<div class="form-group">
-								<input type="button" class="btn btn-lg btn-block btn-success" value="Conferma">
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
+        <div class="container">
+        	<div class="jumbotron">
+        		<div class="row">
+        			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        				<h1 class="centra">(:piatto ~ [:nome:]:)</h1>
+        			</div>
+        		</div>
+        		<hr>
+        		<div class="row">
+        			<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
+        				<img class="img-max-height-300 img-responsive center-block" src="(:piatto ~ [:foto:]:)">
+        			</div>
+        		</div>
+        		<div class="panel panel-primary">
+        			<div class="panel-heading">
+        				<h3 class="panel-title">Ingredienti:</h3>
+        			</div>
+        			<div class="panel-body">
+        				<div class="row">
+        					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        						<p>(:piatto ~ [:ingredienti:]:)</p>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        		<div class="panel panel-warnign">
+        			<div class="panel-heading">
+        				<h3 class="panel-title">Curiosità:</h3>
+        			</div>
+        			<div class="panel-body">
+        				<div class="row">
+        					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        						<p>(:piatto ~ [:curiosita:]:)</p>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        		<hr>
+        		<div class="row">
+        			<div class="col-xs-5 col-xs-offset-1">
+        				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
+        			</div>
+        		</div>
+        	</div>
+        </div>
 	</body>
 </html>
