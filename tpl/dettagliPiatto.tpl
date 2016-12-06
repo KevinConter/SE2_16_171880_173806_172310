@@ -92,6 +92,15 @@
         			<div class="col-xs-5 col-xs-offset-1">
         				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
         			</div>
+        			<form action="/ScegliPiatto" method="POST">
+        				<div class="col-xs-5">
+        					<div class="form-group">
+        						<input type="hidden" class="form-control" value="(:piatto ~ [:nome:]:)" name="iPiatto">
+        						<input type="hidden" class="form-control" value="(:piatto ~ [:tipo:]:)" name="iTipo">
+        						<input type="submit" class="btn btn-lg btn-block btn-success" value="Ordina">
+        					</div>
+        				</div>
+        			</form>
         		</div>
         	</div>
         </div>

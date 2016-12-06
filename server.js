@@ -39,13 +39,13 @@ app.get("/",function(request,response){
 
 //Bind per recuperare index.html
 app.get("/files/index.html",function(request,response){
-	/*var user={nome:"Nome",cognome:"Cognome"};
-	var dati=['asd','asd','asd'];*/
+	var tmp=date.toISOString().substring(0,10);
 	if(request.session.user){
 		var user = db.cercaUtenteId(request.session.user);
 		bind.toFile("tpl/index.tpl",
 			{
-			user: user
+			user: user,
+			data: tmp
 			},
 			function(data){
 				response.writeHead(200,{"Content-Type":"text/html"});
@@ -211,7 +211,7 @@ app.post("/EditUser",function(request,response){
 		}else{
 			var b = true;
 			if(user.mail!=mail){
-				b = !db.checkMail(mail);
+				b = db.checkMail(mail);
 			}
 			if(b){
 				user.nome=nome;
@@ -247,9 +247,15 @@ app.post("/LogIn",function(request,response){
 	}
 	if(mail != undefined && pwd != undefined){
 		var user = db.cercaUtenteMailPassword(mail,pwd);
-		request.session.user = user.id;
+		if(user!=null){
+			request.session.user = user.id;
+			response.redirect("/files/index.html");	
+		}else{
+			response.redirect("/files/logIn.html");
+		}
+	}else{
+		response.redirect("/files/logIn.html");
 	}
-	response.redirect("/files/index.html");
 });
 
 //per il logout dell'utente
@@ -303,7 +309,8 @@ app.post("/GetPiatti",function(request,response){
 				case db.CONTORNO:
 				case db.DESSERT: piatti = db.getPiattiTipo(tipo);
 							bind.toFile("tpl/elenco.tpl",
-								{piatti: piatti},
+								{piatti: piatti,
+								tipo: tipo},
 								function(data){
 									response.writeHead(200,{"Content-Type":"text/html"});
 									response.end(data);

@@ -68,7 +68,7 @@
 							<div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 								<div class="form-group">
 									<label class="control-label" for="iData">Scegli il giorno per cui vuoi prenotare</label>
-									<input type="date" class="form-control" id="iData" name="iData">
+									<input type="date" class="form-control" id="iData" name="iData" value="(:data:)">
 								</div>
 							</div>
 						</div>

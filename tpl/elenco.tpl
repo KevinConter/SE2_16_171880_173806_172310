@@ -59,9 +59,9 @@
 					</div>
 				</div>
 				<hr>
-				<form action="/scegliPrimo" method="POST">
+				<form action="/ScegliPiatto" method="POST">
 					<div class="list-group">
-						(:piatti~
+						(:piatti ~
 						<div class="list-group-item panel panel-primary">
 							<div class="panel-body">
 								<div class="row">
@@ -78,7 +78,7 @@
 										</div>
 									</div>
 									<div class="col-xs-1">
-										<input type="radio" class="radio" name="iPrimo" value="[:id:]">
+										<input type="radio" class="radio" name="iPiatto" value="[:nome:]">
 									</div>
 								</div>
 							</div>
@@ -91,7 +91,8 @@
 		    			</div>
 						<div class="col-xs-5">
 							<div class="form-group">
-								<input type="button" class="btn btn-lg btn-block btn-success" value="Conferma">
+								<input type="hidden" class="form-control" value="(:tipo:)" name="iTipo">
+								<input type="submit" class="btn btn-lg btn-block btn-success" value="Conferma">
 							</div>
 						</div>
 					</div>

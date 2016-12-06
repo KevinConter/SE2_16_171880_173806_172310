@@ -67,14 +67,14 @@
 							</div>
 							<div class="panel-body">
 								<div class="col-xs-5">
-									<a href="#dettagliPiatto?id=1">
-										<img class="img-max-height-150 img-responsive center-block" src="#">
+									<a href="/GetDettagliPiatto?nome=(:primo ~ [:nome:]:)">
+										<img class="img-max-height-150 img-responsive center-block" src="(:primo ~ [:foto:]:)">
 									</a>
 								</div>
 								<div class="col-xs-7">
 									<div class="row">
 										<div class="col-xs-12">
-											<h3>(:primo ~ Nome del primo:)</h3>
+											<h3>(:primo ~ [:nome:]:)</h3>
 										</div>
 									</div>
 								</div>
@@ -86,14 +86,14 @@
 							</div>
 							<div class="panel-body">
 								<div class="col-xs-5">
-									<a href="#dettagliPiatto?id=1">
-										<img class="img-max-height-150 img-responsive center-block" src="#">
+									<a href="/GetDettagliPiatto?nome=(:secondo ~ [:nome:]:)">
+										<img class="img-max-height-150 img-responsive center-block" src="(:secondo ~ [:foto:]:)">
 									</a>
 								</div>
 								<div class="col-xs-7">
 									<div class="row">
 										<div class="col-xs-12">
-											<h3>(:secondo ~ Nome del secondo:)</h3>
+											<h3>(:secondo ~ [:nome:]:)</h3>
 										</div>
 									</div>
 								</div>
@@ -105,14 +105,14 @@
 							</div>
 							<div class="panel-body">
 								<div class="col-xs-5">
-									<a href="#dettagliPiatto?id=1">
-										<img class="img-max-height-150 img-responsive center-block" src="#">
+									<a href="/GetDettagliPiatto?nome=(:contorno ~ [:nome:]:)">
+										<img class="img-max-height-150 img-responsive center-block" src="(:contorno ~ [:foto:]:)">
 									</a>
 								</div>
 								<div class="col-xs-7">
 									<div class="row">
 										<div class="col-xs-12">
-											<h3>(:contorno ~ Nome del contorno:)</h3>
+											<h3>(:contorno ~ [:nome:]:)</h3>
 										</div>
 									</div>
 								</div>
@@ -124,14 +124,14 @@
 							</div>
 							<div class="panel-body">
 								<div class="col-xs-5">
-									<a href="#dettagliPiatto?id=1">
-										<img class="img-max-height-150 img-responsive center-block" src="#">
+									<a href="/GetDettagliPiatto?nome=(:dessert ~ [:nome:]:)">
+										<img class="img-max-height-150 img-responsive center-block" src="(:dessert ~ [:foto:]:)">
 									</a>
 								</div>
 								<div class="col-xs-7">
 									<div class="row">
 										<div class="col-xs-12">
-											<h3>(:primo ~ Nome del dessert:)</h3>
+											<h3>(:dessert ~ [:nome:]:)</h3>
 										</div>
 									</div>
 								</div>
@@ -140,7 +140,10 @@
 					</div>
 					<hr>
 					<div class="row">
-						<div class="col-xs-4 col-xs-offset-4">
+						<div class="col-xs-5 col-xs-offset-1">
+		    				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
+		    			</div>
+						<div class="col-xs-5">
 							<a href="/Conferma" role="button" class="btn btn-lg btn-block btn-success">
 								Conferma
 							</a>
