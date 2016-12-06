@@ -55,7 +55,7 @@
 			<div class="jumbotron">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h1 class="centra">Elenco (:tipo ~ piatti:)</h1>
+						<h1 class="centra">Elenco piatti</h1>
 					</div>
 				</div>
 				<hr>
@@ -66,8 +66,8 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-4">
-										<a href="#dettagliPiatto?id=[:id:]">
-											<img class="img-max-height-150 img-responsive center-block" src="[:foto ~ files/immagini/defaultPiatti.jpg:]">
+										<a href="/GetDettagliPiatto?id=[:id:]">
+											<img class="img-max-height-125 img-responsive center-block" src="[:foto:]">
 										</a>
 									</div>
 									<div class="col-xs-7">
