@@ -144,7 +144,7 @@ app.post("/SignIn",function(request,response){
 	}
 	
 	if(!errore){	
-		var user = new db.User(nome,cognome,indirizzo,new Date(data),recapito,mail,pwd,[]);
+		var user = new db.User(nome,cognome,indirizzo,data,recapito,mail,pwd,[]);
 		var id = db.addUser(user);
 	}
 	response.redirect("/");
@@ -268,14 +268,14 @@ app.get("/LogOut",function(request,response){
 app.get("/files/editUser.html",function(request,response){
 	var sess = request.session;
 	if(sess.user){
-		var user= db.cercaUtenteId(sess.user.id);
+		var user= db.cercaUtenteId(sess.user);
 		bind.toFile("tpl/editUser.tpl",
 		{
 			id: user.id,
 			nome: user.nome,
 			cognome: user.cognome,
 			indirizzo: user.via,
-			data: user.data_nascita.toJSON.substring(0,10),
+			data: user.data_nascita,
 			recapito: user.recapito,
 			mail: user.mail,
 			password: user.password

@@ -11,7 +11,7 @@ var prenotazioni = [];
   * @param {String} nome il nome della persona
   * @param {String} cognome il comgnome della persona
   * @param {String} via l'indirizzo della persona
-  * @param {Date} data la data di nascita della persona
+  * @param {String} data la data di nascita della persona
   * @param {String|Array[String]} recapito un recapito oppure una lista di recapiti
   * @param {String} mail l'e-mail con cui si è registrata la persona
   * @param {String} password la password di log-in dell'utente
@@ -21,7 +21,7 @@ var User = function(nome,cognome,via,data,recapito,mail,password,allergeni){
 	if(typeof nome != 'string' || 
 		typeof cognome != 'string' || 
 		typeof via != 'string' || 
-		! (data instanceof Date) || 
+		typeof via != 'string' || 
 		!(typeof recapito == 'string' || (recapito instanceof Array)) || 
 		typeof mail != 'string' || 
 		typeof password != 'string' || 
@@ -116,6 +116,8 @@ var addUser = function(u){
 	if(u instanceof User){
 		if(checkMail(u.mail)){
 			var id = users.push(u) -1;
+			if(id==0)
+				id=1;
 			u.id = id;
 			return id;
 		}
@@ -338,12 +340,12 @@ exports.getPiattiTipo = getPiattiTipo;
 
 /**
   * Costruttore per associare una prenotazione di una determinata data ad un certo utente
-  * @param {Date} data la data della prenotazione
+  * @param String} data la data della prenotazione
   * @param {User} user l'utente che ha effettuato la prenotazione
   * @param {Array[Piatto]} piatti i piatti prenotati dall'utente per quella data
 */
 var Prenotazione = function(data,user,piatti){
-	if( !(data instanceof Date) ||
+	if( typeof data != 'string' ||
 		!(user instanceof User) ||
 		!(piatti instanceof Array) ||
 		piatti.length > 4){
@@ -376,7 +378,7 @@ var Prenotazione = function(data,user,piatti){
  */
 var prenotazioneComparator = function(p1,p2){
 	if(p1 instanceof Prenotazione && p2 instanceof Prenotazione){
-		var tmp = p1.date.getTime() - p2.date.getTime();
+		var tmp = p1.date.localeCompare(p2.date);
 		if(tmp == 0){
 			tmp = p1.user.id - p2.user.id;
 		}
@@ -388,13 +390,13 @@ var prenotazioneComparator = function(p1,p2){
 /**
   * Funzione che controlla se l'utente ha già effettuato una prenotazione in quella data
   * @param {User} u l'utente da controllare
-  * @param {Date} date la data da controllare
+  * @param {String} date la data da controllare
   * @return {Boolean} true se l'utente ha già effettuato la prenotazione in quel giorno, false altrimenti
  */
 var hasPrenotazione = function(u,date){
 	if(u instanceof User && date instanceof Date){
 		for(var i in prenotazioni){
-			if(userComparator(u,prenotazioni[i].user) == 0 && date.getTime() == prenotazioni[i].date.getTime()){
+			if(userComparator(u,prenotazioni[i].user) == 0 && date.localeCompare(prenotazioni[i].date)==0){
 				return true;
 			}
 		}
@@ -461,14 +463,14 @@ var getPrenotazioniUser = function(u){
 
 /**
   * Funzione che restituisce tutte le ptenotazioni effetttuate in un determinato giorno
-  * @param{Date} d la data di cui si vogniono conoscere le prenotazioni
+  * @param{String} d la data di cui si vogniono conoscere le prenotazioni
   * @return {Array} un Array di prenotazioni effettuate nella data specificata
  */
 var getPrenotazioniGiorno = function(d){
-	if(d instanceof Date){
+	if(typeof via == 'string'){
 		var ret = [];
 		for(var i in prenotazioni){
-			if(d.getTime() == prenotazioni[i].getTime()){
+			if(d.localeCompare(prenotazioni[i].date)==0){
 				ret.push(preotazioni[i]);
 			}
 		}
@@ -488,7 +490,7 @@ exports.getPrenotazioniGiorno = getPrenotazioniGiorno;
 /*****
   Init
 ******/
-addUser(new User('nome','cognome','via da qui',new Date('1995-12-29'),'0123456789','nome@gmail.com','password',[]));
+addUser(new User('nome','cognome','via da qui','1995-12-29','0123456789','nome@gmail.com','password',[]));
 
 addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'',null,['glutine'],PRIMO));
 addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto e\' uno dei vanti della citta\' di genova',null,['glutine'],PRIMO));
