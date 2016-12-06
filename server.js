@@ -65,7 +65,7 @@ app.get("/GetDettagliPiatto",function(request,response){
 				{piatto:piatto},
 				function(data){
 					response.writeHead(200,{"Content-Type":"text/html"});
-					response.end(data)
+					response.end(data);
 				});
 		}else{
 			response.writeHead(404,{"Content-Type":"text/html"});
@@ -82,7 +82,7 @@ app.get("/files/resoconto.html",function(request,response){
 			{},
 			function(data){
 				response.writeHead(200,{"Content-Type":"text/html"});
-				response.end(data)
+				response.end(data);
 			});
 	}else{
 		response.redirect("/");
@@ -275,14 +275,14 @@ app.get("/files/editUser.html",function(request,response){
 			nome: user.nome,
 			cognome: user.cognome,
 			indirizzo: user.via,
-			data: user.data_nascita..toJSON.substring(0,10),
+			data: user.data_nascita.toJSON.substring(0,10),
 			recapito: user.recapito,
 			mail: user.mail,
 			password: user.password
 		},
 		function(data){
 			response.writeHead(200,{"Content-Type":"text/html"});
-			response.end(data)
+			response.end(data);
 		});
 	}else{	//Se non esiste
 		response.redirect("/files/logIn.html");
@@ -328,7 +328,7 @@ app.get("/files/error.html",function(request,response){
 		},
 		function(data){
 			response.writeHead(200,{"Content-Type":"text/html"});
-			response.end(data)
+			response.end(data);
 		});
 	}else{	//Se non esiste
 		response.redirect("/files/logIn.html");
