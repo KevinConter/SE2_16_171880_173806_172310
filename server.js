@@ -198,7 +198,7 @@ app.post("/EditUser",function(request,response){
 		response.redirect("/");
 	}else{
 		if(user.mail!=mail){
-			if(checkMail(mail)){
+			if(db.checkMail(mail)){
 				user.nome=nome;
 				user.cognome=cognome;
 				user.data_nascita=data;
