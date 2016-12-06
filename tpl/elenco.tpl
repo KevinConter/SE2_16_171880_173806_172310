@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Elenco (:tipo ~ piatti:)</title>
+		<title>Elenco piatti</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<link rel="stylesheet" href="files/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
@@ -67,7 +67,7 @@
 								<div class="row">
 									<div class="col-xs-4">
 										<a href="/GetDettagliPiatto?nome=[:nome:]">
-											<img class="img-max-height-125 img-responsive center-block" src="[:fotoa ~ files/immagini/defaultPiatti.png:]">
+											<img class="img-max-height-125 img-responsive center-block" src="[:foto:]">
 										</a>
 									</div>
 									<div class="col-xs-7">
