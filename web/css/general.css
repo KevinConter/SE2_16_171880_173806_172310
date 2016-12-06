@@ -35,3 +35,13 @@ hr{
 .img-max-height-300{
 	max-height:300px;
 }
+
+.panel-warnign{
+	border-color:#ff6103;
+}
+
+.panel-warnign>.panel-heading{
+	color:#fff;
+	background-color: #ff6103;
+	border-color: #ff6103;
+}

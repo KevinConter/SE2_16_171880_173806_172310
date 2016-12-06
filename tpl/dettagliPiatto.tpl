@@ -75,7 +75,7 @@
         				</div>
         			</div>
         		</div>
-        		<div class="panel panel-success">
+        		<div class="panel panel-warnign">
         			<div class="panel-heading">
         				<h3 class="panel-title">Curiosità:</h3>
         			</div>
@@ -85,6 +85,12 @@
         						<p>(:piatto ~ [:curiosita:]:)</p>
         					</div>
         				</div>
+        			</div>
+        		</div>
+        		<hr>
+        		<div class="row">
+        			<div class="col-xs-5 col-xs-offset-1">
+        				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
         			</div>
         		</div>
         	</div>

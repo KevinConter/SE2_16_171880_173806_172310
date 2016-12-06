@@ -66,8 +66,8 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-4">
-										<a href="/GetDettagliPiatto?id=[:id:]">
-											<img class="img-max-height-125 img-responsive center-block" src="[:foto:]">
+										<a href="/GetDettagliPiatto?nome=[:nome:]">
+											<img class="img-max-height-125 img-responsive center-block" src="[:fotoa ~ files/immagini/defaultPiatti.png:]">
 										</a>
 									</div>
 									<div class="col-xs-7">
@@ -86,8 +86,13 @@
 						:)
 					<hr>
 					<div class="row">
-						<div class="col-xs-4 col-xs-offset-4">
-							<input type="button" class="btn btn-lg btn-block btn-success" value="Conferma">
+						<div class="col-xs-5 col-xs-offset-1">
+		    				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
+		    			</div>
+						<div class="col-xs-5">
+							<div class="form-group">
+								<input type="button" class="btn btn-lg btn-block btn-success" value="Conferma">
+							</div>
 						</div>
 					</div>
 				</form>
