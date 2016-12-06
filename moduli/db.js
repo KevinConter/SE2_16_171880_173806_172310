@@ -380,7 +380,7 @@ var prenotazioneComparator = function(p1,p2){
 	if(p1 instanceof Prenotazione && p2 instanceof Prenotazione){
 		var tmp = p1.date.localeCompare(p2.date);
 		if(tmp == 0){
-			tmp = p1.user.id - p2.user.id;
+			tmp = UserComparator(p1.user,p2.user);
 		}
 		return tmp;
 	}
@@ -391,17 +391,17 @@ var prenotazioneComparator = function(p1,p2){
   * Funzione che controlla se l'utente ha già effettuato una prenotazione in quella data
   * @param {User} u l'utente da controllare
   * @param {String} date la data da controllare
-  * @return {Boolean} true se l'utente ha già effettuato la prenotazione in quel giorno, false altrimenti
+  * @return {Prenotazione} la Prenotazione se l'utente ha già effettuato la prenotazione in quel giorno, altrimenti null
  */
-var hasPrenotazione = function(u,date){
-	if(u instanceof User && date instanceof Date){
+var getPrenotazione = function(u,date){
+	if(u instanceof User && typeof date == "string"){
 		for(var i in prenotazioni){
 			if(userComparator(u,prenotazioni[i].user) == 0 && date.localeCompare(prenotazioni[i].date)==0){
-				return true;
+				return prenotazioni[i];
 			}
 		}
 	}
-	return false;
+	return null;
 }
 
 /**
@@ -480,7 +480,7 @@ var getPrenotazioniGiorno = function(d){
 
 exports.Prenotazione = Prenotazione;
 exports.prenotazioneComparator = prenotazioneComparator;
-exports.hasPrenotazione = hasPrenotazione;
+exports.getPrenotazione = getPrenotazione;
 exports.addPrenotazione = addPrenotazione;
 exports.deletePrenotazione = deletePrenotazione;
 exports.updatePrenotazione = updatePrenotazione;
