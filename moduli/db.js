@@ -67,7 +67,7 @@ var UserComparator = function(u1,u2){
 */
 var cercaUtenteId = function(id){
 	for (var i in users){
-		if(users[i] != undefined && i == id){
+		if(users[i] != undefined && users[i].id == id){
 			return users[i];
 		}
 	}
@@ -136,7 +136,7 @@ var deleteUser = function(id){
  */
 var updateUser = function(u){
 	if(u instanceof User){
-		user[u.id] = u;
+		users[u.id] = u;
 	}
 }
 
@@ -183,7 +183,7 @@ var DESSERT = 'dessert';
   * @param {String} nome il nome del piatto
   * @param {String} ingredienti gli ingredienti del piatto
   * @param {String} curiosita le curiosità del piatto
-  * @param {String} foto il percorso della foto del piatto
+  * @param {String|null} foto il percorso della foto del piatto, se null inserisce quella di default
   * @param {Array[String]} allergeni gli allergeni contenuti nel piatto
   * @param {String} tipo se è primo/secondo/contorno/dessert
 */
@@ -191,7 +191,7 @@ var  Piatto = function(nome,ingredienti,curiosita,foto,allergeni,tipo){
 	if(typeof nome != 'string' || 
 		typeof ingredienti != 'string' || 
 		typeof curiosita != 'string' || 
-		typeof foto != 'string' ||
+		(typeof foto != 'string' && foto != null) ||
 		!(allergeni instanceof Array) ||
 		typeof tipo != 'string' ||
 		(tipo.localeCompare(PRIMO) != 0 &&
@@ -204,7 +204,11 @@ var  Piatto = function(nome,ingredienti,curiosita,foto,allergeni,tipo){
 	this.nome = nome;
 	this.ingredienti = ingredienti;
 	this.curiosita = curiosita;
-	this.foto = foto;
+	if(foto === null){
+		this.foto="files/immagini/defaultPiatti.png";
+	}else{
+		this.foto = foto;
+	}
 	this.allergeni = allergeni;
 	this.tipo = tipo;
 	
@@ -486,15 +490,15 @@ exports.getPrenotazioniGiorno = getPrenotazioniGiorno;
 ******/
 addUser(new User('nome','cognome','via da qui',new Date('1995-12-29'),'0123456789','nome@gmail.com','password',[]));
 
-addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'','',['glutine'],PRIMO));
-addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto e\' uno dei vanti della citta\' di genova','',['glutine'],PRIMO));
+addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'',null,['glutine'],PRIMO));
+addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto e\' uno dei vanti della citta\' di genova',null,['glutine'],PRIMO));
 
-addPiatto(new Piatto('Arrosto di Maiale','Arrosto gr. 100','Non ci sono curiosita\'','',[],SECONDO));
-addPiatto(new Piatto('Cotoletta alla Milanese','Carne di maiale gr. 100\nuova\npane grattugiato','Non ci sono curiosita\'','',['uova'],SECONDO));
+addPiatto(new Piatto('Arrosto di Maiale','Arrosto gr. 100','Non ci sono curiosita\'',null,[],SECONDO));
+addPiatto(new Piatto('Cotoletta alla Milanese','Carne di maiale gr. 100\nuova\npane grattugiato','Non ci sono curiosita\'',null,['uova'],SECONDO));
 
-addPiatto(new Piatto('Cavolo','Cavolo gr. 75\nSale, Olio, Aceto qb','Il cavolo e\' stato coltivato la prima volta da ...','',[],CONTORNO));
-addPiatto(new Piatto('Patatine fritte','Patate gr. 75\nSale\nketchup, Maionese o Senape a scelta','Non ci sono curiosita\'','',[],CONTORNO));
+addPiatto(new Piatto('Cavolo','Cavolo gr. 75\nSale, Olio, Aceto qb','Il cavolo e\' stato coltivato la prima volta da ...',null,[],CONTORNO));
+addPiatto(new Piatto('Patatine fritte','Patate gr. 75\nSale\nketchup, Maionese o Senape a scelta','Non ci sono curiosita\'',null,[],CONTORNO));
 
-addPiatto(new Piatto('Budino','[Ingredienti del budino]','Non ci sono curiosita\'','',[],DESSERT));
-addPiatto(new Piatto('Yogurt magro','Latte','Non ci sono curiosita\'','',['latte'],DESSERT));
+addPiatto(new Piatto('Budino','[Ingredienti del budino]','Non ci sono curiosita\'',null,[],DESSERT));
+addPiatto(new Piatto('Yogurt magro','Latte','Non ci sono curiosita\'',null,['latte'],DESSERT));
 
