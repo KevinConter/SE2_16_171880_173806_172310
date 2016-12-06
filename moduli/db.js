@@ -345,7 +345,7 @@ exports.getPiattiTipo = getPiattiTipo;
 */
 var Prenotazione = function(data,user){
 	if( typeof data != 'string' ||
-		!(user instanceof User){
+		!(user instanceof User)){
 		
 		return null;
 	}
