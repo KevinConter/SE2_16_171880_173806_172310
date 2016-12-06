@@ -74,7 +74,6 @@ app.get("/GetDettagliPiatto",function(request,response){
 	}else{
 		response.redirect("/files/logIn.html");
 	}
-	//////////
 });
 
 app.get("/files/resoconto.html",function(request,response){
