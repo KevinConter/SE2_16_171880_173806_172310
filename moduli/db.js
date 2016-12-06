@@ -1,5 +1,6 @@
 var users = [];
 var piatti = [];
+var prenotazioni = [];
 
 /**************************
  * Gestione degli utenti  *
@@ -95,7 +96,7 @@ var  cercaUtenteMailPassword = function(mail,password){
 /**
   * Funzione che controlla se esiste già la mail
   * @param {String} mail la E-mail da controllare
-  * @return {Boolean} false se la mail è già presente, false altrimenti
+  * @return {Boolean} false se la mail è già presente, true altrimenti
 */
 var checkMail = function(mail){
 	for (var i in users){
@@ -127,6 +128,16 @@ var addUser = function(u){
 */
 var deleteUser = function(id){
 	delete users[i];
+}
+
+/**
+  * Funzione che permette di aggiornare un utente
+  * @param {User] u l'utente aggiornato
+ */
+var updateUser(u){
+	if(u instanceof User){
+		user[u.id] = u;
+	}
 }
 
 /**
@@ -314,13 +325,75 @@ exports.deletePiatto = deletePiatto;
 exports.getPiatto = getPiatto;
 exports.getPiattiTipo = getPiattiTipo;
 
+
+
+/************************
+ *  Prenotazioni		*
+ ************************/
+
+/**
+  * Costruttore per associare una prenotazione di una determinata data ad un certo utente
+  * @param {Date} data la data della prenotazione
+  * @param {User} user l'utente che ha effettuato la prenotazione
+  * @param {Array[Piatto]} piatti i piatti prenotati dall'utente per quella data
+*/
+var Prenotazione = function(data,user,piatti){
+	if( !(data instanceof Date) ||
+		!(user instanceof User) ||
+		!(piatti instanceof Array) ||
+		piatti.length > 4){
+		
+		return null;
+	}
+	var c = [];
+	c[PRIMO] = false;
+	c[SECONDO] = false;
+	c[CONTORNO] = false;
+	c[DESSERT] = false;
+	for (var i in piatti){
+		var tmp = piatti[i].tipo;
+		if(!c[tmp]){
+			c[tmp] = true;
+		}else{
+			return null;
+		}
+	}
+	
+	this.date = data;
+	this.user = user;
+	this.piatti = piatti;
+}
+
+/**
+  * Comparatore tra Prenotazioni
+  * @param {Prenotazione} p1
+  * @param {Prenotazione} p2
+ */
+var prenotazioneComparator = function(p1,p2){
+	if(p1 instanceof Prenotazione && p2 instanceof Prenotazione){
+		var tmp = p1.date.getTime() - p2.date.getTime();
+		if(tmp == 0){
+			tmp = p1.user.id - p2.user.id;
+		}
+		return tmp;
+	}
+	return -1;
+}
+
 /*****
   Init
 ******/
 addUser(new User('nome','cognome','via da qui',new Date('1995-12.29'),'0123456789','nome@gmail.com','password',[]));
 
-addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'','',[],PRIMO));
+addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'','',['glutine'],PRIMO));
+addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto e\' uno dei vanti della citta\' di genova','',['glutine'],PRIMO));
+
 addPiatto(new Piatto('Arrosto di Maiale','Arrosto gr. 100','Non ci sono curiosita\'','',[],SECONDO));
+addPiatto(new Piatto('Cotoletta alla Milanese','Carne di maiale gr. 100\nuova\npane grattugiato','Non ci sono curiosita\'','',['uova'],SECONDO));
+
 addPiatto(new Piatto('Capuccio','Capuccio gr. 50\nSale, Olio, Aceto qb','Il capuccio e\' stato coltivato la prima volta da ...','',[],CONTORNO));
+addPiatto(new Piatto('Patatine fritte','Patate gr. 75\nSale\nketchup, Maionese o Senape a scelta','Non ci sono curiosita\'','',[],CONTORNO));
+
 addPiatto(new Piatto('Budino','[Ingredienti del budino]','Non ci sono curiosita\'','',[],DESSERT));
+addPiatto(new Piatto('Yogurt magro','Latte','Non ci sono curiosita\'','',['latte'],DESSERT));
 
