@@ -20,10 +20,7 @@ app.use('/files',express.static(__dirname+'/web'));
 //applica body-parser alle richieste
 app.use(bodyParser.urlencoded({ extended: false }));
 //inizializzazione delle sessioni
-var date = new Date();
-var midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
-var delta = midnight - Date.now();
-app.use(session({ secret: 'MySecretPassword',  cookie: {maxAge: delta}}));
+app.use(session({ secret: 'MySecretPassword',  cookie: {maxAge: 14400000}}));	// Durata dei cookie di sessione: 4 ore
 /*************************************************/
 
 //Set del server per reindirizzare le richieste fatte alla root
@@ -39,13 +36,11 @@ app.get("/",function(request,response){
 
 //Bind per recuperare index.html
 app.get("/files/index.html",function(request,response){
-	var tmp=date.toISOString().substring(0,10);
 	if(request.session.user){
 		var user = db.cercaUtenteId(request.session.user);
 		bind.toFile("tpl/index.tpl",
 			{
-			user: user,
-			data: tmp
+			user: user
 			},
 			function(data){
 				response.writeHead(200,{"Content-Type":"text/html"});
@@ -248,7 +243,12 @@ app.post("/LogIn",function(request,response){
 	if(mail != undefined && pwd != undefined){
 		var user = db.cercaUtenteMailPassword(mail,pwd);
 		if(user!=null){
+			var data = new Date();
+			data.setDate(data.getDate()+4);	// Imposta la data di pronotazione a 4 giorni da oggi
 			request.session.user = user.id;
+			var p = new db.Prenotazione(data.toISOString().substring(0,10),user);
+			request.session.prenotazione = p;
+			console.log(p);
 			response.redirect("/files/index.html");	
 		}else{
 			response.redirect("/files/logIn.html");
@@ -321,6 +321,26 @@ app.post("/GetPiatti",function(request,response){
 			}
 		}
 	}else{ //se non è loggato
+		response.redirect("/files/logIn.html");
+	}
+});
+
+app.post("/ScegliPiatto",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var nomePiatto;
+		if(request.body.iPiatto){
+			nomePiatto = request.body.iPiatto;
+			var piatto = db.getPiatto(nomePiatto);
+			console.log(sess.prenotazione);
+			sess.prenotazione.add(piatto);
+			console.log(sess.prenotazione);
+			response.redirect("/files/index.html");
+		}else{
+			response.writeHead(409,{"Content-Type":"text/html"});
+			response.end("Non è stato selezionato nessun piatto.");
+		}
+	}else{
 		response.redirect("/files/logIn.html");
 	}
 });

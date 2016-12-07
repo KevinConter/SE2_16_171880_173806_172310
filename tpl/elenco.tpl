@@ -91,7 +91,6 @@
 		    			</div>
 						<div class="col-xs-5">
 							<div class="form-group">
-								<input type="hidden" class="form-control" value="(:tipo:)" name="iTipo">
 								<input type="submit" class="btn btn-lg btn-block btn-success" value="Conferma">
 							</div>
 						</div>

@@ -96,7 +96,6 @@
         				<div class="col-xs-5">
         					<div class="form-group">
         						<input type="hidden" class="form-control" value="(:piatto ~ [:nome:]:)" name="iPiatto">
-        						<input type="hidden" class="form-control" value="(:piatto ~ [:tipo:]:)" name="iTipo">
         						<input type="submit" class="btn btn-lg btn-block btn-success" value="Ordina">
         					</div>
         				</div>
