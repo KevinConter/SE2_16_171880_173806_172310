@@ -12,7 +12,7 @@ var prenotazioni = [];
   * @param {String} cognome il comgnome della persona
   * @param {String} via l'indirizzo della persona
   * @param {String} data la data di nascita della persona
-  * @param {String|Array[String]} recapito un recapito oppure una lista di recapiti
+  * @param {String} recapito un recapito oppure una lista di recapiti
   * @param {String} mail l'e-mail con cui si è registrata la persona
   * @param {String} password la password di log-in dell'utente
   * @param {Array[String]} allergeni una lista di allergeni. Può essere omessa
@@ -21,8 +21,8 @@ var User = function(nome,cognome,via,data,recapito,mail,password,allergeni){
 	if(typeof nome != 'string' || 
 		typeof cognome != 'string' || 
 		typeof via != 'string' || 
-		typeof via != 'string' || 
-		!(typeof recapito == 'string' || (recapito instanceof Array)) || 
+		typeof data != 'string' || 
+		!(typeof recapito == 'string') || 
 		typeof mail != 'string' || 
 		typeof password != 'string' || 
 		!(allergeni instanceof Array)){
@@ -356,9 +356,39 @@ var Prenotazione = function(data,user){
 	this.piatti = [];
 	this.add = function(p){
 		if (p instanceof Piatto){
-			piatti[p.tipo] = p;
+			var i=undefined;
+			switch(p.tipo){
+				case PRIMO:
+					i=0;
+					break;
+				case SECONDO:
+					i=1;
+					break;
+				case CONTORNO:
+					i=2;
+					break;
+				default:
+					i=3;
+					break;
+			}
+			this.piatti[i] = p;
 		}
 	}
+}
+
+/**
+  * Funzione che premette di parsare un oggetto in una Prenotazione
+  * @param {Object} o l'oggetto da parsare
+  * @return {Prenotazione} un oggetto prenotazione corrispondente all'oggetto passato
+ */
+var parsePrenotazione = function(o){
+	var ret = new Prenotazione(o.date,cercaUtenteId(o.user.id));
+	for(var i in o.piatti){
+		if(o.piatti[i]){
+			ret.add(getPiatto(o.piatti[i].nome));
+		}
+	}
+	return ret;
 }
 
 /**
@@ -469,6 +499,7 @@ var getPrenotazioniGiorno = function(d){
 }
 
 exports.Prenotazione = Prenotazione;
+exports.parsePrenotazione = parsePrenotazione;
 exports.prenotazioneComparator = prenotazioneComparator;
 exports.getPrenotazione = getPrenotazione;
 exports.addPrenotazione = addPrenotazione;

@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="files/bootstrap/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="files/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="files/css/general.css">
+		<link rel="stylesheet" href="files/css/dettagliPiatto.css">
 	</head>
 	<body>
 		<!-- navbar -->    

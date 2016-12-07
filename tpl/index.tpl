@@ -8,9 +8,11 @@
 		<script type="text/javascript" src="bootstrap/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="css/general.css">
+		<link rel="stylesheet" href="css/index.css">
 		<script type="text/javascript" src="js/index.js"></script>
+
 	</head>
-	<body>
+	<body onload="init()">
     
 		<!-- navbar -->    
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -63,16 +65,21 @@
 				<hr>
 				<form id="form" action="/GetPiatti" method="POST">
 					<input class="form-control" type="hidden" id="iHidden" name="iTipo">
-					<div class="margin-top-100">
-						<div class="row">
-							<div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-								<div class="form-group">
-									<label class="control-label" for="iData">Scegli il giorno per cui vuoi prenotare</label>
-									<input type="date" class="form-control" id="iData" name="iData" value="(:data:)" min="(:data:)">
+					<div class="row">
+		                <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+				            <div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="centra" id="gg">giorno</h3>
+								</div>
+								<div class="panel-body panel_data">
+									<h2 class="centra" id="mm">mese</h2>
+						            <h1 class="centra" id="numgg" >numero</h1>
+						            <h2 class="centra" id="yyyy">anno</h2>
 								</div>
 							</div>
-						</div>
-					</div>
+						</div>			
+		        	</div>
+					
 					<div class="margin-top-100">
 						<div class="row margin-top-bottom-20">
 							<div class="col-xs-4 col-xs-offset-1">

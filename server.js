@@ -141,8 +141,11 @@ app.post("/SignIn",function(request,response){
 	if(!errore){	
 		var user = new db.User(nome,cognome,indirizzo,data,recapito,mail,pwd,[]);
 		var id = db.addUser(user);
+		request.session.user = id;
+		response.redirect("/files/index.html");
+	}else{
+		response.redirect("/files/signIn.html");
 	}
-	response.redirect("/");
 });
 
 

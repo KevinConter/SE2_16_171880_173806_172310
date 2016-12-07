@@ -3,8 +3,7 @@ CSS GENERALE
 **************************************************************************************/
 
 body{
-	padding-top: 70px;
-	margin-top: 20px;
+	padding-top: 90px;
 }
 
 .centra{
@@ -23,11 +22,6 @@ hr{
 	margin-top: 100px;
 }
 
-.radio{
-	width:30px;
-	height:30px;
-}
-
 .img-max-height-125{
 	max-height:125px;
 }
@@ -36,12 +30,3 @@ hr{
 	max-height:300px;
 }
 
-.panel-warnign{
-	border-color:#ff6103;
-}
-
-.panel-warnign>.panel-heading{
-	color:#fff;
-	background-color: #ff6103;
-	border-color: #ff6103;
-}
