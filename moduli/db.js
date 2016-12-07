@@ -115,9 +115,7 @@ var checkMail = function(mail){
 var addUser = function(u){
 	if(u instanceof User){
 		if(checkMail(u.mail)){
-			var id = users.push(u) -1;
-			if(id==0)
-				id=1;
+			var id = users.push(u);
 			u.id = id;
 			return id;
 		}
