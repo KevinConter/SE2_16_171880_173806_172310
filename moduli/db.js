@@ -356,9 +356,39 @@ var Prenotazione = function(data,user){
 	this.piatti = [];
 	this.add = function(p){
 		if (p instanceof Piatto){
-			piatti[p.tipo] = p;
+			var i=undefined;
+			switch(p.tipo){
+				case PRIMO:
+					i=0;
+					break;
+				case SECONDO:
+					i=1;
+					break;
+				case CONTORNO:
+					i=2;
+					break;
+				default:
+					i=3;
+					break;
+			}
+			this.piatti[i] = p;
 		}
 	}
+}
+
+/**
+  * Funzione che premette di parsare un oggetto in una Prenotazione
+  * @param {Object} o l'oggetto da parsare
+  * @return {Prenotazione} un oggetto prenotazione corrispondente all'oggetto passato
+ */
+var parsePrenotazione = function(o){
+	var ret = new Prenotazione(o.date,cercaUtenteId(o.user.id));
+	for(var i in o.piatti){
+		if(o.piatti[i]){
+			ret.add(getPiatto(o.piatti[i].nome));
+		}
+	}
+	return ret;
 }
 
 /**
@@ -469,6 +499,7 @@ var getPrenotazioniGiorno = function(d){
 }
 
 exports.Prenotazione = Prenotazione;
+exports.parsePrenotazione = parsePrenotazione;
 exports.prenotazioneComparator = prenotazioneComparator;
 exports.getPrenotazione = getPrenotazione;
 exports.addPrenotazione = addPrenotazione;
