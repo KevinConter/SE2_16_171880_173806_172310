@@ -1,0 +1,218 @@
+# Documentazione applicazione prenotazione pasti
+swagger: '2.0'
+info:
+  title: APSP Cibo
+  description: Applicazione per la prenotazioe di pasti al servizio offerto da APSS
+  version: "1.0.0"
+# the domain of the service
+host: lit-river-83410.herokuapp.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /
+produces:
+  - text/html
+paths:
+  /:
+    get:
+      summary: Root redirection
+      description: | 
+        Verifica la presenza dell'oggetto utente all'interno della sessione: se esso è presente, allora manda un   comando di redirect al client per raggiungere index.html, altrimenti manda un redirect alla pagina logIn.html.
+      tags:
+        - Root
+      responses:
+        200:
+          description: Redirect alla pagina index.html o logIn.html
+          
+  /files/index.html:
+    get:
+      summary: Get file index.html.
+      description: |
+        Se all'interno della sessione è presente l'oggetto utente, allora viene eseguito il binding del template index.tpl, al quale viene dato l'oggetto dell'utente.
+      tags:
+        - Index
+      responses:
+        200:
+          description: Pagina risultante dal binding del template index.tpl se l'utente ha eseguito l'operazione di login, altrimenti viene fatto un redirect alla pagina logIn.html
+          
+  /SignIn:
+    post:
+      summary: Registrazione utente.
+      description: |
+        Viene eseguito un controllo generale per verificare se tutti i campi sono stati compilati; se tutto ha funzionato correttamente, viene creato un nuovo utente e viene aggiunto alla lista di utenti registrati.
+      parameters:
+        - name: iNome
+          in: query
+          description: Nome dell'utente.
+          required: true
+          type: string
+        - name: iCognome
+          in: query
+          description: Cognome dell'utente.
+          required: true
+          type: string
+        - name: iIndirizzo
+          in: query
+          description: Indirizzo del domicilio dell'utente; identifica il luogo a cui verranno consegnati i pasti ordinati.
+          required: true
+          type: string
+        - name: iData
+          in: query
+          description: Data di nascita dell'utente.
+          required: true
+          type: string
+        - name: iRecapito
+          in: query
+          description: Numero di telefono dell'utente.
+          required: true
+          type: string
+        - name: iMail
+          in: query
+          description: Indirizzo email dell'utente.
+          type: string
+        - name: iPassword
+          in: query
+          description: Password di accesso.
+          type: string
+      tags:
+        - User
+      responses:
+        200:
+          description: Viene eseguito un redirect alla pagina di registrazione se si è verificato un'errore durante la registrazione; altrimenti viene eseguito un redirect alla pagina index.html.
+          schema:
+            $ref: '#/definitions/User'
+          
+  /EditUser:
+    post:
+      summary: Modifica profilo utente
+      description: |
+        Dopo aver verificato che siano stati passati tutti i campi necessari, se non si è verificato nessun error, i dati dell'utente vengono modificati.
+        Se la mail viene modificata, viene eseguito un controllo per verificare se tale indirizzo è già presente all'iterno del database: se è già presente, viene mandato un redirect alla pagina di errore; se non è presente viene eseguita la modifica e viene fatto un redirect alla home.
+      parameters:
+        - name: iNome
+          in: query
+          description: Nuovo nome dell'utente.
+          required: true
+          type: string
+        - name: iCognome
+          in: query
+          description: Nuovo cognome dell'utente.
+          required: true
+          type: string
+        - name: iIndirizzo
+          in: query
+          description: Nuovo indirizzo del domicilio dell'utente; identifica il luogo a cui verranno consegnati i pasti ordinati.
+          required: true
+          type: string
+        - name: iData
+          in: query
+          description: Nuova data di nascita dell'utente.
+          required: true
+          type: string
+        - name: iRecapito
+          in: query
+          description: Nuovo numero di telefono dell'utente.
+          required: true
+          type: string
+        - name: iMail
+          in: query
+          description: Nuovo indirizzo email dell'utente.
+          type: string
+        - name: iPassword
+          in: query
+          description: Nuova password di accesso.
+          type: string
+      tags:
+        - User
+      responses:
+        200:
+          description: Redirect alla pagina index.html se le modifiche sono state eseguite; se si è verificato un errore, redirect alla pagine error.html.
+          schema:
+            $ref: '#/definitions/User'
+          
+  /LogIn:
+    post:
+      summary: Accesso al sistema
+      description: Verifica i dati ricevuti ed autentica l'utente al sistema. Se l'utente è registrato, vengono estratti i sui dati e vengono aggiunti alla sessione. Se non è registrato, viene eseguito un redirect alla pagina di logIn.
+      parameters:
+        - name: iMail
+          in: query
+          description: Indirizzo email usato alla registrazione.
+          type: string
+        - name: iPassword
+          in: query
+          description: Password per l'autenticazione.
+          type: string
+      tags:
+        - User
+      responses:
+        200:
+          description: Redirect alla pagina index.html se i dati sono corretti e l'utente viene autenticato. Redirect alla pagina logIn.html se i dati sono errati.
+          schema:
+            $ref: '#/definitions/User'
+            
+  /logOut:
+    get:
+      summary: Logout dal sistema
+      description: Cancella la sessione ed esegue un redirect alla root.
+      tags:
+        - User
+      responses:
+        200:
+          description: Redirect alla root.
+          
+  /files/editUser.html:
+    get:
+      summary: Estrazione dati utente
+      description: Estrae dalla sessione l'identificativo dell'utente ed estrae tutti i suoi dati; esegue poi il binding del template editUser.tpl compilando i campi del form con i dati attuali dell'utente.
+      tags:
+        - User
+      responses:
+        200:
+          description: Risultato del binding del template editUser.tpl se l'utente è loggato.
+          schema:
+            $ref: '#/definitions/User'
+
+  /files/error.html:
+    get:
+      summary: Pagina di errore
+      description: Verifica se l'utente è loggato, ed esegue il parsing del template error.tpl in cui viene mostrato un messaggio di errore generico.
+      responses:
+        200:
+          description: Binding del file error.tpl oppure se l'utente non è loggato viene eseguito un redirect alla pagina di login.
+
+
+definitions:
+  User:
+    type: object
+    properties:
+      nome:
+        type: string
+        description: Nome del'utente.
+      cognome:
+        type: string
+        description: Cognome dell'utente.
+      mail:
+        type: string
+        description: Indirizzo email dell'utente
+      via:
+        type: string
+        description: Indirizzo dell'utente.
+      data_nascita:
+        type: string
+        description: Data di nascita dell'utente.
+      password:
+        type: string
+        description: Password per accedere al sistema.
+      recapito:
+        type: string
+        description: Numero di telefono dell'utente.
+      allergeni:
+        type: array
+        description: Elenco degli allergeni dell'utente.
+        items:
+          $ref: '#/definitions/Allergene'
+  Allergene:
+    type: string
+    description: Identificativo dell'allergene.
