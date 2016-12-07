@@ -1,3 +1,17 @@
+/**
+*	Imposta la data di oggi + 4 giorni
+*/
+function init(){
+	var data = new Date();
+	var giorni = ["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"];
+	var mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+    data.setDate(data.getDate() +4);
+    document.getElementById("gg").innerHTML=giorni[data.getDay()];
+    document.getElementById("mm").innerHTML=mesi[data.getMonth()];
+ 	document.getElementById("numgg").innerHTML=data.getDate();
+	document.getElementById("yyyy").innerHTML=data.getFullYear();
+}
+
 
 /**
 *	Imposta la stringa che identifica il tipo di pulsante che è stato.
@@ -26,3 +40,4 @@ function salta(){
 		document.getElementById("formConferma").submit();
 	}
 }
+
