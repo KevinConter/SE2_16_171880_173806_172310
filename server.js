@@ -251,7 +251,6 @@ app.post("/LogIn",function(request,response){
 			request.session.user = user.id;
 			var p = new db.Prenotazione(data.toISOString().substring(0,10),user);
 			request.session.prenotazione = p;
-			console.log(p);
 			response.redirect("/files/index.html");	
 		}else{
 			response.redirect("/files/logIn.html");
@@ -335,14 +334,35 @@ app.post("/ScegliPiatto",function(request,response){
 		if(request.body.iPiatto){
 			nomePiatto = request.body.iPiatto;
 			var piatto = db.getPiatto(nomePiatto);
-			console.log(sess.prenotazione);
-			sess.prenotazione.add(piatto);
+			var prenotazione = db.parsePrenotazione(sess.prenotazione);
+			prenotazione.add(piatto);
+			sess.prenotazione=prenotazione;
 			console.log(sess.prenotazione);
 			response.redirect("/files/index.html");
 		}else{
 			response.writeHead(409,{"Content-Type":"text/html"});
 			response.end("Non è stato selezionato nessun piatto.");
 		}
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+});
+
+app.post("/GetResoconto",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var piatti = sess.prenotazione.piatti;
+		bind.toFile("tpl/resoconto.tpl",
+			{primo: piatti[0],
+			secondo: piatti[1],
+			contorno: piatti[2],
+			dessert: piatti[3]
+			},
+			function(data){
+				response.writeHead(200,{"Content.Type":"text/html"});
+				response.end(data);
+			}
+		);
 	}else{
 		response.redirect("/files/logIn.html");
 	}
