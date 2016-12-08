@@ -52,6 +52,20 @@ app.get("/files/index.html",function(request,response){
 	}
 });
 
+app.get("/files/final.html",function(request,response){
+	if(request.session.user){
+		bind.toFile("tpl/index.tpl",
+			{},
+			function(data){
+				response.writeHead(200,{"Content-Type":"text/html"});
+				response.end(data);
+			}
+		);
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+});
+
 app.get("/GetDettagliPiatto",function(request,response){
 	if(request.session.user){
 		if(request.query.nome){
@@ -70,20 +84,6 @@ app.get("/GetDettagliPiatto",function(request,response){
 		response.redirect("/files/logIn.html");
 	}
 });
-
-app.get("/files/resoconto.html",function(request,response){
-	if(request.session.user){
-		bind.toFile("tpl/resoconto.tpl",
-			{},
-			function(data){
-				response.writeHead(200,{"Content-Type":"text/html"});
-				response.end(data);
-			});
-	}else{
-		response.redirect("/");
-	}
-});
-
 
 //per il signin dell'utente
 app.post("/SignIn",function(request,response){
@@ -141,8 +141,16 @@ app.post("/SignIn",function(request,response){
 	if(!errore){	
 		var user = new db.User(nome,cognome,indirizzo,data,recapito,mail,pwd,[]);
 		var id = db.addUser(user);
+		var data = new Date();
+		data.setDate(data.getDate()+4);	// Imposta la data di pronotazione a 4 giorni da oggi
+		request.session.user = user.id;
+		var p = new db.Prenotazione(data.toISOString().substring(0,10),user);
+		request.session.prenotazione = p;
+		request.session.user = id;
+		response.redirect("/files/index.html");
+	}else{
+		response.redirect("/files/signIn.html");
 	}
-	response.redirect("/");
 });
 
 
@@ -248,7 +256,6 @@ app.post("/LogIn",function(request,response){
 			request.session.user = user.id;
 			var p = new db.Prenotazione(data.toISOString().substring(0,10),user);
 			request.session.prenotazione = p;
-			console.log(p);
 			response.redirect("/files/index.html");	
 		}else{
 			response.redirect("/files/logIn.html");
@@ -332,14 +339,57 @@ app.post("/ScegliPiatto",function(request,response){
 		if(request.body.iPiatto){
 			nomePiatto = request.body.iPiatto;
 			var piatto = db.getPiatto(nomePiatto);
-			console.log(sess.prenotazione);
-			sess.prenotazione.add(piatto);
-			console.log(sess.prenotazione);
+			var prenotazione = db.parsePrenotazione(sess.prenotazione);
+			prenotazione.add(piatto);
+			sess.prenotazione=prenotazione;
 			response.redirect("/files/index.html");
 		}else{
 			response.writeHead(409,{"Content-Type":"text/html"});
 			response.end("Non è stato selezionato nessun piatto.");
 		}
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+});
+
+app.post("/GetResoconto",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var piatti = sess.prenotazione.piatti;
+		bind.toFile("tpl/resoconto.tpl",
+			{primo: piatti[0],
+			secondo: piatti[1],
+			contorno: piatti[2],
+			dessert: piatti[3]
+			},
+			function(data){
+				response.writeHead(200,{"Content.Type":"text/html"});
+				response.end(data);
+			}
+		);
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+});
+
+app.get("/Conferma",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var prenotazione = db.parsePrenotazione(sess.prenotazione);
+		db.addPrenotazione(prenotazione);	// Aggiungi prenotazione all'elenco generale
+		response.redirect("/files/final.html");
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+});
+
+app.post("/SaltaOrdine",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var pren = db.parsePrenotazione(sess.prenotazione);
+		pren.piatti = [];	// Cancella la prenotazione dell'utente
+		db.addPrenotazione(pren);
+		response.redirect("files/final.html");
 	}else{
 		response.redirect("/files/logIn.html");
 	}
