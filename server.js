@@ -54,7 +54,7 @@ app.get("/files/index.html",function(request,response){
 
 app.get("/files/final.html",function(request,response){
 	if(request.session.user){
-		bind.toFile("tpl/index.tpl",
+		bind.toFile("tpl/final.tpl",
 			{},
 			function(data){
 				response.writeHead(200,{"Content-Type":"text/html"});
