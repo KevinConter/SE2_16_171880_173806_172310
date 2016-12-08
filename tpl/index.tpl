@@ -69,12 +69,12 @@
 		                <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
 				            <div class="panel panel-primary">
 								<div class="panel-heading">
-									<h3 class="centra" id="gg">giorno</h3>
+									<h3 class="centra" id="gg"></h3>
 								</div>
 								<div class="panel-body panel_data">
-									<h2 class="centra" id="mm">mese</h2>
-						            <h1 class="centra" id="numgg" >numero</h1>
-						            <h2 class="centra" id="yyyy">anno</h2>
+									<h2 class="centra" id="mm"></h2>
+						            <h1 class="centra" id="numgg" ></h1>
+						            <h2 class="centra" id="yyyy"></h2>
 								</div>
 							</div>
 						</div>			

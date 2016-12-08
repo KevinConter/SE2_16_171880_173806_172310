@@ -509,6 +509,7 @@ exports.getPrenotazioniGiorno = getPrenotazioniGiorno;
 /*****
   Init
 ******/
+addUser(new User('admin','administrator','non esiste','0001-01-01','0000','admin@admin.com','password',[]));
 addUser(new User('nome','cognome','via da qui','1995-12-29','0123456789','nome@gmail.com','password',[]));
 
 addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'',null,['glutine'],PRIMO));

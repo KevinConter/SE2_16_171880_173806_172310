@@ -85,6 +85,8 @@ app.get("/files/resoconto.html",function(request,response){
 });
 
 
+
+
 //per il signin dell'utente
 app.post("/SignIn",function(request,response){
 	var errore=false;
@@ -251,7 +253,10 @@ app.post("/LogIn",function(request,response){
 			request.session.user = user.id;
 			var p = new db.Prenotazione(data.toISOString().substring(0,10),user);
 			request.session.prenotazione = p;
-			response.redirect("/files/index.html");	
+			if(user.id == 1){
+				response.redirect("/files/admin.html")
+			}else
+				response.redirect("/files/index.html");	
 		}else{
 			response.redirect("/files/logIn.html");
 		}
@@ -367,6 +372,114 @@ app.post("/GetResoconto",function(request,response){
 		response.redirect("/files/logIn.html");
 	}
 });
+
+//Bind per recuperare admin.html
+app.get("/files/admin.html",function(request,response){
+	if(request.session.user && request.session.user==1){
+		bind.toFile("tpl/admin.tpl",
+		{},
+		function(data){
+			response.writeHead(200,{"Content-Type":"text/html"});
+			response.end(data);
+		});
+	}else{	//Se non esiste
+		response.redirect("/");
+	}
+});
+
+//Estrazione del piatto cercato dall'admin
+app.post("/AddPiatto",function(request,response){
+	var errore=false;
+	var nome = undefined;
+	var foto = undefined;
+	var tipo = undefined;
+	var ingredienti = undefined;
+	var allergeni = undefined;
+	var curiosita = undefined;
+
+	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
+		if(request.body.iNome){
+			nome = request.body.iNome;
+		}else{
+			errore=true;
+		}
+		
+		if(request.body.iFoto){
+			foto = request.body.iFoto;
+		}else{
+			errore=true;
+		}
+		
+		if(request.body.iTipo){
+			tipo = parseInt( request.body.iTipo);
+			switch(tipo){
+				case 1: tipo = db.PRIMO; break; 
+				case 2: tipo = db.SECONDO; break;
+				case 3: tipo = db.CONTORNO; break;
+				case 4: tipo = db.DESSERT; break;
+				default : errore = true;
+			}
+		}else{
+			errore=true;
+		}
+		
+		if(request.body.iIngredienti){
+			ingredienti = request.body.iIngredienti;
+		}else{
+			errore=true;
+		}
+		
+		if(request.body.iAllergeni){
+			allergeni = request.body.iAllergeni;
+		}else{
+			errore=true;
+		}
+		
+		if(request.body.iCuriosita){
+			curiosita = request.body.iCuriosita;
+		}else{
+			errore=true;
+		}
+	
+		if(!errore){	
+			var piatto = new db.Piatto(nome,ingredienti,curiosita,foto,[],tipo);
+			db.addPiatto(piatto);
+			response.redirect("/files/admin.html");
+		}else{
+			response.redirect("/files/admin.html");
+		}
+		
+		
+	}else{ //se non è loggato
+		response.redirect("/");
+	}
+});
+/*
+//Estrazione del piatto cercato dall'admin
+app.post("/GetPiatto",function(request,response){
+	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
+		var cerca = undefined;
+		var piatto;
+		if(request.body.iCerca){
+			cerca = request.body.iCerca;
+			piatto = db.getPiatto(cerca);
+			bind.toFile("tpl/admin.tpl",
+			{
+				nome: piatto.nome,
+				tipo: piatto.tipo,
+				ingredienti : piatto.ingredienti,
+				curiosita : piatto.curiosita
+			},
+			function(data){
+				response.writeHead(200,{"Content-Type":"text/html"});
+				response.end(data);
+			});
+		}
+	}else{ //se non è loggato
+		response.redirect("/");
+	}
+});
+*/
 
 //Bind per recuperare error.html
 app.get("/files/error.html",function(request,response){
