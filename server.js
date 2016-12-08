@@ -337,7 +337,6 @@ app.post("/ScegliPiatto",function(request,response){
 			var prenotazione = db.parsePrenotazione(sess.prenotazione);
 			prenotazione.add(piatto);
 			sess.prenotazione=prenotazione;
-			console.log(sess.prenotazione);
 			response.redirect("/files/index.html");
 		}else{
 			response.writeHead(409,{"Content-Type":"text/html"});
@@ -363,6 +362,18 @@ app.post("/GetResoconto",function(request,response){
 				response.end(data);
 			}
 		);
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+});
+
+app.post("/SaltaOrdine",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var pren = db.parsePrenotazione(sess.prenotazione);
+		pren.piatti = [];
+		db.addPrenotazione(pren);
+		response.redirect("files/final.html");
 	}else{
 		response.redirect("/files/logIn.html");
 	}

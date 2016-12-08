@@ -427,7 +427,7 @@ var getPrenotazione = function(u,date){
   * @param {Prenotazione} p la prenotazione da aggiungere
  */
 var addPrenotazione = function(p){
-	if(p instanceof Prenotazione && !hasPrenotazione(p.user,p.date)){
+	if(p instanceof Prenotazione && getPrenotazione(p.user,p.date)===null){
 		prenotazioni.push(p);
 	}
 }
@@ -485,7 +485,7 @@ var getPrenotazioniUser = function(u){
   * @return {Array} un Array di prenotazioni effettuate nella data specificata
  */
 var getPrenotazioniGiorno = function(d){
-	if(typeof via == 'string'){
+	if(typeof d == 'string'){
 		var ret = [];
 		for(var i in prenotazioni){
 			if(d.localeCompare(prenotazioni[i].date)==0){
