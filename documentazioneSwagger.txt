@@ -36,11 +36,42 @@ paths:
         200:
           description: Pagina risultante dal binding del template index.tpl se l'utente ha eseguito l'operazione di login, altrimenti viene fatto un redirect alla pagina logIn.html
           
+  /files/final.html:
+    get:
+      summary: Get file index.html.
+      description: |
+        Se all'interno della sessione è presente l'oggetto utente, allora viene eseguito il binding del template index.tpl, al quale viene dato l'oggetto dell'utente.
+      tags:
+        - Final
+      responses:
+        200:
+          description: Pagina risultante dal binding del template final.tpl se l'utente ha eseguito l'operazione di login, altrimenti viene fatto un redirect alla pagina logIn.html
+          
+  /GetDettagliPiatto:
+    get:
+      summary: Dettagli piatto.
+      description: |
+        Se l'utente è loggato, viene estratto dall'elenco il piatto selezionato dall'utente; viene quindi eseguito il binding del template dettagliPiatto.tpl a cui viene passato l'oggetto piatto che contiene tutte le informazioni necessarie.
+      parameters:
+        - name: nome
+          in: query
+          description: Nome identificativo del piatto voluto.
+          required: true
+          type: string
+      tags:
+        - Piatti
+      responses:
+        200:
+          description: Pagina risultante dal bind del template dettagliPiatto.tpl se l'utente è loggato, altrimenti viene fatto un redirect alla pagina login.html.
+          schema:
+            $ref: '#/definitions/Piatto'
+          
   /SignIn:
     post:
       summary: Registrazione utente.
       description: |
         Viene eseguito un controllo generale per verificare se tutti i campi sono stati compilati; se tutto ha funzionato correttamente, viene creato un nuovo utente e viene aggiunto alla lista di utenti registrati.
+        Prepara all'interno della sessione la struttura necessaria a contenere la prenotazione che l'utente andrà ad eseguire.
       parameters:
         - name: iNome
           in: query
@@ -134,7 +165,8 @@ paths:
   /LogIn:
     post:
       summary: Accesso al sistema
-      description: Verifica i dati ricevuti ed autentica l'utente al sistema. Se l'utente è registrato, vengono estratti i sui dati e vengono aggiunti alla sessione. Se non è registrato, viene eseguito un redirect alla pagina di logIn.
+      description:
+        Verifica i dati ricevuti ed autentica l'utente al sistema. Se l'utente è registrato, vengono estratti i sui dati e vengono aggiunti alla sessione. Se non è registrato, viene eseguito un redirect alla pagina di logIn.
       parameters:
         - name: iMail
           in: query
@@ -165,14 +197,88 @@ paths:
   /files/editUser.html:
     get:
       summary: Estrazione dati utente
-      description: Estrae dalla sessione l'identificativo dell'utente ed estrae tutti i suoi dati; esegue poi il binding del template editUser.tpl compilando i campi del form con i dati attuali dell'utente.
+      description:
+        Estrae dalla sessione l'identificativo dell'utente ed estrae tutti i suoi dati; esegue poi il binding del template editUser.tpl compilando i campi del form con i dati attuali dell'utente.
       tags:
         - User
       responses:
         200:
-          description: Risultato del binding del template editUser.tpl se l'utente è loggato.
+          description: Risultato del binding del template editUser.tpl se l'utente è loggato, atrimenti redirect alla pagina di login.
           schema:
             $ref: '#/definitions/User'
+            
+  /GetPiatti:
+    post:
+      summary: Estrazione elenco piatti.
+      description: |
+        Estrae dalla sessione l'identificativo dell'utente; estrae poi dall'elenco complessivo di piatti, tutti quelli del tipo che l'utente ha richiesto. Se il tipo estratto dalla richeista non è tra quelli definiti come tipi di piatti, viene eseguito un redirect alla pagina index.html.
+        parameters:
+        - name: iTipo:
+          in: query
+          description: Tipo di piatto che si vogliono estrarre.
+          required: true
+          type: string
+      tags:
+        - Piatti
+      responses:
+        200:
+          description: Risultato del bindig del template elenco.tpl compilato con i dati dei piatti ottenuti dalla ricerca per tipo.
+          schema:
+            $ref: '#/definitions/Piatti'
+            
+  /ScegliPiatto:
+    post:
+      summary: Aggiungi alla prenotazione
+      description: |
+        Estrae dalla sessione l'idetificativo dell'utente; estrae poi il nome identificativo del piatto selezionato, ricerca tutti i dati mancanti e aggiunge il piatto alla prenotazione. Al termine esegue il redirect alla pagina index.html. Se il nome del piatto non viene passato nella richiesta viene inviato in messaggio di errore. Se l'utente non è loggato, viene fatto un redirect alla pagina di login.
+      parameters:
+        - name: iPiatto
+          in: query
+          description: Nome identificativo del piatto selezionato.
+          required: true
+          type: string
+      tags:
+        - Piatti
+      responses:
+        200:
+          description: Redirect alla pagina index.html. Redirect a login se l'utente non è loggato.
+        409:
+          description: Errore, il nome del piatto non è stato passato.
+          
+  /GetResoconto:
+    post:
+      summary: Resoconto ordine
+      description: |
+        Estrae dalla sessione l'identificativo dell'utente e la prenotazione compilata. da questa estrae i piatti ordinati che vengono utilizzati per compilare il template resoconto.tpl. Se l'utente non è loggato viene fatto un redirect alla pagina di login.
+      tags:
+        - Piatti
+      responses:
+        200:
+          description: Risultato del binding del template resoconto.tpl compilato con i dati dei piatti ordinati.
+          schema:
+            $ref: '#/definitions/Prenotazione'
+  
+  /Conferma:
+    get:
+      summary: Conferma definitiva
+      description: |
+        Estrae dalla sessione l'identificati dell'utente e la sua prenotazione; questa viene poi aggiunta all'elenco complessivo che verrà estratto dall'amministratore. Viene quindi fatto un redirect alla pagina final.html. Se l'utente non è loggato viene fatto un redirect alla pagina di login.
+      tags:
+        - Piatti
+      responses:
+        200:
+          description: Risultato del binding del tamplate final.tpl. Oppure redirect alla pagina di login.
+          
+  /SaltaOrdine:
+    get:
+      summary: Salta ordinazione
+      description: |
+        Permette all'utente di non eseguire l'ordinazione; viene quindi salvata una prenotazione vuota identificata dall'utente e dalla data.
+      tags:
+        - SaltaOrdine
+      responses:
+        200:
+          description: Risultato del binding del tamplate final.tpl. Oppure redirect alla pagina di login.
 
   /files/error.html:
     get:
@@ -213,6 +319,50 @@ definitions:
         description: Elenco degli allergeni dell'utente.
         items:
           $ref: '#/definitions/Allergene'
+          
   Allergene:
     type: string
     description: Identificativo dell'allergene.
+    
+  Piatto:
+    type: object
+    description: Oggetto che rappresenta un piatto completo di tutti i dati utili.
+    properties:
+      nome:
+        type: string
+        description: Nome identificativo del piatto.
+      ingredienti:
+        type: string
+        description: Stringa che contiene l'elenco degli ingredienti contenuti nel piatto.
+      curiosità:
+        type: string
+        description: Testo che contiene informazioni aggiuntive/curiosità sul piatto.
+      foto:
+        type: string
+        description: Percorso da inserire all'interno del campo src di un tag img.
+      allergeni:
+        type: array
+        description: Elenco degli allergeni che il piatto può contenere.
+        items:
+          $ref: '#/definitions/Allergene'
+      tipo:
+        type: string
+        description: Costante stringa che identifica la categoria di appartenenza del piatto; può assumere i valori 'primo', 'secondo', 'contorno' oppure 'dessert'.
+        
+  Piatti:
+    type: array
+    description: Elenco di piatti.
+    items:
+      $ref: '#/definitions/Piatto'
+      
+  Prenotazione:
+    type: object
+    description: Oggetto che contiene l'elenco dei piatti ordinati dall'utente per una data specifica.
+    properties:
+      data:
+        type: string
+        description: Data per cui la prenotazione è stata eseguita.
+      user:
+        $ref: '#/definitions/User'
+      piatti:
+        $ref: '#/definitions/Piatti'
