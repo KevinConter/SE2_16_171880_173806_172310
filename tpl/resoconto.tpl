@@ -71,7 +71,7 @@
 								</div>
 								<div class="panel-body">
 									<div class="col-xs-5">
-											<img class="img-max-height-150 img-responsive center-block" src="(:primo ~ [:foto:]:)" onclick="getElenco('(:primo ~ [:tipo ~ primo:]:)')">
+											<img class="img-max-height-125 img-responsive center-block" src="(:primo ~ [:foto:]:)" onclick="getElenco('(:primo ~ [:tipo ~ primo:]:)')">
 									</div>
 									<div class="col-xs-7">
 										<div class="row">
@@ -88,7 +88,7 @@
 								</div>
 								<div class="panel-body">
 									<div class="col-xs-5">
-										<img class="img-max-height-150 img-responsive center-block" src="(:secondo ~ [:foto:]:)" onclick="getElenco('(:secondo ~ [:tipo:]:)')">
+										<img class="img-max-height-125 img-responsive center-block" src="(:secondo ~ [:foto:]:)" onclick="getElenco('(:secondo ~ [:tipo:]:)')">
 									</div>
 									<div class="col-xs-7">
 										<div class="row">
@@ -105,7 +105,7 @@
 								</div>
 								<div class="panel-body">
 									<div class="col-xs-5">
-										<img class="img-max-height-150 img-responsive center-block" src="(:contorno ~ [:foto:]:)" onclick="getElenco('(:contorno ~ [:tipo:]:)')">
+										<img class="img-max-height-125 img-responsive center-block" src="(:contorno ~ [:foto:]:)" onclick="getElenco('(:contorno ~ [:tipo:]:)')">
 									</div>
 									<div class="col-xs-7">
 										<div class="row">
@@ -122,7 +122,7 @@
 								</div>
 								<div class="panel-body">
 									<div class="col-xs-5">
-										<img class="img-max-height-150 img-responsive center-block" src="(:dessert ~ [:foto:]:)" onclick="getElenco('(:dessert ~ [:tipo:]:)')">
+										<img class="img-max-height-125 img-responsive center-block" src="(:dessert ~ [:foto:]:)" onclick="getElenco('(:dessert ~ [:tipo:]:)')">
 									</div>
 									<div class="col-xs-7">
 										<div class="row">

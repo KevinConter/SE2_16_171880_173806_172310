@@ -71,20 +71,6 @@ app.get("/GetDettagliPiatto",function(request,response){
 	}
 });
 
-app.get("/files/resoconto.html",function(request,response){
-	if(request.session.user){
-		bind.toFile("tpl/resoconto.tpl",
-			{},
-			function(data){
-				response.writeHead(200,{"Content-Type":"text/html"});
-				response.end(data);
-			});
-	}else{
-		response.redirect("/");
-	}
-});
-
-
 //per il signin dell'utente
 app.post("/SignIn",function(request,response){
 	var errore=false;
@@ -337,7 +323,6 @@ app.post("/ScegliPiatto",function(request,response){
 			var prenotazione = db.parsePrenotazione(sess.prenotazione);
 			prenotazione.add(piatto);
 			sess.prenotazione=prenotazione;
-			console.log(sess.prenotazione);
 			response.redirect("/files/index.html");
 		}else{
 			response.writeHead(409,{"Content-Type":"text/html"});
@@ -363,6 +348,18 @@ app.post("/GetResoconto",function(request,response){
 				response.end(data);
 			}
 		);
+	}else{
+		response.redirect("/files/logIn.html");
+	}
+});
+
+app.get("/Conferma",function(request,response){
+	var sess = request.session;
+	if(sess.user){
+		var prenotazione = db.parsePrenotazione(sess.prenotazione);
+		db.addPrenotazione(prenotazione);	// Aggiungi prenotazione all'elenco generale
+		console.log(db.getPrenotazioniGiorno("2016-12-08"));
+		response.redirect("/files/final.html");
 	}else{
 		response.redirect("/files/logIn.html");
 	}
