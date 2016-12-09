@@ -7,6 +7,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bind = require('bind');
 var session = require('express-session');
+var fs = require("fs");
+var multer  =   require('multer');
+var upload = multer({ dest: '/tmp'});
 var db = require('./moduli/db.js');
 /************************************************/
 
@@ -28,7 +31,10 @@ app.get("/",function(request,response){
 	//Controlli per verificare se esiste la sessione
 	var sess = request.session;
 	if(sess.user){
-		response.redirect("/files/index.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/index.html");
 	}else{	//Se non esiste
 		response.redirect("/files/logIn.html");
 	}
@@ -36,7 +42,7 @@ app.get("/",function(request,response){
 
 //Bind per recuperare index.html
 app.get("/files/index.html",function(request,response){
-	if(request.session.user){
+	if(request.session.user && request.session.user !=1){
 		var user = db.cercaUtenteId(request.session.user);
 		bind.toFile("tpl/index.tpl",
 			{
@@ -48,12 +54,15 @@ app.get("/files/index.html",function(request,response){
 			}
 		);
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.get("/files/final.html",function(request,response){
-	if(request.session.user){
+	if(request.session.user && request.session.user !=1){
 		bind.toFile("tpl/final.tpl",
 			{},
 			function(data){
@@ -62,12 +71,15 @@ app.get("/files/final.html",function(request,response){
 			}
 		);
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.get("/GetDettagliPiatto",function(request,response){
-	if(request.session.user){
+	if(request.session.user && request.session.user !=1){
 		if(request.query.nome){
 			var piatto = db.getPiatto(request.query.nome);
 			bind.toFile("tpl/dettagliPiatto.tpl",
@@ -81,7 +93,26 @@ app.get("/GetDettagliPiatto",function(request,response){
 			response.end("Il piatto richiesto non è stato trovato sul server.");
 		}
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
+	}
+});
+
+app.get("/files/resoconto.html",function(request,response){
+	if(request.session.user && request.session.user !=1){
+		bind.toFile("tpl/resoconto.tpl",
+			{},
+			function(data){
+				response.writeHead(200,{"Content-Type":"text/html"});
+				response.end(data);
+			});
+	}else{
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/");
 	}
 });
 
@@ -234,7 +265,10 @@ app.post("/EditUser",function(request,response){
 
 		}
 	}else{
-		response.redirect("/");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/");
 	}
 });
 
@@ -256,7 +290,10 @@ app.post("/LogIn",function(request,response){
 			request.session.user = user.id;
 			var p = new db.Prenotazione(data.toISOString().substring(0,10),user);
 			request.session.prenotazione = p;
-			response.redirect("/files/index.html");	
+			if(user.id == 1){
+				response.redirect("/files/admin.html")
+			}else
+				response.redirect("/files/index.html");	
 		}else{
 			response.redirect("/files/logIn.html");
 		}
@@ -279,9 +316,8 @@ app.get("/LogOut",function(request,response){
 
 //Bind per recuperare editUser.html
 app.get("/files/editUser.html",function(request,response){
-	var sess = request.session;
-	if(sess.user){
-		var user= db.cercaUtenteId(sess.user);
+	if(request.session.user){
+		var user= db.cercaUtenteId(request.session.user);
 		bind.toFile("tpl/editUser.tpl",
 		{
 			id: user.id,
@@ -298,14 +334,17 @@ app.get("/files/editUser.html",function(request,response){
 			response.end(data);
 		});
 	}else{	//Se non esiste
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 //Estrazione dell'elenco di piatti da mostrare
 //nella pagina apposita
 app.post("/GetPiatti",function(request,response){
-	if(request.session.user){	//Se l'utente è loggato
+	if(request.session.user && request.session.user !=1){	//Se l'utente è loggato
 		var tipo = undefined;
 		var piatti = [];
 		if(request.body.iTipo){
@@ -328,13 +367,16 @@ app.post("/GetPiatti",function(request,response){
 			}
 		}
 	}else{ //se non è loggato
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.post("/ScegliPiatto",function(request,response){
 	var sess = request.session;
-	if(sess.user){
+	if(sess.user && request.session.user !=1){
 		var nomePiatto;
 		if(request.body.iPiatto){
 			nomePiatto = request.body.iPiatto;
@@ -348,13 +390,16 @@ app.post("/ScegliPiatto",function(request,response){
 			response.end("Non è stato selezionato nessun piatto.");
 		}
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.post("/GetResoconto",function(request,response){
 	var sess = request.session;
-	if(sess.user){
+	if(sess.user && request.session.user !=1){
 		var piatti = sess.prenotazione.piatti;
 		bind.toFile("tpl/resoconto.tpl",
 			{primo: piatti[0],
@@ -368,30 +413,183 @@ app.post("/GetResoconto",function(request,response){
 			}
 		);
 	}else{
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
+	}
+});
+
+//Bind per recuperare admin.html
+app.get("/files/admin.html",function(request,response){
+	if(request.session.user && request.session.user==1){
+		bind.toFile("tpl/admin.tpl",
+		{},
+		function(data){
+			response.writeHead(200,{"Content-Type":"text/html"});
+			response.end(data);
+		});
+	}else{	//Se non esiste
+		response.redirect("/");
+	}
+});
+
+//Aggiunta del piatto cercato dall'admin
+app.post("/AddPiatto", upload.single('file'), function(request,response){
+	var errore=false;
+	var nome = undefined;
+	var foto = undefined;
+	var tipo = undefined;
+	var ingredienti = undefined;
+	var allergeni = undefined;
+	var curiosita = undefined;
+
+	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
+		if(request.body.iNome){
+			nome = request.body.iNome;
+		}else{
+			errore=true;
+		}
+		
+		if(request.file){
+			var file = __dirname + '/web/immagini/' + nome+'.img';
+			fs.rename(request.file.path, file, function(err) {
+				if (err) {
+					errore = true;
+				}
+			});
+			foto = "/files/immagini/"+nome+'.img';
+		}else{
+			foto = '/files/immagini/defaultPiatti.png';
+		}
+		
+		if(request.body.iTipo){
+			tipo = parseInt( request.body.iTipo);
+			switch(tipo){
+				case 1: tipo = db.PRIMO; break; 
+				case 2: tipo = db.SECONDO; break;
+				case 3: tipo = db.CONTORNO; break;
+				case 4: tipo = db.DESSERT; break;
+				default : errore = true;
+			}
+		}else{
+			errore=true;
+		}
+		
+		if(request.body.iIngredienti){
+			ingredienti = request.body.iIngredienti;
+		}else{
+			errore=true;
+		}
+		
+		if(request.body.iAllergeni){
+			allergeni = request.body.iAllergeni;
+		}else{
+			errore=true;
+		}
+		
+		if(request.body.iCuriosita){
+			curiosita = request.body.iCuriosita;
+		}else{
+			errore=true;
+		}
+	
+		if(!errore){	
+			var piatto = new db.Piatto(nome,ingredienti,curiosita,foto,[],tipo);
+			db.addPiatto(piatto);
+			response.redirect("/files/admin.html");
+		}else{
+			bind.toFile("tpl/admin.tpl",
+				{messaggio: "Si è verificato un errore, il piatto non è stato inserito."},
+				function(data){
+					response.writeHead(409,{"Content-Type":"text/html"});
+					response.end(data);
+				}
+			);
+		}
+	}else{ //se non è loggato
 		response.redirect("/files/logIn.html");
 	}
 });
 
+//Estrazione del piatto cercato dall'admin
+app.post("/GetPiatto",function(request,response){
+	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
+		var cerca = undefined;
+		if(request.body.iCerca){
+			cerca = request.body.iCerca;
+			var piatto = db.getPiatto(cerca);
+			if(piatto!= undefined){
+				bind.toFile("tpl/piatto.tpl",
+				{piatto:piatto},
+				function(data){
+					response.writeHead(200,{"Content-Type":"text/html"});
+					response.end(data);
+				});
+			}else{
+			response.redirect("/files/error.html");
+			}
+		}else{
+			response.redirect("/files/error.html");
+		}
+	}else{ //se non è loggato
+		response.redirect("/");
+	}
+});
+
+//Estrazione del piatto cercato dall'admin per eliminarlo
+app.post("/EliminaPiatto",function(request,response){
+	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
+		if(request.body.iPiatto){
+			var ok = false;
+			var foto = __dirname + '/web/immagini/' + request.body.iPiatto +'.img';
+			ok = db.deletePiatto(request.body.iPiatto);
+			if(ok){
+				fs.exists(foto,function(exists){	//Verifica dell'esistenza del file immagine del piatto
+					if(exists){
+						fs.unlinkSync(foto);	//Cancellazione del file
+					}
+				});
+				response.redirect("/files/admin.html");
+			}else{
+				response.redirect("/files/error.html");	
+			}
+
+		}else{
+			response.redirect("/files/error.html");
+		}
+	}else{ //se non è loggato
+		response.redirect("/");
+	}
+});
+
+
 app.get("/Conferma",function(request,response){
 	var sess = request.session;
-	if(sess.user){
+	if(sess.user && request.session.user !=1){
 		var prenotazione = db.parsePrenotazione(sess.prenotazione);
 		db.addPrenotazione(prenotazione);	// Aggiungi prenotazione all'elenco generale
 		response.redirect("/files/final.html");
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.post("/SaltaOrdine",function(request,response){
 	var sess = request.session;
-	if(sess.user){
+	if(sess.user && request.session.user !=1){
 		var pren = db.parsePrenotazione(sess.prenotazione);
 		pren.piatti = [];	// Cancella la prenotazione dell'utente
 		db.addPrenotazione(pren);
 		response.redirect("files/final.html");
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
@@ -411,6 +609,23 @@ app.get("/files/error.html",function(request,response){
 		response.redirect("/files/logIn.html");
 	}
 });
+
+
+
+//Gestione dell'errore 404
+function Error404(request,response){
+	bind.toFile("tpl/error.tpl",
+	{
+		messaggio: "404 File non trovato"
+	},
+	function(data){
+		response.writeHead(404,{"Content-Type":"text/html"});
+		response.end(data);		
+	});
+}
+app.use(Error404);
+
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
