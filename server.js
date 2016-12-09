@@ -28,7 +28,10 @@ app.get("/",function(request,response){
 	//Controlli per verificare se esiste la sessione
 	var sess = request.session;
 	if(sess.user){
-		response.redirect("/files/index.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/index.html");
 	}else{	//Se non esiste
 		response.redirect("/files/logIn.html");
 	}
@@ -36,7 +39,7 @@ app.get("/",function(request,response){
 
 //Bind per recuperare index.html
 app.get("/files/index.html",function(request,response){
-	if(request.session.user){
+	if(request.session.user && request.session.user !=1){
 		var user = db.cercaUtenteId(request.session.user);
 		bind.toFile("tpl/index.tpl",
 			{
@@ -48,12 +51,15 @@ app.get("/files/index.html",function(request,response){
 			}
 		);
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.get("/files/final.html",function(request,response){
-	if(request.session.user){
+	if(request.session.user && request.session.user !=1){
 		bind.toFile("tpl/final.tpl",
 			{},
 			function(data){
@@ -62,12 +68,15 @@ app.get("/files/final.html",function(request,response){
 			}
 		);
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.get("/GetDettagliPiatto",function(request,response){
-	if(request.session.user){
+	if(request.session.user && request.session.user !=1){
 		if(request.query.nome){
 			var piatto = db.getPiatto(request.query.nome);
 			bind.toFile("tpl/dettagliPiatto.tpl",
@@ -81,12 +90,15 @@ app.get("/GetDettagliPiatto",function(request,response){
 			response.end("Il piatto richiesto non è stato trovato sul server.");
 		}
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.get("/files/resoconto.html",function(request,response){
-	if(request.session.user){
+	if(request.session.user && request.session.user !=1){
 		bind.toFile("tpl/resoconto.tpl",
 			{},
 			function(data){
@@ -94,7 +106,10 @@ app.get("/files/resoconto.html",function(request,response){
 				response.end(data);
 			});
 	}else{
-		response.redirect("/");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/");
 	}
 });
 
@@ -247,7 +262,10 @@ app.post("/EditUser",function(request,response){
 
 		}
 	}else{
-		response.redirect("/");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/");
 	}
 });
 
@@ -295,9 +313,8 @@ app.get("/LogOut",function(request,response){
 
 //Bind per recuperare editUser.html
 app.get("/files/editUser.html",function(request,response){
-	var sess = request.session;
-	if(sess.user){
-		var user= db.cercaUtenteId(sess.user);
+	if(request.session.user){
+		var user= db.cercaUtenteId(request.session.user);
 		bind.toFile("tpl/editUser.tpl",
 		{
 			id: user.id,
@@ -314,14 +331,17 @@ app.get("/files/editUser.html",function(request,response){
 			response.end(data);
 		});
 	}else{	//Se non esiste
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 //Estrazione dell'elenco di piatti da mostrare
 //nella pagina apposita
 app.post("/GetPiatti",function(request,response){
-	if(request.session.user){	//Se l'utente è loggato
+	if(request.session.user && request.session.user !=1){	//Se l'utente è loggato
 		var tipo = undefined;
 		var piatti = [];
 		if(request.body.iTipo){
@@ -344,13 +364,16 @@ app.post("/GetPiatti",function(request,response){
 			}
 		}
 	}else{ //se non è loggato
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.post("/ScegliPiatto",function(request,response){
 	var sess = request.session;
-	if(sess.user){
+	if(sess.user && request.session.user !=1){
 		var nomePiatto;
 		if(request.body.iPiatto){
 			nomePiatto = request.body.iPiatto;
@@ -364,13 +387,16 @@ app.post("/ScegliPiatto",function(request,response){
 			response.end("Non è stato selezionato nessun piatto.");
 		}
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.post("/GetResoconto",function(request,response){
 	var sess = request.session;
-	if(sess.user){
+	if(sess.user && request.session.user !=1){
 		var piatti = sess.prenotazione.piatti;
 		bind.toFile("tpl/resoconto.tpl",
 			{primo: piatti[0],
@@ -384,7 +410,10 @@ app.post("/GetResoconto",function(request,response){
 			}
 		);
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
@@ -498,24 +527,30 @@ app.post("/GetPiatto",function(request,response){
 
 app.get("/Conferma",function(request,response){
 	var sess = request.session;
-	if(sess.user){
+	if(sess.user && request.session.user !=1){
 		var prenotazione = db.parsePrenotazione(sess.prenotazione);
 		db.addPrenotazione(prenotazione);	// Aggiungi prenotazione all'elenco generale
 		response.redirect("/files/final.html");
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
 app.post("/SaltaOrdine",function(request,response){
 	var sess = request.session;
-	if(sess.user){
+	if(sess.user && request.session.user !=1){
 		var pren = db.parsePrenotazione(sess.prenotazione);
 		pren.piatti = [];	// Cancella la prenotazione dell'utente
 		db.addPrenotazione(pren);
 		response.redirect("files/final.html");
 	}else{
-		response.redirect("/files/logIn.html");
+		if(request.session.user == 1)
+			response.redirect("/files/admin.html");
+		else
+			response.redirect("/files/logIn.html");
 	}
 });
 
