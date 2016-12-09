@@ -137,7 +137,7 @@
 				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 						<div class="form-group" id="cAllergeni">
 							<label for="iAllergeni" class="control-label"> Allergeni</label>
-						  	<textarea class="form-control" rows="5" id="iAllergeni" name="iAllergeni" style="resize:none">(:allergeni ~ Allergeni:)</textarea>
+						  	<textarea class="form-control" rows="5" id="iAllergeni" name="iAllergeni" style="resize:none">(:allergeni:)</textarea>
 						</div>
 					</div>
 				</div>
