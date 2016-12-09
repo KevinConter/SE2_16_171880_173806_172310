@@ -6,10 +6,23 @@ SCRIPT PER IL LOGIN
  * Resetta le classi dei campi di input (toglie il successo o insuccesso)
  */
 function resetta(){
+	document.getElementById("cCerca").className="form-group";
 	document.getElementById("cNome").className="form-group";
 	document.getElementById("Foto").value="";
 	document.getElementById("LabelFoto").className="form-control center-block labelFoto";
 	$("#LabelFoto").css("background-image", "none");
+}
+
+/**
+* Controlla se fare il submit del form oppure da un messaggio di errore
+*/
+function controlloCerca(){
+
+	var ok = controlloValidita("iCerca") ;
+	if(ok)
+		document.getElementById("search").submit();
+	else
+		alert("Form incompleto");	
 }
 
 /**

@@ -498,32 +498,52 @@ app.post("/AddPiatto",function(request,response){
 		response.redirect("/");
 	}
 });
-/*
+
 //Estrazione del piatto cercato dall'admin
 app.post("/GetPiatto",function(request,response){
 	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
 		var cerca = undefined;
-		var piatto;
 		if(request.body.iCerca){
 			cerca = request.body.iCerca;
-			piatto = db.getPiatto(cerca);
-			bind.toFile("tpl/admin.tpl",
-			{
-				nome: piatto.nome,
-				tipo: piatto.tipo,
-				ingredienti : piatto.ingredienti,
-				curiosita : piatto.curiosita
-			},
-			function(data){
-				response.writeHead(200,{"Content-Type":"text/html"});
-				response.end(data);
-			});
+			var piatto = db.getPiatto(cerca);
+			if(piatto!= undefined){
+				bind.toFile("tpl/piatto.tpl",
+				{piatto:piatto},
+				function(data){
+					response.writeHead(200,{"Content-Type":"text/html"});
+					response.end(data);
+				});
+			}else{
+			response.redirect("/files/error.html");
+			}
+		}else{
+			response.redirect("/files/error.html");
 		}
 	}else{ //se non è loggato
 		response.redirect("/");
 	}
 });
-*/
+
+//Estrazione del piatto cercato dall'admin per eliminarlo
+app.post("/EliminaPiatto",function(request,response){
+	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
+		if(request.body.iPiatto){
+			var ok = false;
+			ok = db.deletePiatto(request.body.iPiatto);
+			if(ok){
+				response.redirect("/files/admin.html");
+			}else{
+				response.redirect("/files/error.html");	
+			}
+
+		}else{
+			response.redirect("/files/error.html");
+		}
+	}else{ //se non è loggato
+		response.redirect("/");
+	}
+});
+
 
 app.get("/Conferma",function(request,response){
 	var sess = request.session;

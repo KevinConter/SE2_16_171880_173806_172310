@@ -77,11 +77,11 @@
                     </div>
                     <div class="row">
 						<div class="col-xs-5 col-xs-offset-1">
-		    				<input type="button" class="btn btn-lg btn-block btn-danger" value="Elimina">
+		    				<input type="button" class="btn btn-lg btn-block btn-danger" value="Resetta" onClick="resetta()">
 		    			</div>
 						<div class="col-xs-5">
 							<div class="form-group">
-								<input type="submit" class="btn btn-lg btn-block btn-primary" value="Cerca">
+								<input type="button" class="btn btn-lg btn-block btn-primary" value="Cerca" onClick="controlloCerca()">
 							</div>
 						</div>
 					</div>
