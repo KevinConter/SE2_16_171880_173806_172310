@@ -7,3 +7,13 @@
 	background-color: #ff6103;
 	border-color: #ff6103;
 }
+
+.panel-default{
+	border-color: #AAAAAA;
+}
+
+.panel-default>.panel-heading{
+	color:#fff;
+	background-color: #AAAAAA;
+	border-color: #AAAAAA;
+}

@@ -82,8 +82,18 @@ app.get("/GetDettagliPiatto",function(request,response){
 	if(request.session.user && request.session.user !=1){
 		if(request.query.nome){
 			var piatto = db.getPiatto(request.query.nome);
+			var allergeni = "";
+			for(var i=0 ; i<piatto.allergeni.length;i++){
+				if(i == piatto.allergeni.length -1)
+					allergeni += piatto.allergeni[i];
+				else
+					allergeni += piatto.allergeni[i]+", ";	
+			}
 			bind.toFile("tpl/dettagliPiatto.tpl",
-				{piatto:piatto},
+				{
+					piatto:piatto,
+					allergeni:allergeni
+				},
 				function(data){
 					response.writeHead(200,{"Content-Type":"text/html"});
 					response.end(data);
@@ -92,22 +102,6 @@ app.get("/GetDettagliPiatto",function(request,response){
 			response.writeHead(404,{"Content-Type":"text/html"});
 			response.end("Il piatto richiesto non è stato trovato sul server.");
 		}
-	}else{
-		if(request.session.user == 1)
-			response.redirect("/files/admin.html");
-		else
-			response.redirect("/files/logIn.html");
-	}
-});
-
-app.get("/files/resoconto.html",function(request,response){
-	if(request.session.user && request.session.user !=1){
-		bind.toFile("tpl/resoconto.tpl",
-			{},
-			function(data){
-				response.writeHead(200,{"Content-Type":"text/html"});
-				response.end(data);
-			});
 	}else{
 		if(request.session.user == 1)
 			response.redirect("/files/admin.html");
@@ -196,6 +190,7 @@ app.post("/EditUser",function(request,response){
 		var recapito = undefined;
 		var mail = undefined;
 		var pwd = undefined;
+		var allergeni = [];
 		var user = db.cercaUtenteId(request.session.user);
 		
 		if(request.body.iNome){
@@ -240,6 +235,15 @@ app.post("/EditUser",function(request,response){
 			errore=true;
 		}
 		
+		if(request.body.iAllergeni || request.body.iAllergeni==""){
+			if(request.body.iAllergeni=="")
+				allergeni = [];
+			else
+				allergeni = request.body.iAllergeni.split(", ");
+		}else{
+			errore=true;
+		}
+		
 		if(errore){	
 			response.redirect("/files/editUser.html");
 		}else{
@@ -255,6 +259,7 @@ app.post("/EditUser",function(request,response){
 				user.password=pwd;
 				user.via=indirizzo;
 				user.recapito=recapito;
+				user.allergeni=allergeni;
 				
 				db.updateUser(user);
 				request.session.user=user.id;
@@ -315,6 +320,13 @@ app.get("/LogOut",function(request,response){
 app.get("/files/editUser.html",function(request,response){
 	if(request.session.user){
 		var user= db.cercaUtenteId(request.session.user);
+		var allergeni = "";
+		for(var i=0 ; i<user.allergeni.length;i++){
+			if(i == user.allergeni.length -1)
+				allergeni += user.allergeni[i];
+			else
+				allergeni += user.allergeni[i]+", ";	
+		}
 		bind.toFile("tpl/editUser.tpl",
 		{
 			id: user.id,
@@ -324,7 +336,8 @@ app.get("/files/editUser.html",function(request,response){
 			data: user.data_nascita,
 			recapito: user.recapito,
 			mail: user.mail,
-			password: user.password
+			password: user.password,
+			allergeni: allergeni
 		},
 		function(data){
 			response.writeHead(200,{"Content-Type":"text/html"});
@@ -342,6 +355,7 @@ app.get("/files/editUser.html",function(request,response){
 //nella pagina apposita
 app.post("/GetPiatti",function(request,response){
 	if(request.session.user && request.session.user !=1){	//Se l'utente è loggato
+		var user= db.cercaUtenteId(request.session.user);
 		var tipo = undefined;
 		var piatti = [];
 		if(request.body.iTipo){
@@ -350,7 +364,7 @@ app.post("/GetPiatti",function(request,response){
 				case db.PRIMO: 
 				case db.SECONDO:
 				case db.CONTORNO:
-				case db.DESSERT: piatti = db.getPiattiTipo(tipo);
+				case db.DESSERT: piatti = db.getPiattiTipo(tipo, user.allergeni);
 							bind.toFile("tpl/elenco.tpl",
 								{piatti: piatti,
 								tipo: tipo},
@@ -480,7 +494,8 @@ app.post("/AddPiatto", upload.single('file'), function(request,response){
 		}
 		
 		if(request.body.iAllergeni){
-			allergeni = request.body.iAllergeni;
+			allergeni = request.body.iAllergeni.split(", ");
+			
 		}else{
 			errore=true;
 		}
@@ -492,7 +507,7 @@ app.post("/AddPiatto", upload.single('file'), function(request,response){
 		}
 	
 		if(!errore){	
-			var piatto = new db.Piatto(nome,ingredienti,curiosita,foto,[],tipo);
+			var piatto = new db.Piatto(nome,ingredienti,curiosita,foto,allergeni,tipo);
 			db.addPiatto(piatto);
 			response.redirect("/files/admin.html");
 		}else{
@@ -517,8 +532,18 @@ app.post("/GetPiatto",function(request,response){
 			cerca = request.body.iCerca;
 			var piatto = db.getPiatto(cerca);
 			if(piatto!= undefined){
+				var allergeni = "";
+				for(var i=0 ; i<piatto.allergeni.length;i++){
+					if(i == piatto.allergeni.length -1)
+						allergeni += piatto.allergeni[i];
+					else
+						allergeni += piatto.allergeni[i]+", ";	
+				}
 				bind.toFile("tpl/piatto.tpl",
-				{piatto:piatto},
+				{
+					piatto:piatto,
+					allergeni:allergeni	
+				},
 				function(data){
 					response.writeHead(200,{"Content-Type":"text/html"});
 					response.end(data);
@@ -527,7 +552,8 @@ app.post("/GetPiatto",function(request,response){
 			response.redirect("/files/error.html");
 			}
 		}else{
-			response.redirect("/files/error.html");
+			response.writeHead(409,{"Content-Type":"text/html"});
+			response.end("Non è stato inserito alcun piatto da cercare.");
 		}
 	}else{ //se non è loggato
 		response.redirect("/files/logIn.html");
@@ -553,7 +579,8 @@ app.post("/EliminaPiatto",function(request,response){
 			}
 
 		}else{
-			response.redirect("/files/error.html");
+			response.writeHead(409,{"Content-Type":"text/html"});
+			response.end("Non è stato inserito alcun piatto da eliminare.");
 		}
 	}else{ //se non è loggato
 		response.redirect("/files/logIn.html");
@@ -599,7 +626,7 @@ app.get("/files/error.html",function(request,response){
 			messaggio: "L'operazione ha causato un errore, ritenti l'operazione tra qualche minuto. Nel caso che l'errore persista contattare il team"
 		},
 		function(data){
-			response.writeHead(200,{"Content-Type":"text/html"});
+			response.writeHead(409,{"Content-Type":"text/html"});
 			response.end(data);
 		});
 	}else{	//Se non esiste

@@ -295,11 +295,27 @@ var getPiatto = function(nome){
 }
 
 /**
+  * Funzione che restituisce se un utente è allergico al pasto
+  * @param {Array[String]} allergeniPiatto gli allergeni del piatto
+  * @param {Array[String]} allergeniUtente gli allergeni dell'utente
+  * @return true se allergico, altrimenti false
+*/
+function isAllergico(allergeniPiatto, allergeniUtente){
+	for (var i=0;i <allergeniPiatto.length;i++){
+		for(var j=0; j<allergeniUtente.length;j++){
+			if(allergeniPiatto[i]==allergeniUtente[j])
+				return true;	
+		}
+	}
+	return false;
+}
+/**
   * Funzione che permette di ottenere tutti i piatti di un certo tipo
   * @param{String} tipo il tipo che si vuole ottenere
+  * @param {Array[String]} allergeni gli allergeni dell'utente
   * @return {Piatti[]} un vettore di piatti di quel tipo
 */
-var getPiattiTipo = function(tipo){
+var getPiattiTipo = function(tipo, allergeni){
 	var ret = [];
 	if(tipo.localeCompare(PRIMO) == 0 ||
 		tipo.localeCompare(SECONDO) == 0 ||
@@ -307,15 +323,13 @@ var getPiattiTipo = function(tipo){
 		tipo.localeCompare(DESSERT) == 0 ){
 	
 		for(var i in piatti){
-			if(piatti[i] != undefined && piatti[i].tipo == tipo){
+			if(piatti[i] != undefined && piatti[i].tipo == tipo && !isAllergico(piatti[i].allergeni,allergeni)){
 				ret.push(piatti[i]);
 			}
 		}
 	}
 	return ret;
 }
-
-
 
 exports.PRIMO = PRIMO;
 exports.SECONDO = SECONDO;

@@ -78,7 +78,21 @@
         				</div>
         			</div>
         		</div>
-        		<div class="panel panel-warnign">
+                
+                <div class="panel panel-warnign">
+        			<div class="panel-heading">
+        				<h3 class="panel-title">Allergeni:</h3>
+        			</div>
+        			<div class="panel-body">
+        				<div class="row">
+        					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        						<p>(:allergeni:)</p>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+                
+        		<div class="panel panel-default">
         			<div class="panel-heading">
         				<h3 class="panel-title">Curiosità:</h3>
         			</div>
