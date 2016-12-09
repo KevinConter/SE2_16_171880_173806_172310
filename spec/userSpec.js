@@ -5,7 +5,7 @@ var options = {followRedirect:false,
 var base='http://localhost:8848/';
 
 describe("Azioni Utente\n",function(){
-	describe("\n",function(){
+	describe("Ordinazione corretta totale\n",function(){
 		it("LogIn: ",function(done){
 			options.form = {iMail:'nome@gmail.com',
 						iPassword:'password'
@@ -17,9 +17,16 @@ describe("Azioni Utente\n",function(){
 			});
 		});
 		
+		it("Index.html: ",function(done){
+			request.get(base+'files/index.html',options,function(error,response,body){
+				expect(response.statusCode).toBe(200);
+				done();
+			});
+		});
+		
 		it("Accedo ai primi: ",function(done){
 			options.form = {iTipo:'primo'};
-			request.post(base+'GetPiatti',options,function(error,response,body){
+			request.post(base+'GetPiatti',options,function(erromr,response,body){
 				expect(response.statusCode).toBe(200);
 				expect(body).toContain("Pasta al Ragu'");
 				done();
@@ -125,6 +132,99 @@ describe("Azioni Utente\n",function(){
 				expect(body).toContain("Cotoletta alla Milanese");
 				expect(body).toContain("Patatine fritte");
 				expect(body).toContain("Budino");
+				done();
+			});
+		});
+		
+		it("Conferma: ",function(done){
+			request.get(base+'Conferma',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/final.html");
+				
+				request.post(base+'LogOut');//Eseguo il LogOut alla fine della sequenza di test
+				done();
+			});
+		});
+	});
+	
+	describe("ordine Parziale",function(){
+		it("LogIn: ",function(done){
+			options.form = {iMail:'prova@gmail.com',
+						iPassword:'password'
+			};
+			request.post(base+'LogIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
+				done();
+			});
+		});
+		
+		it("Ordino la Cotoletta: ",function(done){
+			options.form = {iPiatto:'Cotoletta alla Milanese'};
+			request.post(base+'ScegliPiatto',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
+				done();
+			});
+		});
+		it("Ordino le Patatine: ",function(done){
+			options.form = {iPiatto:'Patatine fritte'};
+			request.post(base+'ScegliPiatto',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
+				done();
+			});
+		});
+		it("Conferma: ",function(done){
+			request.get(base+'Conferma',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/final.html");
+				done();
+			});
+		});
+		it("LogOut: ",function(done){
+			request.post(base+'LogOut');//Eseguo il LogOut alla fine della sequenza di test
+			done();
+		});
+		
+	});
+	
+	describe("Profilo",function(){
+		it("getProfilo",function(done){
+			request.get(base+'files/editUser.html',options,function(error,response,body){
+				expect(body).toBeUndefined();
+				done();
+			});
+		});
+	});
+	
+	describe("Test su GetDettagliPiatto",function(){
+		it("Dettagli piatto esistente: Budino: ",function(done){
+			request.get(base+'GetDettagliPiatto?nome=Budino',options,function(error,response,body){
+				expect(response.statusCode).toBe(200);
+				expect(body).toContain("Budino");
+				expect(body).toContain("Non ci sono curiosita'");
+				done();
+			});
+		});
+		it("Dettagli piatto inesistente: ",function(done){
+			request.get(base+'GetDettagliPiatto?nome=qwerty',options,function(error,response,body){
+				expect(response.statusCode).toBe(404);
+				expect(body).toContain('Il piatto richiesto non è stato trovato sul server.');
+				done();
+			});
+		});
+		it("Dettagli piatto nome vuoto",function(done){
+			request.get(base+'GetDettagliPiatto?nome=',options,function(error,response,body){
+				expect(response.statusCode).toBe(409);
+				expect(body).toContain('Errore');
+				done();
+			});
+		});
+		it("Dettagli piatto senza nome",function(done){
+			request.get(base+'GetDettagliPiatto',options,function(error,response,body){
+				expect(response.statusCode).toBe(409);
+				expect(body).toContain('Errore');
 				done();
 			});
 		});
