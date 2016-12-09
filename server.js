@@ -542,8 +542,14 @@ app.post("/EliminaPiatto",function(request,response){
 	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
 		if(request.body.iPiatto){
 			var ok = false;
+			var foto = __dirname + '/web/immagini/' + request.body.iPiatto +'.img';
 			ok = db.deletePiatto(request.body.iPiatto);
 			if(ok){
+				fs.exists(foto,function(exists){	//Verifica dell'esistenza del file immagine del piatto
+					if(exists){
+						fs.unlinkSync(foto);	//Cancellazione del file
+					}
+				});
 				response.redirect("/files/admin.html");
 			}else{
 				response.redirect("/files/error.html");	
@@ -608,7 +614,6 @@ app.get("/files/error.html",function(request,response){
 
 //Gestione dell'errore 404
 function Error404(request,response){
-	
 	bind.toFile("tpl/error.tpl",
 	{
 		messaggio: "404 File non trovato"
@@ -616,7 +621,7 @@ function Error404(request,response){
 	function(data){
 		response.writeHead(404,{"Content-Type":"text/html"});
 		response.end(data);		
-	})
+	});
 }
 app.use(Error404);
 
