@@ -499,10 +499,16 @@ app.post("/AddPiatto", upload.single('file'), function(request,response){
 			db.addPiatto(piatto);
 			response.redirect("/files/admin.html");
 		}else{
-			response.redirect("/files/admin.html");
+			bind.toFile("tpl/admin.tpl",
+				{messaggio: "Si è verificato un errore, il piatto non è stato inserito."},
+				function(data){
+					response.writeHead(409,{"Content-Type":"text/html"});
+					response.end(data);
+				}
+			);
 		}
 	}else{ //se non è loggato
-		response.redirect("/");
+		response.redirect("/files/logIn.html");
 	}
 });
 

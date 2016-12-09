@@ -4,15 +4,21 @@
 		<title>ADMINISTRATOR</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<link rel="stylesheet" href="bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-		<script type="text/javascript" src="bootstrap/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/admin.css">
-          <script type="text/javascript" src="js/form.js"></script>
-        <script type="text/javascript" src="js/admin.js"></script>
-        
-        
+		<link rel="stylesheet" href="/files/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+		<script type="text/javascript" src="/files/bootstrap/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="/files/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="/files/css/general.css">
+        <link rel="stylesheet" href="/files/css/admin.css">
+          <script type="text/javascript" src="/files/js/form.js"></script>
+        <script type="text/javascript" src="/files/js/admin.js"></script>
+        <script>
+        	$(document).ready(function(){
+        		var messaggio="(:messaggio:)";
+        		if(messaggio!=""){
+        			alert("Attenzione!\n"+messaggio);
+        		}
+        	});
+        </script>
         
 	</head>
 	<body>
