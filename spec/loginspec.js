@@ -98,22 +98,6 @@ describe("Login Test\n",function(){
 		});
 	});
 	
-	describe("-> /files/resoconto.html\n",function(){
-		it("Get: ",function(done){
-			request.get(base+'files/resoconto.html',options,function(error,response,body){
-				expect(response.statusCode).toBe(302);
-				expect(body).toContain("Redirecting to /files/logIn.html");
-				done();
-			});
-		});
-		it("Post: ",function(done){
-			request.post(base+'files/resoconto.html',options,function(error,response,body){
-				expect(response.statusCode).toBe(404);
-				done();
-			});
-		});
-	});
-	
 	describe("-> /GetDettagliPiatto\n",function(){
 		it("Get: ",function(done){
 			request.get(base+'GetDettagliPiatto',options,function(error,response,body){
@@ -304,6 +288,22 @@ describe("Login Test\n",function(){
 			request.post(base+'AddPiatto',options,function(error,response,body){
 				expect(response.statusCode).toBe(302);
 				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("-> /GetElencoPrenotazioni\n",function(){
+		it("Get: ",function(done){
+			request.get(base+'GetElencoPrenotazioni',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain('Redirecting to /');
+				done();
+			});
+		});
+		it("Post: ",function(done){
+			request.post(base+'GetElencoPrenotazioni',options,function(error,response,body){
+				expect(response.statusCode).toBe(404);
 				done();
 			});
 		});
