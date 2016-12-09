@@ -70,9 +70,11 @@ paths:
           schema:
             $ref: '#/definitions/Piatto'
         404:
-          description: Se il piatto richiesto on è stato trovato sul server.
+          description: Se il piatto richiesto non è stato trovato sul server.
         302:
           description: Redirect a admin.html se l'utente è amministratore; Redirect a logIn.html se non è loggato.
+        409:
+          description: Errore, non è stato inviato il nome di un piatto valido.
           
   /SignIn:
     post:
@@ -166,7 +168,7 @@ paths:
         - User
       responses:
         302:
-          description: Redirect alla pagina index.html se le modifiche sono state eseguite; se si è verificato un errore, redirect alla pagine error.html. Redirect a logIn.html se l'utente non è loggato.
+          description: Redirect alla pagina index.html se le modifiche sono state eseguite; se si è verificato un errore, redirect alla pagine error.html. Redirect a logIn.html se l'utente non è loggato. Redirect a editUser.html se uno dei campi non è stato compilato.
           schema:
             $ref: '#/definitions/User'
           
@@ -368,6 +370,21 @@ paths:
           description: Redirect a admin.html se il piatto è stato eliminato. Redirect a error.html se il piatto era già stato eliminato. Redirect a logIn.html se l'utente non è loggato.
         409:
           description: Errore, non è stato inviato il nome del piatto da eliminare.
+          
+  /GetElencoPrenotazioni:
+    get:
+      summary: Elenco prenotazioni
+      description: |
+        Estrae dal sistema l'elenco complessivo di tutte le prenotazioni eseguite dagli utenti se l'utente loggato è amministratore. Se l'utente non è amministratore, redirect a ROOT.
+      tags:
+        - Admin
+      responses:
+        200:
+          description: Risultato del binding del template elencoPrenotazioni.tpl se l'utente loggatto è aministratore.
+          schema:
+            $ref: '#/definitions/Elenco'
+        302:
+          description: Redirect a ROOT perchè l'utente loggato non è amministratore.
   
   /Conferma:
     get:
@@ -397,7 +414,7 @@ paths:
       description: Verifica se l'utente è loggato, ed esegue il parsing del template error.tpl in cui viene mostrato un messaggio di errore generico.
       responses:
         409:
-          description: Binding del file error.tpl oppure se l'utente non è loggato viene eseguito un redirect alla pagina di login.
+          description: Binding del file error.tpl.
         302:
           description: Redirect a logIn.html se l'utente non è loggato.
 
@@ -479,3 +496,9 @@ definitions:
         $ref: '#/definitions/User'
       piatti:
         $ref: '#/definitions/Piatti'
+        
+  Elenco:
+    type: array
+    description: Elenco delle prenotazioni
+    items:
+      $ref: '#/definitions/Prenotazione'
