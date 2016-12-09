@@ -77,7 +77,7 @@
                     </div>
                     <div class="row">
 						<div class="col-xs-5 col-xs-offset-1">
-		    				<input type="button" class="btn btn-lg btn-block btn-danger" value="Resetta" onClick="resetta()">
+		    				<input type="reset" class="btn btn-lg btn-block btn-danger" value="Resetta" onClick="resetta()">
 		    			</div>
 						<div class="col-xs-5">
 							<div class="form-group">
@@ -89,7 +89,7 @@
 				<hr>
                 
                 
-				<form action="/AddPiatto" method="POST" id="modulo">
+				<form action="/AddPiatto" enctype="multipart/form-data" method="POST" id="modulo">
 					<div class="row" >
                         <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
                             <div class="form-group" id="cNome">
@@ -104,7 +104,7 @@
                             <div class="form-group" id="cFotoProfilo">
                                <label for="LabelFoto"> Foto Piatto </label>
                                <label for="Foto" id="LabelFoto" class="form-control center-block labelFoto"></label>
-                               <input type="file" id="Foto" onchange="cambiaFoto()" name="iFoto" accept="image/*" class="invisibile">
+                               <input type="file" id="Foto" onchange="cambiaFoto()" name="file" accept="image/*" class="invisibile">
                              </div>
                         </div>
                     </div>

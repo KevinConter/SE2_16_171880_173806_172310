@@ -7,6 +7,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bind = require('bind');
 var session = require('express-session');
+var fs = require("fs");
+var multer  =   require('multer');
+var upload = multer({ dest: '/tmp'});
 var db = require('./moduli/db.js');
 /************************************************/
 
@@ -431,8 +434,8 @@ app.get("/files/admin.html",function(request,response){
 	}
 });
 
-//Estrazione del piatto cercato dall'admin
-app.post("/AddPiatto",function(request,response){
+//Aggiunta del piatto cercato dall'admin
+app.post("/AddPiatto", upload.single('file'), function(request,response){
 	var errore=false;
 	var nome = undefined;
 	var foto = undefined;
@@ -448,8 +451,14 @@ app.post("/AddPiatto",function(request,response){
 			errore=true;
 		}
 		
-		if(request.body.iFoto){
-			foto = request.body.iFoto;
+		if(request.file){
+			var file = __dirname + '/web/immagini/' + nome+'.img';
+			fs.rename(request.file.path, file, function(err) {
+				if (err) {
+					errore = true;
+				}
+			});
+			foto = "/files/immagini/"+nome+'.img';
 		}else{
 			errore=true;
 		}
@@ -486,14 +495,12 @@ app.post("/AddPiatto",function(request,response){
 		}
 	
 		if(!errore){	
-			var piatto = new db.Piatto(nome,ingredienti,curiosita,null,[],tipo);
+			var piatto = new db.Piatto(nome,ingredienti,curiosita,foto,[],tipo);
 			db.addPiatto(piatto);
 			response.redirect("/files/admin.html");
 		}else{
 			response.redirect("/files/admin.html");
 		}
-		
-		
 	}else{ //se non è loggato
 		response.redirect("/");
 	}
