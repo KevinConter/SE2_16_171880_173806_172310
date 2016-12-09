@@ -1,5 +1,5 @@
 {
-  "name": "prgetto_se2",
+  "name": "progetto_se2",
   "version": "1.0.0",
   "description": "Progetto finale SE2",
   "main": "server.js",
@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/KevinConter/SE2_16_171880_173806_172310_P/issues"
   },
-  "homepage": "https://github.com/KevinConter/SE2_16_171880_173806_172310_P#readme"
+  "homepage": "https://github.com/KevinConter/SE2_16_171880_173806_172310_P#readme",
+  "dependencies": {
+    "bind": "^0.1.7",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "util": "^0.10.3"
+  }
 }
