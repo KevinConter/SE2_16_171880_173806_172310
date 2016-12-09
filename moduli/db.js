@@ -379,8 +379,11 @@ var Prenotazione = function(data,user){
 				case CONTORNO:
 					i=2;
 					break;
-				default:
+				case DESSERT:
 					i=3;
+					break;
+				default:
+					i=4;
 					break;
 			}
 			this.piatti[i] = p;

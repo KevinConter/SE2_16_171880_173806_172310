@@ -82,25 +82,30 @@ app.get("/GetDettagliPiatto",function(request,response){
 	if(request.session.user && request.session.user !=1){
 		if(request.query.nome){
 			var piatto = db.getPiatto(request.query.nome);
-			var allergeni = "";
-			for(var i=0 ; i<piatto.allergeni.length;i++){
-				if(i == piatto.allergeni.length -1)
-					allergeni += piatto.allergeni[i];
-				else
-					allergeni += piatto.allergeni[i]+", ";	
+			if(piatto!=undefined){
+				var allergeni = "";
+				for(var i=0 ; i<piatto.allergeni.length;i++){
+					if(i == piatto.allergeni.length -1)
+						allergeni += piatto.allergeni[i];
+					else
+						allergeni += piatto.allergeni[i]+", ";	
+				}
+				bind.toFile("tpl/dettagliPiatto.tpl",
+					{
+						piatto:piatto,
+						allergeni:allergeni
+					},
+					function(data){
+						response.writeHead(200,{"Content-Type":"text/html"});
+						response.end(data);
+					});
+			}else{
+				response.writeHead(404,{"Content-Type":"text/html"});
+				response.end("Il piatto richiesto non è stato trovato sul server.");
 			}
-			bind.toFile("tpl/dettagliPiatto.tpl",
-				{
-					piatto:piatto,
-					allergeni:allergeni
-				},
-				function(data){
-					response.writeHead(200,{"Content-Type":"text/html"});
-					response.end(data);
-				});
 		}else{
-			response.writeHead(404,{"Content-Type":"text/html"});
-			response.end("Il piatto richiesto non è stato trovato sul server.");
+			response.writeHead(409,{"Content-Type":"text/html"});
+			response.end("Errore, non è stato inserito il nome di un piatto da cercare.");
 		}
 	}else{
 		if(request.session.user == 1)
@@ -293,7 +298,7 @@ app.post("/LogIn",function(request,response){
 			var p = new db.Prenotazione(data.toISOString().substring(0,10),user);
 			request.session.prenotazione = p;
 			if(user.id == 1){
-				response.redirect("/files/admin.html")
+				response.redirect("/files/admin.html");
 			}else
 				response.redirect("/files/index.html");	
 		}else{
@@ -344,10 +349,7 @@ app.get("/files/editUser.html",function(request,response){
 			response.end(data);
 		});
 	}else{	//Se non esiste
-		if(request.session.user == 1)
-			response.redirect("/files/admin.html");
-		else
-			response.redirect("/files/logIn.html");
+		response.redirect("/files/logIn.html");
 	}
 });
 
@@ -549,7 +551,7 @@ app.post("/GetPiatto",function(request,response){
 					response.end(data);
 				});
 			}else{
-			response.redirect("/files/error.html");
+				response.redirect("/files/error.html");
 			}
 		}else{
 			response.writeHead(409,{"Content-Type":"text/html"});
@@ -587,6 +589,24 @@ app.post("/EliminaPiatto",function(request,response){
 	}
 });
 
+app.get("/GetElencoPrenotazioni",function(request,response){
+	var sess = request.session;
+	if(sess.user && sess.user==1){
+		var data = new Date();
+		data.setDate(data.getDate()+4);	// Imposta la data di pronotazione a 4 giorni da oggi
+		var elenco = db.getPrenotazioniGiorno(data.toISOString().substring(0,10));
+		bind.toFile("tpl/elencoPrenotazioni.tpl",
+			{elenco: elenco,
+			data: data.toISOString().substring(0,10)},
+			function(data){
+				response.writeHead(200,{"Content-Type":"text/html"});
+				response.end(data);
+			}
+		);
+	}else{
+		response.redirect("/");
+	}
+});
 
 app.get("/Conferma",function(request,response){
 	var sess = request.session;
