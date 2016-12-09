@@ -110,22 +110,6 @@ app.get("/GetDettagliPiatto",function(request,response){
 	}
 });
 
-app.get("/files/resoconto.html",function(request,response){
-	if(request.session.user && request.session.user !=1){
-		bind.toFile("tpl/resoconto.tpl",
-			{},
-			function(data){
-				response.writeHead(200,{"Content-Type":"text/html"});
-				response.end(data);
-			});
-	}else{
-		if(request.session.user == 1)
-			response.redirect("/files/admin.html");
-		else
-			response.redirect("/files/logIn.html");
-	}
-});
-
 //per il signin dell'utente
 app.post("/SignIn",function(request,response){
 	var errore=false;
@@ -568,7 +552,8 @@ app.post("/GetPiatto",function(request,response){
 			response.redirect("/files/error.html");
 			}
 		}else{
-			response.redirect("/files/error.html");
+			response.writeHead(409,{"Content-Type":"text/html"});
+			response.end("Non è stato inserito alcun piatto da cercare.");
 		}
 	}else{ //se non è loggato
 		response.redirect("/files/logIn.html");
