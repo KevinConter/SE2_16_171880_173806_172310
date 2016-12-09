@@ -43,6 +43,26 @@ describe("Login Test\n",function(){
 		});
 	});
 	
+	describe("Get /files/error.html\n",function(){
+		it("Non loggato: ",function(done){
+			request.get(base+'files/error.html',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("Get /files/admin.html\n",function(){
+		it("Non loggato: ",function(done){
+			request.get(base+'files/admin.html',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
 	describe("Get /files/resoconto.html\n",function(){
 		it("Non loggato: ",function(done){
 			request.get(base+'files/resoconto.html',options,function(error,response,body){
@@ -73,9 +93,9 @@ describe("Login Test\n",function(){
 		});
 	});
 	
-	describe("Get /EditUser\n",function(){
+	describe("Get /files/final.html\n",function(){
 		it("Non loggato: ",function(done){
-			request.get(base+'EditUser',options,function(error,response,body){
+			request.get(base+'files/final.html',options,function(error,response,body){
 				expect(response.statusCode).toBe(302);
 				expect(body).toContain("Redirecting to /files/logIn.html");
 				done();
@@ -83,9 +103,9 @@ describe("Login Test\n",function(){
 		});
 	});
 	
-	describe("Get /GetPiatti\n",function(){
+	describe("Get /Conferma\n",function(){
 		it("Non loggato: ",function(done){
-			request.get(base+'GetPiatti',options,function(error,response,body){
+			request.get(base+'Conferma',options,function(error,response,body){
 				expect(response.statusCode).toBe(302);
 				expect(body).toContain("Redirecting to /files/logIn.html");
 				done();
@@ -93,9 +113,9 @@ describe("Login Test\n",function(){
 		});
 	});
 	
-	describe("Get /ScegliPiatto\n",function(){
+	describe("Post /EditUser\n",function(){
 		it("Non loggato: ",function(done){
-			request.get(base+'ScegliPiatto',options,function(error,response,body){
+			request.post(base+'EditUser',options,function(error,response,body){
 				expect(response.statusCode).toBe(302);
 				expect(body).toContain("Redirecting to /files/logIn.html");
 				done();
@@ -103,9 +123,9 @@ describe("Login Test\n",function(){
 		});
 	});
 	
-	describe("Get /GetResoconto\n",function(){
+	describe("Post /GetPiatti\n",function(){
 		it("Non loggato: ",function(done){
-			request.get(base+'GetResoconto',options,function(error,response,body){
+			request.post(base+'GetPiatti',options,function(error,response,body){
 				expect(response.statusCode).toBe(302);
 				expect(body).toContain("Redirecting to /files/logIn.html");
 				done();
@@ -113,11 +133,174 @@ describe("Login Test\n",function(){
 		});
 	});
 	
-	describe("Get /SaltaOrdine\n",function(){
+	describe("Post /ScegliPiatto\n",function(){
 		it("Non loggato: ",function(done){
-			request.get(base+'SaltaOrdine',options,function(error,response,body){
+			request.post(base+'ScegliPiatto',options,function(error,response,body){
 				expect(response.statusCode).toBe(302);
 				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("Post /GetResoconto\n",function(){
+		it("Non loggato: ",function(done){
+			request.post(base+'GetResoconto',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("Post /SaltaOrdine\n",function(){
+		it("Non loggato: ",function(done){
+			request.post(base+'SaltaOrdine',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("Post /EliminaPiatto\n",function(){
+		it("Non loggato: ",function(done){
+			request.post(base+'EliminaPiatto',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("Post /GetPiatto\n",function(){
+		it("Non loggato: ",function(done){
+			request.post(base+'GetPiatto',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("Post /AddPiatto\n",function(){
+		it("Non loggato: ",function(done){
+			request.post(base+'AddPiatto',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("Post /LogIn\n",function(){
+		it("Provo a loggarmi con utente sbagliato: ",function(done){
+			options.form = {iMail:'asd@asd.asd',iPassword:'password'};
+			request.post(base+'LogIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+		
+		it("Provo a loggarmi con utente giusto: ",function(done){
+			options.form = {iMail:'nome@gmail.com',iPassword:'password'};
+			request.post(base+'LogIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
+				done();
+			});
+		});
+		
+	});
+	
+	describe("Get /LogOut\n",function(){
+		it("Provo a sloggarmi: ",function(done){
+			request.get(base+'LogOut',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+	});
+	
+	describe("Nuova registrazione corretta\n",function(){
+		it("Registrazione Utente: ",function(done){
+			options.form = {
+				iNome : 'prova',
+				iCognome : 'prova',
+				iIndirizzo : 'via da qui',
+				iData : '2016-12-09',
+				iRecapito : '0123456789',
+				iMail : 'prova@gmail.com',
+				iPassword : 'password'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
+				done();
+			});
+		});
+		
+		it("Provo a sloggarmi: ",function(done){
+			request.get(base+'LogOut',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+		
+		it("Provo a loggarmi con utente nuovo: ",function(done){
+			options.form = {iMail:'prova@gmail.com',iPassword:'password'};
+			request.post(base+'LogIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
+				done();
+			});
+		});
+		
+		it("Mi sloggo: ",function(done){
+			request.get(base+'LogOut',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/logIn.html");
+				done();
+			});
+		});
+		
+	});
+	
+	
+	describe("Nuova registrazione errata\n",function(){
+		it("Registrazione Utente già presente: ",function(done){
+			options.form = {
+				iNome : 'nome',
+				iCognome : 'cognome',
+				iIndirizzo : 'via da qui',
+				iData : '2016-12-09',
+				iRecapito : '0123456789',
+				iMail : 'nome@gmail.com',
+				iPassword : 'password'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
+				done();
+			});
+		});
+		
+		it("Registrazione Utente: ",function(done){
+			options.form = {
+				iNome : 'prova',
+				iCognome : 'prova',
+				iIndirizzo : 'via da qui',
+				iData : '2016-12-09',
+				iRecapito : '0123456789',
+				iMail : 'prova@gmail.com',
+				iPassword : 'password'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
 				done();
 			});
 		});
