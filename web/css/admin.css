@@ -6,7 +6,7 @@ CSS ADMIN
 	width:auto; 
 	cursor:pointer;
 	background-position:center;
-	background-image: none;
+	background-image: url(/files/immagini/aggiungi-immagine.png);
 	background-repeat: no-repeat;
 	background-size: 150px 150px;
 }

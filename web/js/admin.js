@@ -8,9 +8,9 @@ SCRIPT PER IL LOGIN
 function resetta(){
 	document.getElementById("cCerca").className="form-group";
 	document.getElementById("cNome").className="form-group";
-	document.getElementById("Foto").value="";
+	document.getElementById("file").value="";
 	document.getElementById("LabelFoto").className="form-control center-block labelFoto";
-	$("#LabelFoto").css("background-image", "none");
+	$("#LabelFoto").css("background-image", "url(/files/immagini/aggiungi-immagine.png)");
 }
 
 /**
@@ -30,7 +30,7 @@ function controlloCerca(){
 */
 function controlloInvia(){
 
-	var ok = controlloValidita("iNome") ;
+	var ok = controlloValidita("iNome") && controlloValidita("iIngredienti") && controlloValidita("iAllergeni") && controlloValidita("iCuriosita");
 	if(ok)
 		document.getElementById("modulo").submit();
 	else
@@ -40,10 +40,10 @@ function controlloInvia(){
 function cambiaFoto(){
 	var reader = new FileReader();
 	// Read the local file as a DataURL
-	reader.readAsDataURL(document.getElementById("Foto").files[0]);
-	if(document.getElementById("Foto").files[0].size>=8388608){
+	reader.readAsDataURL(document.getElementById("file").files[0]);
+	if(document.getElementById("file").files[0].size>=8388608){
 		alert("Il file selezionato per l'immagine di profilo è troppo grande!\nLa dimensione massima consentita è: 8 MB.");
-		document.getElementById("Foto").value="";
+		document.getElementById("file").value="";
 		document.getElementById("LabelFoto").className="form-control center-block labelFoto";
 	}else{
 		// When loaded, set image data as background of page

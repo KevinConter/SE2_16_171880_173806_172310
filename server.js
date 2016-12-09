@@ -7,6 +7,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bind = require('bind');
 var session = require('express-session');
+var fs = require("fs");
+var multer  =   require('multer');
+var upload = multer({ dest: '/tmp'});
 var db = require('./moduli/db.js');
 /************************************************/
 
@@ -431,8 +434,8 @@ app.get("/files/admin.html",function(request,response){
 	}
 });
 
-//Estrazione del piatto cercato dall'admin
-app.post("/AddPiatto",function(request,response){
+//Aggiunta del piatto cercato dall'admin
+app.post("/AddPiatto", upload.single('file'), function(request,response){
 	var errore=false;
 	var nome = undefined;
 	var foto = undefined;
@@ -448,10 +451,16 @@ app.post("/AddPiatto",function(request,response){
 			errore=true;
 		}
 		
-		if(request.body.iFoto){
-			foto = request.body.iFoto;
+		if(request.file){
+			var file = __dirname + '/web/immagini/' + nome+'.img';
+			fs.rename(request.file.path, file, function(err) {
+				if (err) {
+					errore = true;
+				}
+			});
+			foto = "/files/immagini/"+nome+'.img';
 		}else{
-			errore=true;
+			foto = '/files/immagini/defaultPiatti.png';
 		}
 		
 		if(request.body.iTipo){
@@ -486,16 +495,20 @@ app.post("/AddPiatto",function(request,response){
 		}
 	
 		if(!errore){	
-			var piatto = new db.Piatto(nome,ingredienti,curiosita,null,[],tipo);
+			var piatto = new db.Piatto(nome,ingredienti,curiosita,foto,[],tipo);
 			db.addPiatto(piatto);
 			response.redirect("/files/admin.html");
 		}else{
-			response.redirect("/files/admin.html");
+			bind.toFile("tpl/admin.tpl",
+				{messaggio: "Si è verificato un errore, il piatto non è stato inserito."},
+				function(data){
+					response.writeHead(409,{"Content-Type":"text/html"});
+					response.end(data);
+				}
+			);
 		}
-		
-		
 	}else{ //se non è loggato
-		response.redirect("/");
+		response.redirect("/files/logIn.html");
 	}
 });
 
@@ -529,8 +542,14 @@ app.post("/EliminaPiatto",function(request,response){
 	if(request.session.user && request.session.user==1){	//Se l'utente è loggato
 		if(request.body.iPiatto){
 			var ok = false;
+			var foto = __dirname + '/web/immagini/' + request.body.iPiatto +'.img';
 			ok = db.deletePiatto(request.body.iPiatto);
 			if(ok){
+				fs.exists(foto,function(exists){	//Verifica dell'esistenza del file immagine del piatto
+					if(exists){
+						fs.unlinkSync(foto);	//Cancellazione del file
+					}
+				});
 				response.redirect("/files/admin.html");
 			}else{
 				response.redirect("/files/error.html");	
@@ -595,7 +614,6 @@ app.get("/files/error.html",function(request,response){
 
 //Gestione dell'errore 404
 function Error404(request,response){
-	
 	bind.toFile("tpl/error.tpl",
 	{
 		messaggio: "404 File non trovato"
@@ -603,7 +621,7 @@ function Error404(request,response){
 	function(data){
 		response.writeHead(404,{"Content-Type":"text/html"});
 		response.end(data);		
-	})
+	});
 }
 app.use(Error404);
 
