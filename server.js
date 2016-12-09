@@ -579,7 +579,8 @@ app.post("/EliminaPiatto",function(request,response){
 			}
 
 		}else{
-			response.redirect("/files/error.html");
+			response.writeHead(409,{"Content-Type":"text/html"});
+			response.end("Non è stato inserito alcun piatto da eliminare.");
 		}
 	}else{ //se non è loggato
 		response.redirect("/files/logIn.html");
