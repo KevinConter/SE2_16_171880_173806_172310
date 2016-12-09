@@ -122,7 +122,7 @@ app.get("/files/resoconto.html",function(request,response){
 		if(request.session.user == 1)
 			response.redirect("/files/admin.html");
 		else
-			response.redirect("/");
+			response.redirect("/files/logIn.html");
 	}
 });
 
@@ -261,7 +261,7 @@ app.post("/EditUser",function(request,response){
 		}
 		
 		if(errore){	
-			response.redirect("/");
+			response.redirect("/files/editUser.html");
 		}else{
 			var b = true;
 			if(user.mail!=mail){
@@ -279,17 +279,14 @@ app.post("/EditUser",function(request,response){
 				
 				db.updateUser(user);
 				request.session.user=user.id;
-				response.redirect("/");
+				response.redirect("/files/index.html");
 			}else{
 				response.redirect("/files/error.html");
 			}
 
 		}
 	}else{
-		if(request.session.user == 1)
-			response.redirect("/files/admin.html");
-		else
-			response.redirect("/");
+		response.redirect("/files/logIn.html");
 	}
 });
 
@@ -330,7 +327,7 @@ app.get("/LogOut",function(request,response){
 		if(err) {
 			console.log(err);
 		} else {
-			response.redirect('/');
+			response.redirect('/files/logIn.html');
 		}
 	});
 });
@@ -573,7 +570,7 @@ app.post("/GetPiatto",function(request,response){
 			response.redirect("/files/error.html");
 		}
 	}else{ //se non è loggato
-		response.redirect("/");
+		response.redirect("/files/logIn.html");
 	}
 });
 
@@ -599,7 +596,7 @@ app.post("/EliminaPiatto",function(request,response){
 			response.redirect("/files/error.html");
 		}
 	}else{ //se non è loggato
-		response.redirect("/");
+		response.redirect("/files/logIn.html");
 	}
 });
 
