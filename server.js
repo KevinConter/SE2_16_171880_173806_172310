@@ -626,7 +626,7 @@ app.get("/files/error.html",function(request,response){
 			messaggio: "L'operazione ha causato un errore, ritenti l'operazione tra qualche minuto. Nel caso che l'errore persista contattare il team"
 		},
 		function(data){
-			response.writeHead(200,{"Content-Type":"text/html"});
+			response.writeHead(409,{"Content-Type":"text/html"});
 			response.end(data);
 		});
 	}else{	//Se non esiste
