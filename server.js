@@ -486,7 +486,7 @@ app.post("/AddPiatto",function(request,response){
 		}
 	
 		if(!errore){	
-			var piatto = new db.Piatto(nome,ingredienti,curiosita,foto,[],tipo);
+			var piatto = new db.Piatto(nome,ingredienti,curiosita,null,[],tipo);
 			db.addPiatto(piatto);
 			response.redirect("/files/admin.html");
 		}else{
@@ -590,6 +590,24 @@ app.get("/files/error.html",function(request,response){
 		response.redirect("/files/logIn.html");
 	}
 });
+
+
+
+//Gestione dell'errore 404
+function Error404(request,response){
+	
+	bind.toFile("tpl/error.tpl",
+	{
+		messaggio: "404 File non trovato"
+	},
+	function(data){
+		response.writeHead(404,{"Content-Type":"text/html"});
+		response.end(data);		
+	})
+}
+app.use(Error404);
+
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
