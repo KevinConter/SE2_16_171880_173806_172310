@@ -460,7 +460,7 @@ app.post("/AddPiatto", upload.single('file'), function(request,response){
 			});
 			foto = "/files/immagini/"+nome+'.img';
 		}else{
-			errore=true;
+			foto = '/files/immagini/defaultPiatti.png';
 		}
 		
 		if(request.body.iTipo){

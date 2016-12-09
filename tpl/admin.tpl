@@ -100,7 +100,7 @@
                         <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
                             <div class="form-group" id="cNome">
                                 <label for="iNome" class="control-label"> Nome piatto</label>
-                                <input type="text" class="form-control" id="iNome" placeholder="Inserisci nome piatto" maxlength="255" name="iNome" value="(:nome:)">
+                                <input type="text" class="form-control" id="iNome" placeholder="Inserisci nome piatto" maxlength="255" name="iNome">
                             </div>
                         </div>
                     </div>
@@ -109,8 +109,8 @@
                         <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
                             <div class="form-group" id="cFotoProfilo">
                                <label for="LabelFoto"> Foto Piatto </label>
-                               <label for="Foto" id="LabelFoto" class="form-control center-block labelFoto"></label>
-                               <input type="file" id="Foto" onchange="cambiaFoto()" name="file" accept="image/*" class="invisibile">
+                               <label for="file" id="LabelFoto" class="form-control center-block labelFoto"></label>
+                               <input type="file" id="file" onchange="cambiaFoto()" name="file" accept="image/*" class="invisibile">
                              </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
                             <div class="form-group" id="cIngredienti">
                                 <label for="iIngredienti" class="control-label"> Ingredienti</label>
-                                <textarea class="form-control" rows="5" id="iIngredienti" name="iIngredienti" style="resize:none">(:ingredienti:)</textarea>
+                                <textarea class="form-control" rows="5" id="iIngredienti" name="iIngredienti" style="resize:none"></textarea>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                         <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
                             <div class="form-group" id="cAllergeni">
                                 <label for="iAllergeni" class="control-label"> Allergeni</label>
-                                <textarea class="form-control" rows="5" id="iAllergeni" name="iAllergeni" style="resize:none">(:allergeni:)</textarea>
+                                <textarea class="form-control" rows="5" id="iAllergeni" name="iAllergeni" style="resize:none"></textarea>
                             </div>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                         <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
                             <div class="form-group" id="cCuriosita">
                                 <label for="iCuriosita" class="control-label"> Curiosità</label>
-                                <textarea class="form-control" rows="5" id="iCuriosita" name="iCuriosita" style="resize:none">(:curiosita:)</textarea>
+                                <textarea class="form-control" rows="5" id="iCuriosita" name="iCuriosita" style="resize:none"></textarea>
                             </div>
                         </div>
                     </div>
