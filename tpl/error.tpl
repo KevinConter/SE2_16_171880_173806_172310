@@ -30,7 +30,7 @@
     		</p>
             
             <div class="row">
-                <div class="col-xs-6 col-xs-offset-3">
+                <div class="col-xs-4 col-xs-offset-4">
                     <a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
                 </div>
             </div>    
