@@ -371,6 +371,7 @@ app.get("/files/editUser.html",function(request,response){
 //nella pagina apposita
 app.post("/GetPiatti",function(request,response){
 	if(request.session.user && request.session.user !=1){	//Se l'utente è loggato
+		var user= db.cercaUtenteId(request.session.user);
 		var tipo = undefined;
 		var piatti = [];
 		if(request.body.iTipo){
@@ -379,7 +380,7 @@ app.post("/GetPiatti",function(request,response){
 				case db.PRIMO: 
 				case db.SECONDO:
 				case db.CONTORNO:
-				case db.DESSERT: piatti = db.getPiattiTipo(tipo);
+				case db.DESSERT: piatti = db.getPiattiTipo(tipo, user.allergeni);
 							bind.toFile("tpl/elenco.tpl",
 								{piatti: piatti,
 								tipo: tipo},
