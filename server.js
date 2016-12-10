@@ -298,7 +298,7 @@ app.post("/LogIn",function(request,response){
 			var p = new db.Prenotazione(data.toISOString().substring(0,10),user);
 			request.session.prenotazione = p;
 			if(user.id == 1){
-				response.redirect("/files/admin.html")
+				response.redirect("/files/admin.html");
 			}else
 				response.redirect("/files/index.html");	
 		}else{
@@ -349,10 +349,7 @@ app.get("/files/editUser.html",function(request,response){
 			response.end(data);
 		});
 	}else{	//Se non esiste
-		if(request.session.user == 1)
-			response.redirect("/files/admin.html");
-		else
-			response.redirect("/files/logIn.html");
+		response.redirect("/files/logIn.html");
 	}
 });
 
@@ -554,7 +551,7 @@ app.post("/GetPiatto",function(request,response){
 					response.end(data);
 				});
 			}else{
-			response.redirect("/files/error.html");
+				response.redirect("/files/error.html");
 			}
 		}else{
 			response.writeHead(409,{"Content-Type":"text/html"});
