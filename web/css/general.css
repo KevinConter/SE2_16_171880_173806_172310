@@ -24,8 +24,12 @@ hr{
 
 .img-max-height-125{
 	max-height:125px;
-	border: solid 1px;
+}
+
+.img-max-height-125:hover{
+	border: solid 2px;
 	border-color:blue;
+	border-radius: 10px;
 }
 
 .img-max-height-300{
