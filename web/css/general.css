@@ -24,6 +24,8 @@ hr{
 
 .img-max-height-125{
 	max-height:125px;
+	border: solid 1px;
+	border-color:blue;
 }
 
 .img-max-height-300{

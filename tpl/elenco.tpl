@@ -68,14 +68,14 @@
 											<img class="img-max-height-125 img-responsive center-block" src="[:foto:]">
 										</a>
 									</div>
-									<div class="col-xs-7">
+									<div class="col-xs-6">
 										<div class="row">
 											<div class="col-xs-12">
 												<h3>[:nome ~ nome piatto:]</h3>
 											</div>
 										</div>
 									</div>
-									<div class="col-xs-1">
+									<div class="col-xs-2">
 										<input type="radio" class="radio" name="iPiatto" value="[:nome:]">
 									</div>
 								</div>
@@ -84,10 +84,10 @@
 						:)
 					<hr>
 					<div class="row">
-						<div class="col-xs-5 col-xs-offset-1">
+						<div class="col-xs-12 col-sm-5 col-sm-offset-1 form-group">
 		    				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
 		    			</div>
-						<div class="col-xs-5">
+						<div class="col-xs-12 col-sm-5 form-group">
 							<div class="form-group">
 								<input type="submit" class="btn btn-lg btn-block btn-success" value="Conferma">
 							</div>

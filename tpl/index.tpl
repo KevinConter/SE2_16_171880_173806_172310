@@ -79,24 +79,24 @@
 					
 					<div class="margin-top-100">
 						<div class="row margin-top-bottom-20">
-							<div class="col-xs-4 col-xs-offset-1">
+							<div class="col-xs-5 col-xs-offset-1">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('primo')" value="Primi">
 								</div>
 							</div>
-							<div class="col-xs-4 col-xs-offset-2">
+							<div class="col-xs-5">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('secondo')" value="Secondi">
 								</div>
 							</div>
 						</div>
 						<div class="row margin-top-bottom-20">
-							<div class="col-xs-4 col-xs-offset-1">
+							<div class="col-xs-5 col-xs-offset-1">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('contorno')" value="Contorni">
 								</div>
 							</div>
-							<div class="col-xs-4 col-xs-offset-2">
+							<div class="col-xs-5">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('dessert')" value="Dessert">
 								</div>
@@ -108,12 +108,12 @@
 					<div class="margin-top-100">
 						<hr>
 						<div class="row">
-							<div class="col-xs-5 col-xs-offset-1">
+							<div class="col-xs-12 col-sm-5 col-sm offset-1">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-success" onclick="conferma()" value="Conferma Ordine">
 								</div>
 							</div>
-							<div class="col-xs-5">
+							<div class="col-xs-12 col-sm-5">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-danger" onclick="salta()" value="Salta Ordine">
 								</div>

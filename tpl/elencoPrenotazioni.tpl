@@ -78,7 +78,7 @@
 					:)
 				<hr>
 				<div class="row">
-					<div class="col-xs-4 col-xs-offset-4">
+					<div class="col-xs-12 col-sm-4 col-sm-offet-4">
 	    				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
 	    			</div>
 				</div>

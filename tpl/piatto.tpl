@@ -108,12 +108,13 @@
         		</div>
                 
                 <hr>
+                
                 <div class="row">
-        			<div class="col-xs-5 col-xs-offset-1">
-        				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
+        			<div class="col-xs-12 col-sm-5 col-sm-offset-1 form-group">
+        				<a role="button" class="btn btn-lg btn-block btn-danger " href="javascript:history.back()">Indietro</a>
         			</div>
         			<form action="/EliminaPiatto" method="POST">
-        				<div class="col-xs-5">
+        				<div class="col-xs-12 col-sm-5">
         					<div class="form-group">
         						<input type="hidden" class="form-control" value="(:piatto ~ [:nome:]:)" name="iPiatto">
         						<input type="submit" class="btn btn-lg btn-block btn-success" value="Elimina">
