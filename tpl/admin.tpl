@@ -37,7 +37,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="active"><a  href="/files/admin.html">Home</a></li>
+                        <li class="active"><a  href="/files/admin.html" role="button" class="btn btn-lg btn-block">Home</a></li>
                         <li><a href="/GetElencoPrenotazioni" role="button" class="btn btn-lg btn-block">
                         	<span class="glyphicon glyphicon-list-alt"></span> 
                         	Elenco Prenotazioni

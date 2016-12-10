@@ -25,7 +25,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
-                        <li><a  href="/files/admin.html">Home</a></li>
+                        <li><a  href="/files/admin.html" role="button" class="btn btn-lg btn-block">Home</a></li>
                         <li class="active"><a href="/GetElencoPrenotazioni" role="button" class="btn btn-lg btn-block">
                         	<span class="glyphicon glyphicon-list-alt"></span> 
                         	Elenco Prenotazioni
@@ -65,7 +65,7 @@
 					(:elenco ~
 					<div class="list-group-item panel panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title">[:user ~ {:nome:} tel: {:recapito:}:]</h3>
+							<h3 class="panel-title">[:user ~ {:nome:} {:cognome:} tel: {:recapito:} Indirizzo: {:via:}:]</h3>
 						</div>
 						<div class="panel-body">
 							<ul>
