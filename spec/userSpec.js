@@ -183,22 +183,22 @@ describe("Azioni Utente\n",function(){
 			});
 		});
 		it("LogOut: ",function(done){
-			request.post(base+'LogOut');//Eseguo il LogOut alla fine della sequenza di test
+			request.get(base+'LogOut',options);//Eseguo il LogOut alla fine della sequenza di test
 			done();
 		});
 		
 	});
 	
-	describe("Profilo",function(){
-		it("getProfilo",function(done){
-			request.get(base+'files/editUser.html',options,function(error,response,body){
-				expect(body).toBeUndefined();
+	describe("Test su GetDettagliPiatto",function(){
+		it("LogIn: ",function(done){
+			options.form={
+				iMail:'nome@gmail.com',
+				iPassword:'password'
+			};
+			request.post(base+'LogIn',options,function(error,response,body){
 				done();
 			});
 		});
-	});
-	
-	describe("Test su GetDettagliPiatto",function(){
 		it("Dettagli piatto esistente: Budino: ",function(done){
 			request.get(base+'GetDettagliPiatto?nome=Budino',options,function(error,response,body){
 				expect(response.statusCode).toBe(200);
@@ -228,6 +228,170 @@ describe("Azioni Utente\n",function(){
 				done();
 			});
 		});
+		it("LogOut: ",function(done){
+			request.get(base+'LogOut',options);//Eseguo il LogOut alla fine della sequenza di test
+			done();
+		});
 	});
-
+	
+	describe("Test sulla scelta del piatto:",function(){
+		it("Nuovo Utente",function(done){
+			options.form = {
+				iNome : 'Test',
+				iCognome : 'Scelta',
+				iIndirizzo : 'indirizzo di test, 10',
+				iData : '1995-12-29',
+				iRecapito : '0461 123456',
+				iMail : 'test.scelta@gmail.com',
+				iPassword : 'testpwd'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/index.html");
+				done();
+			});
+		});
+		describe("Scelta Primo",function(){
+			it("Ordino pasta alla genovese: ",function(done){
+				options.form = {iPiatto:'Pasta alla Genovese'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Ordino pasta al Ragu\' : ",function(done){
+				options.form = {iPiatto:'Pasta al Ragu\''};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Ordino pasta alla genovese: ",function(done){
+				options.form = {iPiatto:'Pasta alla Genovese'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Resoconto: ",function(done){
+				request.post(base+'GetResoconto',options,function(error,response,body){
+					expect(response.statusCode).toBe(200);
+					expect(body).toContain("Pasta alla Genovese");
+					done();
+				});
+			});
+		});
+		describe("Scelta Secondo",function(){
+			it("Ordino Cotoletta: ",function(done){
+				options.form = {iPiatto:'Cotoletta alla Milanese'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Ordino Arrosto: ",function(done){
+				options.form = {iPiatto:'Arrosto di Maiale'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Ordino Cotoletta: ",function(done){
+				options.form = {iPiatto:'Cotoletta alla Milanese'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Resoconto: ",function(done){
+				request.post(base+'GetResoconto',options,function(error,response,body){
+					expect(response.statusCode).toBe(200);
+					expect(body).toContain("Pasta alla Genovese");
+					expect(body).toContain("Cotoletta alla Milanese");
+					done();
+				});
+			});
+		});
+		describe("Scelta Contorno",function(){
+			it("Ordino Patatine: ",function(done){
+				options.form = {iPiatto:'Patatine fritte'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Ordino Cavolo: ",function(done){
+				options.form = {iPiatto:'Cavolo'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Ordino Patatine: ",function(done){
+				options.form = {iPiatto:'Patatine fritte'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Resoconto: ",function(done){
+				request.post(base+'GetResoconto',options,function(error,response,body){
+					expect(response.statusCode).toBe(200);
+					expect(body).toContain("Pasta alla Genovese");
+					expect(body).toContain("Cotoletta alla Milanese");
+					expect(body).toContain("Patatine fritte");
+					done();
+				});
+			});
+		});
+		describe("Scelta Dessert",function(){
+			it("Ordino Budino: ",function(done){
+				options.form = {iPiatto:'Budino'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Ordino Yogurt: ",function(done){
+				options.form = {iPiatto:'Yogurt magro'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Ordino Budino: ",function(done){
+				options.form = {iPiatto:'Budino'};
+				request.post(base+'ScegliPiatto',options,function(error,response,body){
+					expect(response.statusCode).toBe(302);
+					expect(body).toContain("Redirecting to /files/index.html");
+					done();
+				});
+			});
+			it("Resoconto: ",function(done){
+				request.post(base+'GetResoconto',options,function(error,response,body){
+					expect(response.statusCode).toBe(200);
+					expect(body).toContain("Pasta alla Genovese");
+					expect(body).toContain("Cotoletta alla Milanese");
+					expect(body).toContain("Patatine fritte");
+					expect(body).toContain("Budino");
+					done();
+				});
+			});
+		});
+		it("LogOut: ",function(done){
+			request.get(base+'LogOut',options);//Eseguo il LogOut alla fine della sequenza di test
+			done();
+		});
+	});
 });
