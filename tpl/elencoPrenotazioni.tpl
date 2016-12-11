@@ -4,10 +4,10 @@
 		<title>Elenco prenotazioni</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<link rel="stylesheet" href="files/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-		<script type="text/javascript" src="files/bootstrap/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="files/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="files/css/general.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="/files/css/general.css">
 	</head>
 	<body>
     
@@ -25,7 +25,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
-                        <li><a  href="/files/admin.html">Home</a></li>
+                        <li><a  href="/files/admin.html" role="button" class="btn btn-lg btn-block">Home</a></li>
                         <li class="active"><a href="/GetElencoPrenotazioni" role="button" class="btn btn-lg btn-block">
                         	<span class="glyphicon glyphicon-list-alt"></span> 
                         	Elenco Prenotazioni
@@ -65,7 +65,7 @@
 					(:elenco ~
 					<div class="list-group-item panel panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title">[:user ~ {:nome:} tel: {:recapito:}:]</h3>
+							<h3 class="panel-title">[:user ~ {:nome:} {:cognome:} tel: {:recapito:} Indirizzo: {:via:}:]</h3>
 						</div>
 						<div class="panel-body">
 							<ul>
@@ -78,7 +78,7 @@
 					:)
 				<hr>
 				<div class="row">
-					<div class="col-xs-4 col-xs-offset-4">
+					<div class="col-xs-12 col-sm-4 col-sm-offet-4">
 	    				<a role="button" class="btn btn-lg btn-block btn-danger" href="javascript:history.back()">Indietro</a>
 	    			</div>
 				</div>

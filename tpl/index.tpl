@@ -4,12 +4,12 @@
 		<title>Home</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<link rel="stylesheet" href="bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-		<script type="text/javascript" src="bootstrap/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="css/general.css">
-		<link rel="stylesheet" href="css/index.css">
-		<script type="text/javascript" src="js/index.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="/files/css/general.css">
+		<link rel="stylesheet" href="/files/css/index.css">
+		<script type="text/javascript" src="/files/js/index.js"></script>
 
 	</head>
 	<body onload="init()">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="active"><a  href="/files/index.html">Home</a></li> 
+                        <li class="active"><a  href="/files/index.html" role="button" class="btn btn-lg btn-block">Home</a></li> 
                     </ul>
                     
                     <ul class="nav navbar-nav navbar-right">
@@ -79,24 +79,24 @@
 					
 					<div class="margin-top-100">
 						<div class="row margin-top-bottom-20">
-							<div class="col-xs-4 col-xs-offset-1">
+							<div class="col-xs-5 col-xs-offset-1">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('primo')" value="Primi">
 								</div>
 							</div>
-							<div class="col-xs-4 col-xs-offset-2">
+							<div class="col-xs-5">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('secondo')" value="Secondi">
 								</div>
 							</div>
 						</div>
 						<div class="row margin-top-bottom-20">
-							<div class="col-xs-4 col-xs-offset-1">
+							<div class="col-xs-5 col-xs-offset-1">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('contorno')" value="Contorni">
 								</div>
 							</div>
-							<div class="col-xs-4 col-xs-offset-2">
+							<div class="col-xs-5">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-primary" onclick="checkButton('dessert')" value="Dessert">
 								</div>
@@ -108,12 +108,12 @@
 					<div class="margin-top-100">
 						<hr>
 						<div class="row">
-							<div class="col-xs-5 col-xs-offset-1">
+							<div class="col-xs-12 col-sm-5 col-sm offset-1">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-success" onclick="conferma()" value="Conferma Ordine">
 								</div>
 							</div>
-							<div class="col-xs-5">
+							<div class="col-xs-12 col-sm-5">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-danger" onclick="salta()" value="Salta Ordine">
 								</div>

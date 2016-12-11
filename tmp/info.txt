@@ -1,0 +1,2 @@
+Questa directory viene utilizata come deposito temporaneo dei file che vengono
+inviati dall'amministratore.

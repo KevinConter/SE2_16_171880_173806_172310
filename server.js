@@ -9,7 +9,7 @@ var bind = require('bind');
 var session = require('express-session');
 var fs = require("fs");
 var multer  =   require('multer');
-var upload = multer({ dest: '/tmp'});
+var upload = multer({ dest: __dirname+'/tmp'});
 var db = require('./moduli/db.js');
 /************************************************/
 

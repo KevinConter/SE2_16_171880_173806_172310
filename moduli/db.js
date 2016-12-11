@@ -303,7 +303,7 @@ var getPiatto = function(nome){
 function isAllergico(allergeniPiatto, allergeniUtente){
 	for (var i=0;i <allergeniPiatto.length;i++){
 		for(var j=0; j<allergeniUtente.length;j++){
-			if(allergeniPiatto[i]==allergeniUtente[j])
+			if(allergeniPiatto[i].toLowerCase()==allergeniUtente[j].toLowerCase())
 				return true;	
 		}
 	}
