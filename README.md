@@ -50,3 +50,7 @@ anche su telefono.
 
 Link app heroku: https://lit-river-83410.herokuapp.com/
 
+MOQUP
+Il moqup iniziale dell'applicazione è utilizzabile al link sottostante.
+Link moqup: https://app.moqups.com/TheATeam/bcVjGptJ4x/view/page/abc3d5369
+
