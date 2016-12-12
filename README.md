@@ -32,17 +32,20 @@ La struttura del sistema è composta in questo modo:
 	- La directory 'web' contiene tutti i file che sono accessibili dall'utente in qualsiasi momento e i file
 	  che vengono richiesti dal browser (css, js e immagini).
 
+
 TEST
 L'applicazione è molto semplice da usare.
 Utilizzando un normale PC, è necessario installare i moduli specificati all'interno del file package.json
 per poter rendere funzionante il server. Completata l'installazione, basta far partire il server, aprire
 il browser e digitare localhost:8848 all'interno della barra degli indirizzi, oppure copiare e incollare
-il link sottostante:
+il link sottostante.
+
 Link app localhost: http://localhost:8848/
 
 Per poter eseguire i test cases è necessario il programma JASMINE e un modulo ulteriore, cioè REQUEST.
 Dopo aver installato il programma e il modulo ed essersi spostati all'interno del branch TEST, è possibile
 far eseguire i test cases con il comando NPM TEST nel terminale.
+
 
 HEROKU
 L'applicazione è anche disponibile online all'indirizzo sottostante su HEROKU, ed utilizzabile quindi
@@ -50,7 +53,9 @@ anche su telefono.
 
 Link app heroku: https://lit-river-83410.herokuapp.com/
 
+
 MOQUP
 Il moqup iniziale dell'applicazione è utilizzabile al link sottostante.
+
 Link moqup: https://app.moqups.com/TheATeam/bcVjGptJ4x/view/page/abc3d5369
 
