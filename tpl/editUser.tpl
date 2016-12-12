@@ -66,12 +66,12 @@
             <hr>
     
 			<form id="modulo" action="/EditUser" method="POST">
-            	<input type="hidden" class="form-control" id="iId" name="iID" value="(:id ~ Id:)"> 
+            	<input type="hidden" class="form-control" id="iId" name="iID" value="(:user ~ [:id:]:)"> 
 				<div class="row" >
 				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 				        <div class="form-group" id="cNome">
 				            <label for="iNome" class="control-label"> Nome </label>
-				            <input type="text" class="form-control" id="iNome" placeholder="Inserisci Nome" maxlength="255" name="iNome" value="(:nome ~ Nome:)">
+				            <input type="text" class="form-control" id="iNome" placeholder="Inserisci Nome" maxlength="255" name="iNome" value="(:user ~ [:nome:]:)">
 				        </div>
 				   </div>
 				</div>
@@ -80,7 +80,7 @@
 				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 						<div class="form-group" id="cCognome">
 							<label for="iCognome" class="control-label"> Cognome </label>
-							<input type="text" class="form-control" id="iCognome" placeholder="Inserisci Cognome" maxlength="255" name="iCognome" value="(:cognome ~ Cognome:)">
+							<input type="text" class="form-control" id="iCognome" placeholder="Inserisci Cognome" maxlength="255" name="iCognome" value="(:user ~ [:cognome:]:)">
 						</div>
 					</div>
 				</div>
@@ -89,7 +89,7 @@
 				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 				        <div class="form-group" id="cIndirizzo">
 				            <label for="iIndirizzo" class="control-label"> Indirizzo </label>
-				            <input type="text" class="form-control" id="iIndirizzo" placeholder="Inserisci un indirizzo" maxlength="255" name="iIndirizzo" value="(:indirizzo ~ Indirizzo:)">
+				            <input type="text" class="form-control" id="iIndirizzo" placeholder="Inserisci un indirizzo" maxlength="255" name="iIndirizzo" value="(:user ~ [:via:]:)">
 				        </div>
 				   </div>
 				</div>
@@ -98,7 +98,7 @@
 				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 				        <div class="form-group" id="cData">
 				            <label for="iData" class="control-label"> Data </label>
-				            <input type="date" class="form-control" id="iData" name="iData" value="(:data ~ Data:)">
+				            <input type="date" class="form-control" id="iData" name="iData" value="(:user ~ [:data_nascita:]:)">
 				        </div>
 				   </div>
 				</div>
@@ -107,7 +107,7 @@
 				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 				        <div class="form-group" id="cRecapito">
 				            <label for="iRecapito" class="control-label"> Numero di telefono </label>
-				            <input type="number" class="form-control" placeholder="Inserisci un numero di telefono" id="iRecapito" name="iRecapito" value="(:recapito ~ Recapito:)">
+				            <input type="number" class="form-control" placeholder="Inserisci un numero di telefono" id="iRecapito" name="iRecapito" value="(:user ~ [:recapito:]:)">
 				        </div>
 				   </div>
 				</div>
@@ -116,7 +116,7 @@
 				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 						<div class="form-group" id="cMail">
 							<label for="iMail" class="control-label"> Indirizzo Mail </label>
-							<input type="email" class="form-control" id="iMail" placeholder="example@gmail.com" maxlength="255" name="iMail" value="(:mail ~ Mail:)">
+							<input type="email" class="form-control" id="iMail" placeholder="example@gmail.com" maxlength="255" name="iMail" value="(:user ~ [:mail:]:)">
 						</div>
 					</div>
 				</div>
@@ -125,7 +125,7 @@
 				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 						<div class="form-group" id="cPassword">
 							<label for="iPassword" class="control-label"> Password [min 8 caratteri]</label>
-							<input type="password" class="form-control" id="iPassword" placeholder="Inserisci Password" maxlength="255" name="iPassword" value="(:password ~ Password:)">
+							<input type="password" class="form-control" id="iPassword" placeholder="Inserisci Password" maxlength="255" name="iPassword" value="(:user ~ [:password:]:)">
 						</div>
 					</div>
 				</div>
