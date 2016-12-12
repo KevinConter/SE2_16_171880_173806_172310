@@ -217,14 +217,14 @@ describe("Azioni Utente\n",function(){
 		it("Dettagli piatto nome vuoto",function(done){
 			request.get(base+'GetDettagliPiatto?nome=',options,function(error,response,body){
 				expect(response.statusCode).toBe(409);
-				expect(body).toContain('Errore');
+				expect(body).toContain('ERRORE');
 				done();
 			});
 		});
 		it("Dettagli piatto senza nome",function(done){
 			request.get(base+'GetDettagliPiatto',options,function(error,response,body){
 				expect(response.statusCode).toBe(409);
-				expect(body).toContain('Errore');
+				expect(body).toContain('ERRORE');
 				done();
 			});
 		});
