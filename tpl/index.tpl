@@ -108,7 +108,7 @@
 					<div class="margin-top-100">
 						<hr>
 						<div class="row">
-							<div class="col-xs-12 col-sm-5 col-sm offset-1">
+							<div class="col-xs-12 col-sm-5 col-sm-offset-1">
 								<div class="form-group">
 									<input type="button" class="btn btn-lg btn-block btn-success" onclick="conferma()" value="Conferma Ordine">
 								</div>
