@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Accedi</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="/files/css/general.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/files/js/form.js"></script>
+    <script type="text/javascript" src="/files/js/logIn.js"></script>
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="jumbotron">
+        
+			<div class="row">
+            	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h1 class="centra">Accesso</h1>                
+                </div>
+            </div>
+			<hr>
+            
+			<form id="modulo" action="/LogIn" method="POST">
+				<div class="row" >
+				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+						<div class="form-group" id="cMail">
+							<label for="iMail" class="control-label"> Indirizzo Mail </label>
+							<input type="email" class="form-control" id="iMail" placeholder="example@gmail.com" maxlength="255" name="iMail">
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" >
+				    <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+						<div class="form-group" id="cPassword">
+							<label for="iPassword" class="control-label"> Password[min 8 caratteri]</label>
+							<input type="password" class="form-control" id="iPassword" placeholder="Inserisci Password" maxlength="255" name="iPassword">
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" >
+						<a href="signIn.html"><p class="centra"> Oppure registrati</p></a>
+				</div>
+				
+				<hr>
+				<div class="row">
+				    <div class="col-xs-12 col-sm-5 col-sm-offset-1">
+				        <div class="form-group">
+				            <input type="reset" class="btn btn-lg btn-block btn-danger" value="Annulla" onClick="resetta()">
+				        </div>
+				    </div>
+				    <div class="col-xs-12 col-sm-5">
+				        <div class="form-group">
+				            <input type="button" class="btn btn-lg btn-block btn-success" id="btnAccedi" value="Accedi" onClick="controlloInvia()">
+				        </div>
+				    </div>
+				</div>
+				
+				
+			</form>
+
+		</div>
+	</div>
+</body>
+
+</html>
