@@ -115,9 +115,7 @@ var checkMail = function(mail){
 var addUser = function(u){
 	if(u instanceof User){
 		if(checkMail(u.mail)){
-			var id = users.push(u) -1;
-			if(id==0)
-				id=1;
+			var id = users.push(u);
 			u.id = id;
 			return id;
 		}
@@ -297,11 +295,27 @@ var getPiatto = function(nome){
 }
 
 /**
+  * Funzione che restituisce se un utente è allergico al pasto
+  * @param {Array[String]} allergeniPiatto gli allergeni del piatto
+  * @param {Array[String]} allergeniUtente gli allergeni dell'utente
+  * @return true se allergico, altrimenti false
+*/
+function isAllergico(allergeniPiatto, allergeniUtente){
+	for (var i=0;i <allergeniPiatto.length;i++){
+		for(var j=0; j<allergeniUtente.length;j++){
+			if(allergeniPiatto[i].toLowerCase()==allergeniUtente[j].toLowerCase())
+				return true;	
+		}
+	}
+	return false;
+}
+/**
   * Funzione che permette di ottenere tutti i piatti di un certo tipo
   * @param{String} tipo il tipo che si vuole ottenere
+  * @param {Array[String]} allergeni gli allergeni dell'utente
   * @return {Piatti[]} un vettore di piatti di quel tipo
 */
-var getPiattiTipo = function(tipo){
+var getPiattiTipo = function(tipo, allergeni){
 	var ret = [];
 	if(tipo.localeCompare(PRIMO) == 0 ||
 		tipo.localeCompare(SECONDO) == 0 ||
@@ -309,15 +323,13 @@ var getPiattiTipo = function(tipo){
 		tipo.localeCompare(DESSERT) == 0 ){
 	
 		for(var i in piatti){
-			if(piatti[i] != undefined && piatti[i].tipo == tipo){
+			if(piatti[i] != undefined && piatti[i].tipo == tipo && !isAllergico(piatti[i].allergeni,allergeni)){
 				ret.push(piatti[i]);
 			}
 		}
 	}
 	return ret;
 }
-
-
 
 exports.PRIMO = PRIMO;
 exports.SECONDO = SECONDO;
@@ -367,8 +379,11 @@ var Prenotazione = function(data,user){
 				case CONTORNO:
 					i=2;
 					break;
-				default:
+				case DESSERT:
 					i=3;
+					break;
+				default:
+					i=4;
 					break;
 			}
 			this.piatti[i] = p;
@@ -416,7 +431,7 @@ var prenotazioneComparator = function(p1,p2){
 var getPrenotazione = function(u,date){
 	if(u instanceof User && typeof date == "string"){
 		for(var i in prenotazioni){
-			if(userComparator(u,prenotazioni[i].user) == 0 && date.localeCompare(prenotazioni[i].date)==0){
+			if(UserComparator(u,prenotazioni[i].user) == 0 && date.localeCompare(prenotazioni[i].date)==0){
 				return prenotazioni[i];
 			}
 		}
@@ -429,7 +444,7 @@ var getPrenotazione = function(u,date){
   * @param {Prenotazione} p la prenotazione da aggiungere
  */
 var addPrenotazione = function(p){
-	if(p instanceof Prenotazione && !hasPrenotazione(p.user,p.date)){
+	if(p instanceof Prenotazione && getPrenotazione(p.user,p.date)===null){
 		prenotazioni.push(p);
 	}
 }
@@ -487,11 +502,11 @@ var getPrenotazioniUser = function(u){
   * @return {Array} un Array di prenotazioni effettuate nella data specificata
  */
 var getPrenotazioniGiorno = function(d){
-	if(typeof via == 'string'){
+	if(typeof d == 'string'){
 		var ret = [];
 		for(var i in prenotazioni){
 			if(d.localeCompare(prenotazioni[i].date)==0){
-				ret.push(preotazioni[i]);
+				ret.push(prenotazioni[i]);
 			}
 		}
 		return ret;
@@ -511,6 +526,7 @@ exports.getPrenotazioniGiorno = getPrenotazioniGiorno;
 /*****
   Init
 ******/
+addUser(new User('admin','administrator','non esiste','0001-01-01','0000','admin@admin.com','password',[]));
 addUser(new User('nome','cognome','via da qui','1995-12-29','0123456789','nome@gmail.com','password',[]));
 
 addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'',null,['glutine'],PRIMO));

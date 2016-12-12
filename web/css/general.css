@@ -26,6 +26,12 @@ hr{
 	max-height:125px;
 }
 
+.img-max-height-125:hover{
+	border: solid 2px;
+	border-color:blue;
+	border-radius: 10px;
+}
+
 .img-max-height-300{
 	max-height:300px;
 }

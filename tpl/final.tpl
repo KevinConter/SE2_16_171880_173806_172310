@@ -4,11 +4,11 @@
 		<title>Conferma ordinazione</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<script type="text/javascript" src="bootstrap/jquery-3.1.1.min.js"></script>	
-		<script type="text/javascript" src="bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<link href="bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="css/general.css" rel="stylesheet" type="text/css">
-		<link href="css/final.css" rel="stylesheet" type="text/css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link href="/files/css/general.css" rel="stylesheet" type="text/css">
+		<link href="/files/css/final.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
     
@@ -16,7 +16,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/files/index.html">Pasti</a>
+                    <a class="navbar-brand" href="/files/index.html">APSP Pasti</a>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
@@ -26,10 +26,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="active"><a  href="/files/index.html">Home</a></li>
-                        <li><a href="#">Page 1</a></li>
-                        <li><a href="#">Page 2</a></li> 
-                        <li><a href="#">Page 3</a></li> 
+                        <li><a  href="/files/index.html" role="button" class="btn btn-lg btn-block">Home</a></li>
                     </ul>
                     
                     <ul class="nav navbar-nav navbar-right">
@@ -61,7 +58,7 @@
 		        </div>
 				<hr> 
 		        <div class="row">
-		                <div class=" thumbnail col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6 sfondo">
+		                <div class=" thumbnail col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6 sfondo">
 		                    <h1 class="centra">
 		                        Il tuo ordine è stato ricevuto correttamente
 		                        <br>
@@ -76,13 +73,13 @@
 		        </div>
 		        <hr>
 		        <div class="row">
-		        	<div class="col-xs-5 col-xs-offset-1">
+		        	<div class="col-xs-12 col-sm-5 col-sm-offset-1 form-group">
 		        		<a href="/files/index.html" role="button" class="btn btn-lg btn-block btn-primary">
 		        			<span class="glyphicon glyphicon-arrow-left"> </span>
 		        			Torna al menù
 		        		</a>
 		        	</div>
-		        	<div class="col-xs-5">
+		        	<div class="col-xs-12 col-sm-5 form-group">
 		        		<a href="/LogOut" role="button" class="btn btn-lg btn-block btn-danger">
 		        			Esci 
 		        			<span class="glyphicon glyphicon-log-out"></span>
