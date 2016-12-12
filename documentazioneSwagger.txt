@@ -1,0 +1,504 @@
+# Documentazione applicazione prenotazione pasti
+swagger: '2.0'
+info:
+  title: APSP Pasti
+  description: Applicazione per la prenotazioe di pasti al servizio offerto da APSP
+  version: "1.0.0"
+# the domain of the service
+host: lit-river-83410.herokuapp.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /
+produces:
+  - text/html
+paths:
+  /:
+    get:
+      summary: Root redirection
+      description: | 
+        Verifica la presenza dell'oggetto utente all'interno della sessione: se esso è presente, allora manda un   comando di redirect al client per raggiungere la home page, altrimenti viene fatto un redirect a logIn.html
+      tags:
+        - Root
+      responses:
+        302:
+          description: Redirect alla pagina logIn.html se l'utente non è loggato; alla pagina index.html se è loggato; alla pagina admin.html se è amministratore.
+          
+  /files/index.html:
+    get:
+      summary: Get file index.html.
+      description: |
+        Se all'interno della sessione è presente l'oggetto utente, allora viene eseguito il binding del template index.tpl, al quale viene dato l'oggetto dell'utente.
+      tags:
+        - Index
+      responses:
+        200:
+          description: Pagina risultante dal binding del template index.tpl se l'utente è loggato e non è amministratore.
+        302:
+          description: Redirect alla pagina di admin.html se è loggato come amministratore, oppure alla pagina logIn.html se non è loggato.
+          
+  /files/final.html:
+    get:
+      summary: Get file index.html.
+      description: |
+       Se l'utente è loggato e non è amministratore, viene fatto il binding del template final.tpl. Se è amministratore, viene fatto un redirect alla pagina admin.html; se non è loggato, redirect a logIn.html
+      tags:
+        - Final
+      responses:
+        200:
+          description: Pagina risultante dal binding del template final.tpl se l'utente ha eseguito l'operazione di login e non è amministratore.
+        302:
+          description: Redirect a logIn.html se l'utente non è loggato; redirect a admin.html se è amministratore.
+          
+  /GetDettagliPiatto:
+    get:
+      summary: Dettagli piatto.
+      description: |
+        Se l'utente è loggato, e non è amministratore, viene estratto dall'elenco il piatto selezionato dall'utente; viene quindi eseguito il binding del template dettagliPiatto.tpl a cui viene passato l'oggetto piatto che contiene tutte le informazioni necessarie. Se l'utente è amministratore, redirect alla pagina admin.html; se non è loggato, redirect a logIn.html.
+      parameters:
+        - name: nome
+          in: query
+          description: Nome identificativo del piatto voluto.
+          required: true
+          type: string
+      tags:
+        - Piatti
+      responses:
+        200:
+          description: Pagina risultante dal bind del template dettagliPiatto.tpl se l'utente è loggato e non è amministratore.
+          schema:
+            $ref: '#/definitions/Piatto'
+        404:
+          description: Se il piatto richiesto non è stato trovato sul server.
+        302:
+          description: Redirect a admin.html se l'utente è amministratore; Redirect a logIn.html se non è loggato.
+        409:
+          description: Errore, non è stato inviato il nome di un piatto valido.
+          
+  /SignIn:
+    post:
+      summary: Registrazione utente.
+      description: |
+        Viene eseguito un controllo generale per verificare se tutti i campi sono stati compilati; se tutto ha funzionato correttamente, viene creato un nuovo utente e viene aggiunto alla lista di utenti registrati.
+        Prepara all'interno della sessione la struttura necessaria a contenere la prenotazione che l'utente andrà ad eseguire.
+      parameters:
+        - name: iNome
+          in: query
+          description: Nome dell'utente.
+          required: true
+          type: string
+        - name: iCognome
+          in: query
+          description: Cognome dell'utente.
+          required: true
+          type: string
+        - name: iIndirizzo
+          in: query
+          description: Indirizzo del domicilio dell'utente; identifica il luogo a cui verranno consegnati i pasti ordinati.
+          required: true
+          type: string
+        - name: iData
+          in: query
+          description: Data di nascita dell'utente.
+          required: true
+          type: string
+        - name: iRecapito
+          in: query
+          description: Numero di telefono dell'utente.
+          required: true
+          type: string
+        - name: iMail
+          in: query
+          description: Indirizzo email dell'utente.
+          type: string
+        - name: iPassword
+          in: query
+          description: Password di accesso.
+          type: string
+      tags:
+        - User
+      responses:
+        302:
+          description: Viene eseguito un redirect alla pagina di registrazione se si è verificato un'errore durante la registrazione; altrimenti viene eseguito un redirect alla pagina index.html.
+          schema:
+            $ref: '#/definitions/User'
+          
+  /EditUser:
+    post:
+      summary: Modifica profilo utente
+      description: |
+        Dopo aver verificato che siano stati passati tutti i campi necessari, se non si è verificato nessun errore, i dati dell'utente vengono modificati.
+        Se la mail viene modificata, viene eseguito un controllo per verificare se tale indirizzo è già presente all'iterno del database: se è già presente, viene mandato un redirect alla pagina di errore; se non è presente viene eseguita la modifica e viene fatto un redirect alla home.
+      parameters:
+        - name: iNome
+          in: query
+          description: Nuovo nome dell'utente.
+          required: true
+          type: string
+        - name: iCognome
+          in: query
+          description: Nuovo cognome dell'utente.
+          required: true
+          type: string
+        - name: iIndirizzo
+          in: query
+          description: Nuovo indirizzo del domicilio dell'utente; identifica il luogo a cui verranno consegnati i pasti ordinati.
+          required: true
+          type: string
+        - name: iData
+          in: query
+          description: Nuova data di nascita dell'utente.
+          required: true
+          type: string
+        - name: iRecapito
+          in: query
+          description: Nuovo numero di telefono dell'utente.
+          required: true
+          type: string
+        - name: iMail
+          in: query
+          description: Nuovo indirizzo email dell'utente.
+          type: string
+        - name: iPassword
+          in: query
+          description: Nuova password di accesso.
+          type: string
+      tags:
+        - User
+      responses:
+        302:
+          description: Redirect alla pagina index.html se le modifiche sono state eseguite; se si è verificato un errore, redirect alla pagine error.html. Redirect a logIn.html se l'utente non è loggato. Redirect a editUser.html se uno dei campi non è stato compilato.
+          schema:
+            $ref: '#/definitions/User'
+          
+  /LogIn:
+    post:
+      summary: Accesso al sistema
+      description:
+        Verifica i dati ricevuti ed autentica l'utente al sistema. Se l'utente è registrato, vengono estratti i sui dati e vengono aggiunti alla sessione. Se non è registrato, viene eseguito un redirect alla pagina di logIn.
+      parameters:
+        - name: iMail
+          in: query
+          description: Indirizzo email usato alla registrazione.
+          required: true
+          type: string
+        - name: iPassword
+          in: query
+          description: Password per l'autenticazione.
+          required: true
+          type: string
+      tags:
+        - User
+      responses:
+        302:
+          description: Redirect alla pagina index.html se i dati sono corretti e l'utente viene autenticato. Redirect a admin.html se l'utente che ha fatto l'accesso è amministratore. Redirect alla pagina logIn.html se i dati sono errati o l'utente non ha inserito i dati.
+          schema:
+            $ref: '#/definitions/User'
+            
+  /logOut:
+    get:
+      summary: Logout dal sistema
+      description: Cancella la sessione ed esegue un redirect alla pagina di login.
+      tags:
+        - User
+      responses:
+        302:
+          description: Redirect a logIn.html.
+          
+  /files/editUser.html:
+    get:
+      summary: Estrazione dati utente
+      description:
+        Estrae dalla sessione l'identificativo dell'utente ed estrae tutti i suoi dati; esegue poi il binding del template editUser.tpl compilando i campi del form con i dati attuali dell'utente.
+      tags:
+        - User
+      responses:
+        200:
+          description: Risultato del binding del template editUser.tpl se l'utente è loggato.
+          schema:
+            $ref: '#/definitions/User'
+        302:
+          description: Redirect a logIn.html se l'utente non è loggato.
+            
+  /GetPiatti:
+    post:
+      summary: Estrazione elenco piatti.
+      description: |
+        Estrae dalla sessione l'identificativo dell'utente; estrae poi dall'elenco complessivo di piatti, tutti quelli del tipo che l'utente ha richiesto. Se il tipo estratto dalla richeista non è tra quelli definiti come tipi di piatti, viene eseguito un redirect alla pagina index.html.
+      parameters:
+        - name: iTipo
+          in: query
+          description: Tipo di piatto che si vogliono estrarre.
+          required: true
+          type: string
+      tags:
+        - Piatti
+      responses:
+        200:
+          description: Risultato del bindig del template elenco.tpl compilato con i dati dei piatti ottenuti dalla ricerca per tipo.
+          schema:
+            $ref: '#/definitions/Piatti'
+        302:
+          description: Redirect a index.html se il tipo passato non è tra quelli diponibili. Redirect a admin.html se l'utente è amministratore. Redirect a logIn.html se non è loggato.
+            
+  /ScegliPiatto:
+    post:
+      summary: Aggiungi alla prenotazione
+      description: |
+        Estrae dalla sessione l'idetificativo dell'utente; estrae poi il nome identificativo del piatto selezionato, ricerca tutti i dati mancanti e aggiunge il piatto alla prenotazione. Al termine esegue il redirect alla pagina index.html. Se il nome del piatto non viene passato nella richiesta viene inviato in messaggio di errore. Se l'utente non è loggato, viene fatto un redirect alla pagina di login.
+      parameters:
+        - name: iPiatto
+          in: query
+          description: Nome identificativo del piatto selezionato.
+          required: true
+          type: string
+      tags:
+        - Prenotazione
+      responses:
+        302:
+          description: Redirect alla pagina index.html. Redirect a login se l'utente non è loggato. Redirect a admin.html se l'utente è amministratore.
+        409:
+          description: Errore, il nome del piatto non è stato passato.
+          
+  /GetResoconto:
+    post:
+      summary: Resoconto ordine
+      description: |
+        Estrae dalla sessione l'identificativo dell'utente e la prenotazione compilata. da questa estrae i piatti ordinati che vengono utilizzati per compilare il template resoconto.tpl. Se l'utente non è loggato viene fatto un redirect alla pagina di login.
+      tags:
+        - Piatti
+      responses:
+        200:
+          description: Risultato del binding del template resoconto.tpl compilato con i dati dei piatti ordinati.
+          schema:
+            $ref: '#/definitions/Prenotazione'
+        302:
+          description: Redirect a admin.html se l'utente è amministratore. Redirect a logIn.html se non è loggato.
+          
+  /files/admin.html:
+    get:
+      summary: Get file admin.html
+      description: |
+        Restituisce il binding del template admin.tpl se l'utente loggato è amministratore, altrimenti esegue un redirect alla ROOT.
+      tags:
+        - Admin
+      responses:
+        200:
+          description: Risultato del binding del template admin.tpl se l'utente è amministratore.
+        302:
+          description: Redirect alla ROOT se l'utente non è amministratore o non è loggato.
+          
+  /AddPiatto:
+    post:
+      summary: Aggiunge un piatto al menù
+      description: |
+        Verifica se l'utente è amministratore, in tal caso controlla che siano stati impostati tutti i campi obbligatori del piatto; se tutti sono corretti, aggiunge il piatto alla lista generale, altrimenti ritorna sulla pagina admin.html con un messaggio di errore. Se l'utente non è loggato, manda un redirect a logIn.html.
+      parameters:
+        - name: iNome
+          in: query
+          description: Nome identificativo del piatto da inserire.
+          required: true
+          type: string
+        - name: file
+          in: request
+          description: File immagine rappresentativa del piatto
+          type: file
+        - name: iTipo
+          in: query
+          description: Tipo a cui appartiene il piatto (primo, secondo, contorno o dessert)
+          required: true
+          type: string
+        - name: iIngredienti
+          in: query
+          description: Lista degli ingredienti utilizzati in preparazione.
+          required: true
+          type: string
+        - name: iAllergeni
+          in: query
+          description: Lista degli allergeni contenuti nel piatto.
+          required: true
+          type: string
+        - name: iCuriosita
+          in: query
+          description: Testo che contiene le curiosità relative al piatto.
+          type: string
+      tags:
+        - Admin
+      responses:
+        302:
+          description: Redirect alla pagina admin.html se il piatto è stato inserito correttamente. Redirect a logIn.html se l'utente non è loggato.
+        409:
+          description: Risultato del binding del template admin.html in cui viene impostato il messaggio di errore.
+  
+  /GetPiatto:
+    post:
+      summary: Ricerca piatto
+      description: |
+        Verifica se l'utente è amministratore; in tal caso ricerca il piatto specificato: se lo trova eseguire il binding del template piatto.tpl, altrimenti esegue un redirect a error.html. Se l'utente non è loggato fa un redirect a logIn.html.
+      parameters:
+        - name: iCerca
+          in: query
+          description: Nome del piatto da ricerca nel sistema.
+          required: true
+          type: string
+      tags:
+        - Admin
+      responses:
+        200:
+          description: Risultato del binding del template piatto.tpl compilato con i dati del piatto cercato.
+        302:
+          description: Redirect a error.html se il piatto non è presente nel sistema. Redirect a logIn.html se l'utene non è loggato.
+        409:
+          description: Errore, il campo di ricerca non è stato compilato.
+          
+  /EliminaPiatto:
+    post:
+      summary: Eliminazione piatto dal menù
+      description: |
+        Verifica che l'utente sia amministratore; in tal caso, cancella il piatto indicato ed elimina anche il file dell'immagine corrispondente. Se il piatto selezionato era già stato cancellato, manda un redirect alla pagina di errore. Se l'utente non è loggato, redirect a logIn.html.
+      parameters:
+        - name: iPiatto
+          in: query
+          description: Nome del piatto da eliminare.
+          required: true
+          type: string
+      tags:
+        - Admin
+      responses:
+        302:
+          description: Redirect a admin.html se il piatto è stato eliminato. Redirect a error.html se il piatto era già stato eliminato. Redirect a logIn.html se l'utente non è loggato.
+        409:
+          description: Errore, non è stato inviato il nome del piatto da eliminare.
+          
+  /GetElencoPrenotazioni:
+    get:
+      summary: Elenco prenotazioni
+      description: |
+        Estrae dal sistema l'elenco complessivo di tutte le prenotazioni eseguite dagli utenti se l'utente loggato è amministratore. Se l'utente non è amministratore, redirect a ROOT.
+      tags:
+        - Admin
+      responses:
+        200:
+          description: Risultato del binding del template elencoPrenotazioni.tpl se l'utente loggatto è aministratore.
+          schema:
+            $ref: '#/definitions/Elenco'
+        302:
+          description: Redirect a ROOT perchè l'utente loggato non è amministratore.
+  
+  /Conferma:
+    get:
+      summary: Conferma definitiva
+      description: |
+        Estrae dalla sessione l'identificati dell'utente e la sua prenotazione; questa viene poi aggiunta all'elenco complessivo che verrà estratto dall'amministratore. Viene quindi fatto un redirect alla pagina final.html. Se l'utente non è loggato viene fatto un redirect alla pagina di login.
+      tags:
+        - Piatti
+      responses:
+        302:
+          description: Redirect a final.html se l'utente è loggato e non è amministratore. Redirect a admin.html se l'utente è amministratore. Redirect a logIn.html se l'utente non è loggato.
+          
+  /SaltaOrdine:
+    get:
+      summary: Salta ordinazione
+      description: |
+        Permette all'utente di non eseguire l'ordinazione; viene quindi salvata una prenotazione vuota identificata dall'utente e dalla data.
+      tags:
+        - SaltaOrdine
+      responses:
+        302:
+          description: Redirect alla pagina final.html se l'utente è loggato e l'ordine è stato salvato. Redirect a admin.html se l'utente è amministratore. Redirect a logIn.html se l'utente non è loggato.
+
+  /files/error.html:
+    get:
+      summary: Pagina di errore
+      description: Verifica se l'utente è loggato, ed esegue il parsing del template error.tpl in cui viene mostrato un messaggio di errore generico.
+      responses:
+        409:
+          description: Binding del file error.tpl.
+        302:
+          description: Redirect a logIn.html se l'utente non è loggato.
+
+
+definitions:
+  User:
+    type: object
+    properties:
+      nome:
+        type: string
+        description: Nome del'utente.
+      cognome:
+        type: string
+        description: Cognome dell'utente.
+      mail:
+        type: string
+        description: Indirizzo email dell'utente
+      via:
+        type: string
+        description: Indirizzo dell'utente.
+      data_nascita:
+        type: string
+        description: Data di nascita dell'utente.
+      password:
+        type: string
+        description: Password per accedere al sistema.
+      recapito:
+        type: string
+        description: Numero di telefono dell'utente.
+      allergeni:
+        type: array
+        description: Elenco degli allergeni dell'utente.
+        items:
+          $ref: '#/definitions/Allergene'
+          
+  Allergene:
+    type: string
+    description: Identificativo dell'allergene.
+    
+  Piatto:
+    type: object
+    description: Oggetto che rappresenta un piatto completo di tutti i dati utili.
+    properties:
+      nome:
+        type: string
+        description: Nome identificativo del piatto.
+      ingredienti:
+        type: string
+        description: Stringa che contiene l'elenco degli ingredienti contenuti nel piatto.
+      curiosità:
+        type: string
+        description: Testo che contiene informazioni aggiuntive/curiosità sul piatto.
+      foto:
+        type: string
+        description: Percorso da inserire all'interno del campo src di un tag img.
+      allergeni:
+        type: array
+        description: Elenco degli allergeni che il piatto può contenere.
+        items:
+          $ref: '#/definitions/Allergene'
+      tipo:
+        type: string
+        description: Costante stringa che identifica la categoria di appartenenza del piatto; può assumere i valori 'primo', 'secondo', 'contorno' oppure 'dessert'.
+        
+  Piatti:
+    type: array
+    description: Elenco di piatti.
+    items:
+      $ref: '#/definitions/Piatto'
+      
+  Prenotazione:
+    type: object
+    description: Oggetto che contiene l'elenco dei piatti ordinati dall'utente per una data specifica.
+    properties:
+      data:
+        type: string
+        description: Data per cui la prenotazione è stata eseguita.
+      user:
+        $ref: '#/definitions/User'
+      piatti:
+        $ref: '#/definitions/Piatti'
+        
+  Elenco:
+    type: array
+    description: Elenco delle prenotazioni
+    items:
+      $ref: '#/definitions/Prenotazione'
