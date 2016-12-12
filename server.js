@@ -132,6 +132,8 @@ app.get("/GetDettagliPiatto",function(request,response){
 
 //Registrazione di un nuova utente
 app.post("/SignIn",function(request,response){
+	var sess = request.session;
+	
 	var errore=false;
 	var nome = undefined;
 	var cognome = undefined;
@@ -183,7 +185,7 @@ app.post("/SignIn",function(request,response){
 		errore=true;
 	}
 	
-	if(!errore){	
+	if(!errore){
 		var user = new db.User(nome,cognome,indirizzo,data,recapito,mail,pwd,[]);
 		var id = db.addUser(user);
 		var data = new Date();
