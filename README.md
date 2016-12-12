@@ -38,7 +38,7 @@ Utilizzando un normale PC, è necessario installare i moduli specificati all'int
 per poter rendere funzionante il server. Completata l'installazione, basta far partire il server, aprire
 il browser e digitare localhost:8848 all'interno della barra degli indirizzi, oppure copiare e incollare
 il link sottostante:
-		http://localhost:8848/
+Link app localhost: http://localhost:8848/
 
 Per poter eseguire i test cases è necessario il programma JASMINE e un modulo ulteriore, cioè REQUEST.
 Dopo aver installato il programma e il modulo ed essersi spostati all'interno del branch TEST, è possibile
