@@ -394,4 +394,112 @@ describe("Azioni Utente\n",function(){
 			done();
 		});
 	});
+	
+	describe("Test sul SignIn\n",function(){
+		it("Nome assente:",function(done){
+			options.form = {
+				iCognome : 'cognome',
+				iIndirizzo : 'via Torre Verde, 25',
+				iData : '1999-08-03',
+				iRecapito : '0466 454647',
+				iMail : 'nome.assente@gmail.com',
+				iPassword : 'noNome123'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/signIn.html");
+				done();
+			});
+		});
+		it("Cognome assente:",function(done){
+			options.form = {
+				iNome : 'nome',
+				iIndirizzo : 'via Torre Verde, 25',
+				iData : '1999-08-03',
+				iRecapito : '0466 454647',
+				iMail : 'cognome.assente@gmail.com',
+				iPassword : 'noCognome123'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/signIn.html");
+				done();
+			});
+		});
+		it("Indirizzo assente:",function(done){
+			options.form = {
+				iNome : 'nome',
+				iCognome : 'cognome',
+				iData : '1999-08-03',
+				iRecapito : '0466 454647',
+				iMail : 'ind.assente@gmail.com',
+				iPassword : 'noIndirizzo123'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/signIn.html");
+				done();
+			});
+		});
+		it("Data assente:",function(done){
+			options.form = {
+				iNome : 'nome',
+				iCognome : 'cognome',
+				iIndirizzo : 'via Torre Verde, 25',
+				iRecapito : '0466 454647',
+				iMail : 'data.assente@gmail.com',
+				iPassword : 'noData123'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/signIn.html");
+				done();
+			});
+		});
+		it("Recapito assente:",function(done){
+			options.form = {
+				iNome : 'nome',
+				iCognome : 'cognome',
+				iIndirizzo : 'via Torre Verde, 25',
+				iData : '1999-08-03',
+				iMail : 'rec.assente@gmail.com',
+				iPassword : 'noRec123'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/signIn.html");
+				done();
+			});
+		});
+		it("Mail assente:",function(done){
+			options.form = {
+				iNome : 'nome',
+				iCognome : 'cognome',
+				iIndirizzo : 'via Torre Verde, 25',
+				iData : '1999-08-03',
+				iRecapito : '0466 454647',
+				iPassword : 'noMail123'
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/signIn.html");
+				done();
+			});
+		});
+		it("Password assente:",function(done){
+			options.form = {
+				iNome : 'nome',
+				iCognome : 'cognome',
+				iIndirizzo : 'via Torre Verde, 25',
+				iData : '1999-08-03',
+				iRecapito : '0466 454647',
+				iMail : 'pwd.assente@gmail.com',
+			};
+			request.post(base+'SignIn',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				expect(body).toContain("Redirecting to /files/signIn.html");
+				done();
+			});
+		});
+	});
 });
