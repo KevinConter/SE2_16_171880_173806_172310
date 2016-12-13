@@ -146,19 +146,16 @@
 				<div class="row">
 				    <div class="col-xs-12 col-sm-5 col-sm-offset-1">
 				        <div class="form-group">
-				            <input type="reset" class="form-control btn btn-danger" value="Annulla" onClick="resetta()">
+				            <input type="reset" class="btn btn-lg btn-block btn-danger" value="Annulla" onClick="resetta()">
 				        </div>
 				    </div>
-				    <div class="col-xs-12 col-sm-5 col-sm-offset-1">
+				    <div class="col-xs-12 col-sm-5">
 				        <div class="form-group">
-				            <input type="button" class="form-control btn btn-success" id="btnModifica" value="Modifica" onClick="controlloInvia()">
+				            <input type="button" class="btn btn-lg btn-block btn-success" id="btnModifica" value="Modifica" onClick="controlloInvia()">
 				        </div>
 				    </div>
-				</div>
-				
-				
+				</div>				
 			</form>
-
 		</div>
 	</div>
 </body>
