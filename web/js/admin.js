@@ -30,9 +30,13 @@ function controlloCerca(){
 */
 function controlloInvia(){
 
-	var ok = controlloValidita("iNome") && controlloValidita("iIngredienti") && controlloValidita("iAllergeni") && controlloValidita("iCuriosita");
-	if(ok)
+	var ok = controlloValidita("iNome") && controlloValidita("iIngredienti") && controlloValidita("iAllergeni");
+	if(ok){
+		if(document.getElementById('iCuriosita').value == '' ){
+			document.getElementById('iCuriosita').value='Non ci sono curiosita\'';
+		}
 		document.getElementById("modulo").submit();
+	}
 	else
 		alert("Form incompleto");	
 }
