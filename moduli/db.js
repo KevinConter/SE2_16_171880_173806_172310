@@ -530,14 +530,14 @@ addUser(new User('admin','administrator','non esiste','0001-01-01','0000','admin
 addUser(new User('nome','cognome','via da qui','1995-12-29','0123456789','nome@gmail.com','password',[]));
 
 addPiatto(new Piatto('Pasta al Ragu\'','pasta gr. 80\nragu\'','Non ci sono curiosita\'',null,['glutine'],PRIMO));
-addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto e\' uno dei vanti della citta\' di genova',null,['glutine'],PRIMO));
+addPiatto(new Piatto('Pasta alla Genovese','pasta gr. 80\npesto\nsale','Il pesto e\' uno dei vanti della citta\' di genova','files/immagini/Pasta alla Genovese.jpg',['glutine'],PRIMO));
 
 addPiatto(new Piatto('Arrosto di Maiale','Arrosto gr. 100','Non ci sono curiosita\'',null,[],SECONDO));
-addPiatto(new Piatto('Cotoletta alla Milanese','Carne di maiale gr. 100\nuova\npane grattugiato','Non ci sono curiosita\'',null,['uova'],SECONDO));
+addPiatto(new Piatto('Cotoletta alla Milanese','Carne di maiale gr. 100\nuova\npane grattugiato','Non ci sono curiosita\'','files/immagini/Cotoletta alla Milanese.jpg',['uova'],SECONDO));
 
 addPiatto(new Piatto('Cavolo','Cavolo gr. 75\nSale, Olio, Aceto qb','Il cavolo e\' stato coltivato la prima volta da ...',null,[],CONTORNO));
-addPiatto(new Piatto('Patatine fritte','Patate gr. 75\nSale\nketchup, Maionese o Senape a scelta','Non ci sono curiosita\'',null,[],CONTORNO));
+addPiatto(new Piatto('Patatine fritte','Patate gr. 75\nSale\nketchup, Maionese o Senape a scelta','Non ci sono curiosita\'','files/immagini/Patatine fritte.jpg',[],CONTORNO));
 
-addPiatto(new Piatto('Budino','[Ingredienti del budino]','Non ci sono curiosita\'',null,[],DESSERT));
+addPiatto(new Piatto('Budino','[Ingredienti del budino]','Non ci sono curiosita\'','files/immagini/Budino.jpg',[],DESSERT));
 addPiatto(new Piatto('Yogurt magro','Latte','Non ci sono curiosita\'',null,['latte'],DESSERT));
 
