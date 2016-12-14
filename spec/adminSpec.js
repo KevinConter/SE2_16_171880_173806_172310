@@ -40,4 +40,13 @@ describe("Test sulle azioni dell'amministratore\n",function(){
 			});
 		});
 	});
+	
+	describe("LogOut",function(){
+		it("LogOut",function(done){
+			request.get(base+'LogOut',options,function(error,response,body){
+				expect(response.statusCode).toBe(302);
+				done();
+			});
+		});
+	});
 });

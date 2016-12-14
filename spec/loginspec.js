@@ -1,5 +1,5 @@
 var request = require("request")
-var options = {followRedirect:false};
+var options = {followRedirect:false,jar:true};
 
 var base='http://localhost:8848/';
 
