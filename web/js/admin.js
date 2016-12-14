@@ -45,8 +45,8 @@ function cambiaFoto(){
 	var reader = new FileReader();
 	// Read the local file as a DataURL
 	reader.readAsDataURL(document.getElementById("file").files[0]);
-	if(document.getElementById("file").files[0].size>=8388608){
-		alert("Il file selezionato per l'immagine di profilo è troppo grande!\nLa dimensione massima consentita è: 8 MB.");
+	if(document.getElementById("file").files[0].size>=4194304){
+		alert("Il file selezionato per l'immagine di profilo è troppo grande!\nLa dimensione massima consentita è: 4 MB.");
 		document.getElementById("file").value="";
 		document.getElementById("LabelFoto").className="form-control center-block labelFoto";
 	}else{

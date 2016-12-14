@@ -3,7 +3,7 @@ swagger: '2.0'
 info:
   title: APSP Pasti
   description: Applicazione per la prenotazioe di pasti al servizio offerto da APSP
-  version: "20"
+  version: "21"
 # the domain of the service
 host: lit-river-83410.herokuapp.com
 # array of all schemes that your API supports
