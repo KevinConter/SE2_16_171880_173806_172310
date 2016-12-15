@@ -4,7 +4,7 @@
   "description": "Progetto finale SE2",
   "main": "server.js",
   "scripts": {
-    "test": "jasmine spec"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
